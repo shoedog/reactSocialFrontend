@@ -4,8 +4,9 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Home from 'material-ui/svg-icons/action/home';
 import FlatButton from 'material-ui/FlatButton';
+import { browserHistory } from 'react-router'
 
 
 class NavBar extends Component {
@@ -42,6 +43,21 @@ class NavBar extends Component {
     console.log(this.state.windowWidth);
   }
 
+  // use react router to change views
+  handleLoginButton() {
+    browserHistory.push('/login');
+  }
+
+  // use react router to change views
+  handleSignupButton() {
+    browserHistory.push('/signup');
+  }
+
+  handleLogoTouchTap() {
+    browserHistory.push('/');
+  }
+
+
   /**
    * Returns buttons or small menu based on size of window.
    */
@@ -75,7 +91,7 @@ class NavBar extends Component {
     return (
       <AppBar
         title="CS419"
-        iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+        iconElementLeft={<IconButton onClick={this.handleLogoTouchTap}><Home /></IconButton>}
         iconElementRight={
           <div>
             {navWindow}
