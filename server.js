@@ -18,6 +18,11 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
+// Serve index page
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/www/index.html');
+});
+
 var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
