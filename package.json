@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/andrew310/cs419-frontend/issues"
   },
-  "homepage": "https://github.com/andrew310/cs419-frontend#readme"
+  "homepage": "https://github.com/andrew310/cs419-frontend#readme",
+  "dependencies": {
+    "babel-core": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1"
+  }
 }
