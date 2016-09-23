@@ -1,11 +1,9 @@
 console.log('Hello World!');
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from './Counter';
+import { render } from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import App from './views/App'
 
-document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(
-    React.createElement(Counter),
-    document.getElementById('mount')
-  );
-});
+injectTapEventPlugin();
+
+render(<App />, document.getElementById('mount'));
