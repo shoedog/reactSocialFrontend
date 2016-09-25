@@ -7,7 +7,7 @@ import { browserHistory, Router } from 'react-router';
 import { routes } from './routes';
 import { createStore, combineReducers } from 'redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import reducers from './reducers';
+import * as reducers from './reducers';
 import { Provider } from 'react-redux';
 
 // Needed for material ui's tap functions.

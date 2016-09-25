@@ -3,7 +3,7 @@ import webpack from 'webpack';
 
 const nodeModulePath = path.resolve( __dirname, 'node_modules');
 const buildPath = path.resolve( __dirname, 'build', 'assets');
-const appPath = path.resolve( __dirname, 'src', 'components', 'index');
+const appPath = path.resolve( __dirname, 'src', 'app');
 const srcPath = path.resolve( __dirname, 'src', );
 
 const config = {

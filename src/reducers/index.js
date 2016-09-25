@@ -1,1 +1,1 @@
-export default require('./count');
+export count from './count'
