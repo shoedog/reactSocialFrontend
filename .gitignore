@@ -1,12 +1,5 @@
 node_modules
-dist/bundle.js
+build/assets/
 /node_modules/
-.idea/cs419-frontend.iml
-.idea/inspectionProfiles/
-.idea/jsLibraryMappings.xml
-.idea/jsLinters/
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-
+.idea/
+npm_debug.log

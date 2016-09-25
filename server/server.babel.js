@@ -7,6 +7,7 @@ import path from 'path';
 
 new webpackDevServer(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
+  contentBase: './build',
   hot: true,
   historyApiFallback: false
 }).listen(8080, 'localhost', function (err, result) {
@@ -15,6 +16,4 @@ new webpackDevServer(webpack(webpackConfig), {
   }
 
   console.log('==> listening at http://localhost:8080/');
-  console.log('==> app is at at http://localhost:8080/build');
 });
-
