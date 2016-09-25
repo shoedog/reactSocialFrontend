@@ -11,7 +11,7 @@ const config = {
   //context: path.resolve(__dirname, '/src'),
 
   entry: [
-      'webpack-dev-server/client?http://localhost:8080/',
+      'webpack-hot-middleware/client',
       'webpack/hot/only-dev-server',
       appPath
   ],
