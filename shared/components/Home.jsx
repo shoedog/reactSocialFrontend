@@ -1,4 +1,4 @@
-import React                  from 'react';
+import React, { Component, PropTypes } from 'react';
 import TodosView              from 'components/TodosView';
 import TodosForm              from 'components/TodosForm';
 import { bindActionCreators } from 'redux';
@@ -16,9 +16,17 @@ import { connect }            from 'react-redux';
  giving it access to the requested parts of state as props, hence why we can use todos as we do.
  It also passes in Redux’s dispatch function which can be used to dispatch actions like so: dispatch(actionCreator());
  */
-@connect(state => ({ todos: state.todos }))
 
-export default class Home extends React.Component {
+class Home extends Component {
+  static propTypes = {
+    todos:    PropTypes.any.isRequired,
+    dispatch: PropTypes.func.isRequired
+  };
+
+  static needs = [
+    TodoActions.getTodos
+  ];
+
   render() {
     const { todos, dispatch } = this.props;
 
@@ -29,11 +37,15 @@ export default class Home extends React.Component {
      */
     return (
       <div id="todo-list">
+
         <TodosView todos={todos}
-                   {...bindActionCreators(TodoActions, dispatch)} />
+           {...bindActionCreators(TodoActions, dispatch)} />
+
         <TodosForm
           {...bindActionCreators(TodoActions, dispatch)} />
       </div>
     );
   }
 }
+
+export default connect(state => ({ todos: state.todos }))(Home)

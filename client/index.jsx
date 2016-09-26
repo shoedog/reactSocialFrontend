@@ -5,25 +5,31 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import routes      from '../shared/routes';
 
 //Redux imports
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider }                     from 'react-redux';
 import * as reducers                    from 'reducers';
 import { fromJS }                       from 'immutable';
 
+// Middleware for async actions
+import promiseMiddleware   from 'lib/promiseMiddleware';
+import immutifyState        from 'lib/immutifyState';
+
 const history = browserHistory;
 
-let initialState = window.__INITIAL_STATE__;
+const initialState = immutifyState(window.__INITIAL_STATE__);
+
+const reducer = combineReducers(reducers);
 
 // Transform into Immutable.js collections,
 // but leave top level keys untouched for Redux
-Object
+/*Object
   .keys(initialState)
   .forEach(key => {
     initialState[key] = fromJS(initialState[key]);
-  });
+  });*/
 
-const reducer = combineReducers(reducers);
-const store   = createStore(reducer, initialState);
+//Async Middleware applied here
+const store   = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
 
 render(
   <Provider store={store}>

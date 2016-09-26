@@ -1,39 +1,51 @@
-import React from 'react';
-
+import React, { PropTypes } from 'react';
+import Immutable     from 'immutable';
 
 // Here we display each todo item in the store alongside edit and delete buttons
 // which are mapped to our pre-bound action creators.
 
-
 export default class TodosView extends React.Component {
+
+  static propTypes = {
+    todos:      PropTypes.instanceOf(Immutable.List).isRequired,
+    editTodo:   PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired
+  };
+
   handleDelete = (e) => {
     const id = Number(e.target.dataset.id);
 
     // Equivalent to `dispatch(deleteTodo())`
     this.props.deleteTodo(id);
   }
+
   handleEdit = (e) => {
     const id  = Number(e.target.dataset.id);
-    const val = this.props.todos.get(id).text
+    const currentVal = this.props.todos.get(id);
 
     // For cutting edge UX
-    let newVal = window.prompt('', val);
-    this.props.editTodo(id, newVal);
+    let text = window.prompt('', currentVal);
+
+    this.props.editTodo(id, text);
   }
 
   render() {
+    const btnStyle = {
+      'margin': '1em 0 1em 1em'
+    };
+
     return (
       <div id="todo-list">
         {
           this.props.todos.map( (todo, index) => {
             return (
-              <div key={index}>
+              <div style={btnStyle} key={index}>
                 <span>{todo}</span>
 
-                <button data-id={index} onClick={this.handleDelete}>
+                <button style={btnStyle} data-id={index} onClick={this.handleDelete}>
                   X
                 </button>
-                <button data-id={index} onClick={this.handleEdit}>
+                <button style={btnStyle} data-id={index} onClick={this.handleEdit}>
                   Edit
                 </button>
               </div>
