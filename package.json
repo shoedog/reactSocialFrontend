@@ -17,14 +17,23 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "babel-runtime": "^6.11.6",
+    "express": "^4.14.0",
+    "history": "^4.2.0",
+    "immutable": "^3.8.1",
+    "object-assign": "^4.1.0",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-require-ignore": "0.0.2",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
@@ -40,14 +49,8 @@
     "express": "^4.14.0",
     "ip": "^1.1.3",
     "material-ui": "^0.15.4",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.5",
-    "react-redux": "^4.4.5",
-    "react-router": "^2.8.1",
-    "react-router-redux": "^4.0.6",
     "react-tap-event-plugin": "^1.0.0",
-    "redux": "^3.6.0",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.1",
     "webpack-dev-server": "^1.16.1",
@@ -75,8 +78,8 @@
   },
   "scripts": {
     "eslint": "eslint src tools",
-    "start": "node server/server.js",
-    "compile": "webpack --config webpack.config.babel.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./shared node ./server/runner.js",
+    "dev": "npm run start & webpack-dev-server --progress --color",
+    "build": "NODE_ENV=production webpack --progress --color -p --config webpack.prod.config.js"
   }
 }

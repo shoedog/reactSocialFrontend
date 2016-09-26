@@ -1,66 +1,45 @@
-import path from 'path';
-import webpack from 'webpack';
+var path    = require('path');
+var webpack = require('webpack');
 
-const nodeModulePath = path.resolve( __dirname, 'node_modules');
-const buildPath = path.resolve( __dirname, 'build', 'assets');
-const appPath = path.resolve( __dirname, 'src', 'app');
-const srcPath = path.resolve( __dirname, 'src', );
-
-const config = {
-
-  //context: path.resolve(__dirname, '/src'),
-
-  entry: [
-      'webpack-hot-middleware/client',
-      'webpack/hot/only-dev-server',
-      appPath
+module.exports = {
+  entry:  [
+    'webpack-dev-server/client?http://127.0.0.1:8080/',
+    'webpack/hot/only-dev-server',
+    './client'
   ],
-
   output: {
-    path: path.resolve( __dirname, 'build', 'assets'),
-    filename: 'app.bundle.js',
-    sourceMapFilename: 'app.bundle.map',
-    publicPath: '/static/'
+    path:     path.join(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
-
-  //Source map provides support for browser debugging by mapping bundle files
-  devtool: '#source-map',
-
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    modulesDirectories: ['node_modules', 'shared'],
+    extensions:         ['', '.js', '.jsx']
   },
-
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
-        loaders: ['react-hot', 'jsx?harmony'],
-        include: [srcPath],
-
-      },
-      {
-        test: /\.js$/,
-        exclude: [nodeModulePath],
+        test:    /\.jsx?$/,
+        exclude: /node_modules/,
         loaders: ['babel']
       }
-    ],
+    ]
   },
-
-  //Minify bundle
   plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        mangle: true,
-        compress: {
-          warnings: false,
-        }
-      }),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development'),
+        'BABEL_ENV': JSON.stringify('dev')
+      }
+    }),
   ],
-
+  devtool: 'inline-source-map',
+  devServer: {
+    hot: true,
+    proxy: {
+      '*': 'http://127.0.0.1:' + (process.env.PORT || 3000)
+    },
+    host: '127.0.0.1'
+  }
 };
-
-module.exports = config;
-
-//"dev": "webpack-dev-server --progress --colors -hot",
