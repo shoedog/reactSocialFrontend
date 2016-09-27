@@ -79,7 +79,7 @@
   },
   "scripts": {
     "eslint": "eslint src tools",
-    "start": "cross-env NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./shared node ./server/runner.js",
+    "start": "cross-env NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./src/shared node ./src/server/",
     "dev": "npm run start & webpack-dev-server --progress --color",
     "build": "NODE_ENV=production webpack --progress --color -p --config webpack.prod.config.js"
   }
