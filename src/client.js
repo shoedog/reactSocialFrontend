@@ -2,17 +2,20 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory, useRouterHistory } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
-import routes from '../shared/routes';
+import routes from './shared/routes';
 
 // Redux imports
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import * as reducers from 'reducers';
 import { fromJS } from 'immutable';
+import rootReducer from './shared/rootReducer.js';
 
 // Middleware for async actions
-import promiseMiddleware from 'lib/promiseMiddleware';
-import immutifyState from 'lib/immutifyState';
+import promiseMiddleware from './shared/lib/promiseMiddleware';
+import immutifyState from './shared/lib/immutifyState';
+
+//Styling
+import { StyleSheet } from 'aphrodite'
 
 const history = browserHistory;
 
@@ -22,14 +25,17 @@ const history = browserHistory;
  */
 const initialState = immutifyState(window.__INITIAL_STATE__);
 
-const reducer = combineReducers(reducers);
+const reducer = rootReducer;
 
 // Async Middleware applied here
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
+
+//Add styles for client
+StyleSheet.rehydrate(window.renderedClassNames);
 
 render(
   <Provider store={store}>
     <Router children={routes} history={history} />
   </Provider>,
-  document.getElementById('react-view')
+  document.getElementById('app')
 );

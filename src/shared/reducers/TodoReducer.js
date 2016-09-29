@@ -6,7 +6,7 @@ import Immutable from 'immutable';
 
  Redux isn’t very opinionated, and only has two expectations of its redeucers:
  1. The reducer has the signature (state, action) => newState.
- 2. The reducer does not mutate the state it is given, but returns a new on
+ 2. The reducer does not mutate the state it is given, but returns a new one
  */
 
 const defaultState = new Immutable.List();
