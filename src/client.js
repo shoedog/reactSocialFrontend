@@ -15,27 +15,39 @@ import promiseMiddleware from './shared/lib/promiseMiddleware';
 import immutifyState from './shared/lib/immutifyState';
 
 //Styling
-import { StyleSheet } from 'aphrodite'
+import { StyleSheet } from 'aphrodite/no-important'
 
 const history = browserHistory;
 
-/*
- This is identical to the server Redux initialization,
- except that we hydrate the store with the state passed from the server.
+/**
+ * We hydrate/initialize the store with the state passed from the server.
  */
 const initialState = immutifyState(window.__INITIAL_STATE__);
 
 const reducer = rootReducer;
 
-// Async Middleware applied here
+/**
+ * Async Middleware applied here
+ */
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
 
-//Add styles for client
+/**
+ * Apply Styles for client
+ */
 StyleSheet.rehydrate(window.renderedClassNames);
 
+/**
+ * Render
+ * @param {Object} store - this applies the store
+ * @param {Object} routes - this applies the routes
+ * @param {Object} history - this applies the history
+ */
 render(
-  <Provider store={store}>
-    <Router children={routes} history={history} />
-  </Provider>,
+<Provider store={store}>
+<Router children={routes} history={history} />
+</Provider>,
   document.getElementById('app')
 );
+
+
+

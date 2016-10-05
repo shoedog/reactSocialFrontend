@@ -10,25 +10,25 @@
  We can also optionally listen in the reducers for auto-generated <TYPE>_REQUEST and <TYPE>_FAILURE
  if we care about mutating state along the way.
  */
-export default function promiseMiddleware() {
-  return next => action => {
+function promiseMiddleware() {
+  return next => (action) => {
     const { promise, type, ...rest } = action;
 
     if (!promise) return next(action);
 
     const SUCCESS = type;
-    const REQUEST = type + '_REQUEST';
-    const FAILURE = type + '_FAILURE';
+    const REQUEST = `${type}_REQUEST`;
+    const FAILURE = `${type}_FAILURE`;
 
     next({ ...rest, type: REQUEST });
 
     return promise
-      .then(res => {
+      .then((res) => {
         next({ ...rest, res, type: SUCCESS });
 
         return true;
       })
-      .catch(error => {
+      .catch((error) => {
         next({ ...rest, error, type: FAILURE });
 
         // Another benefit is being able to log all failures here
@@ -37,3 +37,5 @@ export default function promiseMiddleware() {
       });
   };
 }
+
+export default promiseMiddleware;

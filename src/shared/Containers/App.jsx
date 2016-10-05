@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Nav from 'containers/NavBar';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -55,3 +55,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 import { connect } from 'react-redux';
 
@@ -36,3 +36,4 @@ const styles = StyleSheet.create({
 });
 
 export default Nav;
+

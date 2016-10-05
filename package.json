@@ -35,6 +35,7 @@
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
+    "babel-plugin-rewire": "^1.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-require-ignore": "0.0.2",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -43,6 +44,11 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-1": "^6.13.0",
     "babel-register": "^6.14.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "enzyme": "^2.4.1",
+    "esdoc": "^0.4.8",
+    "esdoc-es7-plugin": "0.0.3",
     "eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-loader": "^1.5.0",
@@ -51,9 +57,13 @@
     "eslint-plugin-react": "^6.3.0",
     "express": "^4.14.0",
     "ip": "^1.1.3",
+    "jsdom": "^9.6.0",
     "material-ui": "^0.15.4",
+    "mocha": "^3.1.0",
+    "react-addons-test-utils": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.5",
     "react-tap-event-plugin": "^1.0.0",
+    "sinon": "^1.17.6",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.1",
     "webpack-dev-server": "^1.16.1",
@@ -80,9 +90,11 @@
     }
   },
   "scripts": {
-    "eslint": "eslint src tools",
+    "esdoc": "esdoc -c ./tools/esdoc.json && open ./docs/esdoc/index.html",
+    "eslint": "eslint -c .eslintrc src",
     "start": "cross-env NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./src/shared node ./src/server/",
     "dev": "npm run start & webpack-dev-server --progress --color",
-    "build": "NODE_ENV=production webpack --progress --color -p --config webpack.prod.config.js"
+    "build": "NODE_ENV=production webpack --progress --color -p --config webpack.prod.config.js",
+    "test": "mocha --require ./tools/testSetup.js --compilers js:babel-register \"src/**/test.js\""
   }
 }

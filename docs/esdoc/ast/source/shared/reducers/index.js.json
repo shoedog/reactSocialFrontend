@@ -1,0 +1,125 @@
+{
+  "type": "Program",
+  "start": 0,
+  "end": 268,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 7,
+      "column": 49
+    }
+  },
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExportNamedDeclaration",
+      "start": 219,
+      "end": 268,
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 49
+        }
+      },
+      "declaration": null,
+      "specifiers": [
+        {
+          "type": "ExportSpecifier",
+          "start": 228,
+          "end": 244,
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 9
+            },
+            "end": {
+              "line": 7,
+              "column": 25
+            }
+          },
+          "local": {
+            "type": "Identifier",
+            "start": 228,
+            "end": 235,
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 9
+              },
+              "end": {
+                "line": 7,
+                "column": 16
+              }
+            },
+            "name": "default",
+            "leadingComments": null
+          },
+          "exported": {
+            "type": "Identifier",
+            "start": 239,
+            "end": 244,
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 20
+              },
+              "end": {
+                "line": 7,
+                "column": 25
+              }
+            },
+            "name": "todos"
+          },
+          "leadingComments": null
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "start": 252,
+        "end": 267,
+        "loc": {
+          "start": {
+            "line": 7,
+            "column": 33
+          },
+          "end": {
+            "line": 7,
+            "column": 48
+          }
+        },
+        "value": "./TodoReducer",
+        "rawValue": "./TodoReducer",
+        "raw": "'./TodoReducer'"
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n ",
+          "start": 0,
+          "end": 217,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 5,
+              "column": 3
+            }
+          },
+          "range": [
+            0,
+            217
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "TodosHome",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TodosHome.jsx"
+}

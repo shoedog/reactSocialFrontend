@@ -1,0 +1,11 @@
+{
+  "source": "./src",
+  "destination": "./docs/esdoc",
+  "includes": ["\\.(js|jsx)$"],
+  "unexportIdentifier": true,
+  "undocumentIdentifier": true,
+  "builtinExternal": true,
+  "plugins": [
+    {"name": "esdoc-es7-plugin"}
+  ]
+}

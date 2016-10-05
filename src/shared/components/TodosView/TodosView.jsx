@@ -1,16 +1,16 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Immutable     from 'immutable';
 
 // Here we display each todo item in the store alongside edit and delete buttons
 // which are mapped to our pre-bound action creators.
 
-export default class TodosView extends React.Component {
+const propTypes = {
+  todos:      PropTypes.instanceOf(Immutable.List).isRequired,
+  editTodo:   PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
+};
 
-  static propTypes = {
-    todos:      PropTypes.instanceOf(Immutable.List).isRequired,
-    editTodo:   PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired
-  };
+class TodosView extends Component {
 
   handleDelete = (e) => {
     const id = Number(e.target.dataset.id);
@@ -56,3 +56,6 @@ export default class TodosView extends React.Component {
     );
   }
 }
+
+TodosView.propTypes = propTypes;
+export default TodosView;

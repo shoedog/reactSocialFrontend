@@ -18,6 +18,11 @@
     },
     "dev": {
       //"presets": ["react-hmre"]
+    },
+    "test": {
+      "plugins": [
+        //"babel-plugin-rewire"
+      ]
     }
   }
 }

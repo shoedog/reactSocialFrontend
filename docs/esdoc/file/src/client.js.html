@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/client.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/andrew310/cs419-frontend" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-history">history</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-initialState">initialState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reducer">reducer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-store">store</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">server</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PORT">PORT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-history">history</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rootReducer">rootReducer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Color">Color</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Type">Type</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blue">blue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sans">sans</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-serif">serif</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/Containers</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-App">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-styles">styles</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Nav">Nav</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-styles">styles</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/actions</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createTodo">createTodo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-deleteTodo">deleteTodo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-editTodo">editTodo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTodos">getTodos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-API_URL">API_URL</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosForm.jsx~TodosForm.html">TodosForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosHome.jsx~Home.html">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosView.jsx~TodosView.html">TodosView</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/lib</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fetchComponentData">fetchComponentData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-immutifyState">immutifyState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-promiseMiddleware">promiseMiddleware</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/reducers</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-todoReducer">todoReducer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-defaultState">defaultState</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/client.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React from &apos;react&apos;;
+import { render } from &apos;react-dom&apos;;
+import { Router, browserHistory, useRouterHistory } from &apos;react-router&apos;;
+import createBrowserHistory from &apos;history/createBrowserHistory&apos;;
+import routes from &apos;./shared/routes&apos;;
+
+// Redux imports
+import { createStore, applyMiddleware } from &apos;redux&apos;;
+import { Provider } from &apos;react-redux&apos;;
+import { fromJS } from &apos;immutable&apos;;
+import rootReducer from &apos;./shared/rootReducer.js&apos;;
+
+// Middleware for async actions
+import promiseMiddleware from &apos;./shared/lib/promiseMiddleware&apos;;
+import immutifyState from &apos;./shared/lib/immutifyState&apos;;
+
+//Styling
+import { StyleSheet } from &apos;aphrodite&apos;
+
+const history = browserHistory;
+
+/**
+ * We hydrate/initialize the store with the state passed from the server.
+ */
+const initialState = immutifyState(window.__INITIAL_STATE__);
+
+const reducer = rootReducer;
+
+/**
+ * Async Middleware applied here
+ */
+const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
+
+/**
+ * Apply Styles for client
+ */
+StyleSheet.rehydrate(window.renderedClassNames);
+
+/**
+ * Render
+ * @param {Object} store - this applies the store
+ * @param {Object} routes - this applies the routes
+ * @param {Object} history - this applies the history
+ */
+render(
+  &lt;Provider store={store}&gt;
+    &lt;Router children={routes} history={history} /&gt;
+  &lt;/Provider&gt;,
+  document.getElementById(&apos;app&apos;)
+);
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

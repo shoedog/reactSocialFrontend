@@ -1,0 +1,1613 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/server/index.js",
+    "memberof": null,
+    "longname": "src/server/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "require('babel-register');\nrequire('./server.jsx');\n"
+  },
+  {
+    "__docId__": 1,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/server/server.jsx",
+    "memberof": null,
+    "longname": "src/server/server.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import express from 'express';\nimport React from 'react';\n\n//Axios is a promise based HTTP client we use for async requests\nimport axios from 'axios';\n\n// Need to render to string on server and to send string to client\nimport { renderToString } from 'react-dom/server'\n\n// Routes and History using react-router\nimport { createMemoryHistory, RouterContext, match } from 'react-router';\n//import createHistory from 'history/createMemoryHistory';\nimport routes from '../shared/routes';\n\n// Redux Imports\n//\nimport { createStore, applyMiddleware } from 'redux';\nimport { Provider } from 'react-redux';\nimport rootReducer from '../shared/rootReducer.js';\n\n// Middleware for async actions + applyMiddleware import from 'redux'\nimport promiseMiddleware from 'lib/promiseMiddleware';\n\n// Handles State Rehydration\nimport fetchComponentData from 'lib/fetchComponentData';\n\n//Inline Styling\nimport { StyleSheetServer } from 'aphrodite'\n\nconst app = express();\nconst history = createMemoryHistory();\nconst PORT = process.env.PORT || 3000;\n\napp.use((req, res) => {\n  const reducer  = rootReducer;\n\n  // Async middleware applied same as in client except without initialState\n  const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);\n\n  /*\n   * From the react-router docs:\n   *\n   * This function is to be used for server-side rendering. It matches a set of routes to\n   * a location, without rendering, and calls a callback(err, redirect, props)\n   * when it's done.\n   *\n   * The function will create a `history` for you, passing additional `options` to create it.\n   * These options can include `basename` to control the base name for URLs, as well as the pair\n   * of `parseQueryString` and `stringifyQuery` to control query string parsing and serializing.\n   * You can also pass in an already instantiated `history` object, which can be constructured\n   * however you like.\n   *\n   * The three arguments to the callback function you pass to `match` are:\n   * - err:       A javascript Error object if an error occured, `undefined` otherwise.\n   * - redirect:  A `Location` object if the route is a redirect, `undefined` otherwise\n   * - props:     The props you should pass to the routing context if the route matched,\n   *              `undefined` otherwise.\n   * If all three parameters are `undefined`, this means that there was no route found matching the\n   * given location.\n   */\n  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {\n    if (err) {\n      console.error(err);\n      return res.status(500).end('Internal server error');\n    }\n    if (!renderProps) return res.status(404).end('Not found.');\n\n    /**\n     * We create a new instance of a Redux store on every request, and inject that through the component tree\n     * (available as <component>.context.redux, if you ever want to access it directly)\n     * by wrapping the root component in Provider.\n     */\n    function renderView() {\n      const InitialView = (\n        <Provider store={store}>\n          <RouterContext {...renderProps} />\n        </Provider>\n      );\n\n      // We’ll also want to pass an initial state to the client, so it can hydrate its stores.\n      const initialState = store.getState();\n\n      const componentHTML = StyleSheetServer.renderStatic(\n        () => renderToString(InitialView)\n      )\n      const HTML = `\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <meta charset=\"utf-8\">\n            <title>Isomorphic Redux Demo</title>\n            <style>\n                  html {\n                    box-sizing: border-box\n                  }\n                  *,\n                  *::before,\n                  *::after {\n                    box-sizing: border-box\n                  }\n                  html {\n                    font-size: 100%;\n                    -ms-overflow-style: scrollbar;\n                    -webkit-tap-highlight-color: rgba(0,0,0,0);\n                    height: 100%;\n                  }\n                  body {\n                    font-size: 1rem;\n                    background-color: #fff;\n                    color: #555;\n                    -webkit-font-smoothing: antialiased;\n                    -moz-osx-font-smoothing: grayscale;\n                    font-family: -apple-system,BlinkMacSystemFont,\"Helvetica Neue\",Helvetica,Arial,sans-serif;\n                    margin: 0;\n                  }\n                  h1,h2,h3,h4,h5,h6 {\n                    margin: 0;\n                    padding: 0;\n                  }\n                </style>\n                <style data-aphrodite>${componentHTML.css.content}</style>\n          </head>\n          <body>\n            <div id=\"app\">${componentHTML.html}</div>\n            <script>window.renderedClassNames = ${JSON.stringify(componentHTML.css.renderedClassNames)};</script>\n            <!-- This sends the state to the client -->\n            <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>\n            <script type=\"application/javascript\" src=\"/bundle.js\"></script>\n          </body>\n      </html>\n    `;\n      return HTML;\n    }\n\n    fetchComponentData(store.dispatch, renderProps.components, renderProps.params)\n      .then(renderView)\n      .then(html => res.end(html))\n      .catch(err => res.end(err.message));\n  });\n});\n\n\napp.listen(PORT, () => {\n  console.log(`Server listening on: ${PORT}`);\n});\n"
+  },
+  {
+    "__docId__": 2,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "app",
+    "memberof": "src/server/server.jsx",
+    "longname": "src/server/server.jsx~app",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/server/server.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "history",
+    "memberof": "src/server/server.jsx",
+    "longname": "src/server/server.jsx~history",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/server/server.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "PORT",
+    "memberof": "src/server/server.jsx",
+    "longname": "src/server/server.jsx~PORT",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/server/server.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/Containers/App.jsx",
+    "memberof": null,
+    "longname": "src/shared/Containers/App.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { PropTypes } from 'react';\nimport Nav from 'containers/NavBar';\nimport { StyleSheet, css } from 'aphrodite';\n\n/*\n * React-router's <Router> component renders <Route>'s\n * and replaces `this.props.children` with the proper React Component.\n *\n * Please refer to `routes.jsx` for the route config.\n *\n * A better explanation of react-router is available here:\n * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md\n */\nconst App = ({children}) => (\n    <div className={css(styles.root)}>\n      <h1 className={css(styles.title)}>Another Social Media Site</h1>\n      <Nav className={css(styles.nav)}/>\n      {children}\n      <footer className={css(styles.footer)}>\n         <p className={css(styles.footerLink)} target='_blank'>Copyright © 2016 Team Moonwalk</p>\n      </footer>\n    </div>\n);\n\nconst styles = StyleSheet.create({\n  root: {\n    maxWidth: \"100%\",\n    backgroundColor: \"#c0c0c0\",\n    color: '#000',\n    margin: '0',\n    padding: '0'\n  },\n  title: {\n    color: '#000',\n    backgroundColor: \"#d8d8d8\",\n    textAlign: \"center\",\n    maxWidth: \"100%\",\n    fontWeight: 'bold',\n    fontSize: 56\n  },\n  footer: {\n    margin: '4rem auto',\n    textAlign: 'center',\n    color: '#b7b7b7'\n  },\n  footerLink: {\n    display: 'inline-block',\n    color: '#000',\n    textDecoration: 'none'\n  },\n  nav: {\n    width: '100%',\n    align: 'center'\n  }\n});\n\nexport default App;"
+  },
+  {
+    "__docId__": 6,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "styles",
+    "memberof": "src/shared/Containers/App.jsx",
+    "longname": "src/shared/Containers/App.jsx~styles",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/Containers/App.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "App",
+    "memberof": "src/shared/Containers/App.jsx",
+    "longname": "src/shared/Containers/App.jsx~App",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/Containers/App.jsx",
+    "importStyle": "App",
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/Containers/NavBar.jsx",
+    "memberof": null,
+    "longname": "src/shared/Containers/NavBar.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { PropTypes } from 'react';\nimport { IndexLink, Link } from 'react-router';\nimport { StyleSheet, css } from 'aphrodite';\n\nimport { connect } from 'react-redux';\n\n\nconst Nav = () => (\n  <div>\n    <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>\n      Home\n    </IndexLink>\n    <Link to='/posts' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed:<br/> Not Implemented\n    </Link>\n    <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>\n  </div>\n);\n\n\nconst styles = StyleSheet.create({\n  link: {\n    maxWidth: '25%',\n    color: '#\t0000FF',\n    margin: '1.5rem 1rem 1.5rem 0',\n    display: 'inline-block',\n    textDecoration: 'none',\n    fontWeight: 'bold',\n    transition: '.2s opacity ease',\n    ':hover': {\n      opacity: 0.4\n    }\n  },\n  activeLink: {\n    color: '#000080'\n  }\n});\n\nexport default Nav;"
+  },
+  {
+    "__docId__": 9,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "styles",
+    "memberof": "src/shared/Containers/NavBar.jsx",
+    "longname": "src/shared/Containers/NavBar.jsx~styles",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/Containers/NavBar.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Nav",
+    "memberof": "src/shared/Containers/NavBar.jsx",
+    "longname": "src/shared/Containers/NavBar.jsx~Nav",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/Containers/NavBar.jsx",
+    "importStyle": "Nav",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 11,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/actions/TodoActions.js",
+    "memberof": null,
+    "longname": "src/shared/actions/TodoActions.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/*\n Redux action creators are just functions that return consistently formatted objects.\n No magic here, we just need a reducer to handle them.\n */\nimport request from 'axios';\nconst API_URL = 'https://webtask.it.auth0.com/api/run/wt-milomord-gmail_com-0/redux-tutorial-backend?webtask_no_cache=1';\n\n\nexport function getTodos() {\n  return {\n    type: 'GET_TODOS',\n    promise: request.get(API_URL)\n  }\n}\n\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    promise: request.post(API_URL, { time: Date.now(), text })\n  }\n}\n/*\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    text,\n    date: Date.now()\n  }\n}\n*/\nexport function editTodo(id, text) {\n  return {\n    type: 'EDIT_TODO',\n    id,\n    text,\n    date: Date.now()\n  };\n}\n\nexport function deleteTodo(id) {\n  return {\n    type: 'DELETE_TODO',\n    id\n  };\n}"
+  },
+  {
+    "__docId__": 12,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "API_URL",
+    "memberof": "src/shared/actions/TodoActions.js",
+    "longname": "src/shared/actions/TodoActions.js~API_URL",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/actions/TodoActions.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "getTodos",
+    "memberof": "src/shared/actions/TodoActions.js",
+    "longname": "src/shared/actions/TodoActions.js~getTodos",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/actions/TodoActions.js",
+    "importStyle": "{getTodos}",
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 14,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "createTodo",
+    "memberof": "src/shared/actions/TodoActions.js",
+    "longname": "src/shared/actions/TodoActions.js~createTodo",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/actions/TodoActions.js",
+    "importStyle": "{createTodo}",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "params": [
+      {
+        "name": "text",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 15,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "editTodo",
+    "memberof": "src/shared/actions/TodoActions.js",
+    "longname": "src/shared/actions/TodoActions.js~editTodo",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/actions/TodoActions.js",
+    "importStyle": "{editTodo}",
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "text",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "deleteTodo",
+    "memberof": "src/shared/actions/TodoActions.js",
+    "longname": "src/shared/actions/TodoActions.js~deleteTodo",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/actions/TodoActions.js",
+    "importStyle": "{deleteTodo}",
+    "description": null,
+    "lineNumber": 40,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/components/TodosForm.jsx",
+    "memberof": null,
+    "longname": "src/shared/components/TodosForm.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { PropTypes } from 'react';\n\n// This is also a ‘dumb’ component, and just lets the user add a todo to the store.\n\nexport default class TodosForm extends React.Component {\n\n  static propTypes = {\n    createTodo: PropTypes.func.isRequired\n  };\n\n  handleSubmit = () => {\n    let node = this.refs['todo-input'];\n\n    this.props.createTodo(node.value);\n\n    node.value = '';\n  }\n\n  render() {\n    return (\n      <div id=\"todo-form\">\n        <input type=\"text\" placeholder=\"type todo\" ref=\"todo-input\" />\n        <input type=\"submit\" value=\"OK!\" onClick={this.handleSubmit} />\n      </div>\n    );\n  }\n}"
+  },
+  {
+    "__docId__": 18,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "TodosForm",
+    "memberof": "src/shared/components/TodosForm.jsx",
+    "longname": "src/shared/components/TodosForm.jsx~TodosForm",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/components/TodosForm.jsx",
+    "importStyle": "TodosForm",
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "interface": false,
+    "extends": [
+      "react~React.Component"
+    ]
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "render",
+    "memberof": "src/shared/components/TodosForm.jsx~TodosForm",
+    "longname": "src/shared/components/TodosForm.jsx~TodosForm#render",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/components/TodosHome.jsx",
+    "memberof": null,
+    "longname": "src/shared/components/TodosHome.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { Component, PropTypes } from 'react';\nimport TodosView              from 'components/TodosView';\nimport TodosForm              from 'components/TodosForm';\nimport { bindActionCreators } from 'redux';\nimport * as TodoActions       from 'actions/TodoActions';\nimport { connect }            from 'react-redux';\n\n/*\n If you’re not familiar with decorators (the @connector section here),\n then it’s easiest to think of them as a replacement for what you would used to use a ‘mixin’ for.\n You may have actually seen them in other languages, like Python, for instance.\n If not, in Javascript they are just functions that modify another given function (here a ‘class’) in some way.\n Notice how when defined like this (‘class leading’) they are attached to the following class definition,\n hence the lack of ;.\n Redux’s @connect decorator wraps our class in another component ( <Connector>),\n giving it access to the requested parts of state as props, hence why we can use todos as we do.\n It also passes in Redux’s dispatch function which can be used to dispatch actions like so: dispatch(actionCreator());\n */\n\nclass Home extends Component {\n  static propTypes = {\n    todos:    PropTypes.any.isRequired,\n    dispatch: PropTypes.func.isRequired\n  };\n\n  static needs = [\n    TodoActions.getTodos\n  ];\n\n  render() {\n    const { todos, dispatch } = this.props;\n\n    /*\n     Finally we use redux’s bindActionCreators method to pass in… ermm… bound action creators.\n     What this means is that, in the child components, we can just call the action creators directly,\n     without wrapping them in a dispatch() call as above.\n     */\n    return (\n      <div id=\"todo-list\">\n\n        <TodosView todos={todos}\n           {...bindActionCreators(TodoActions, dispatch)} />\n\n        <TodosForm\n          {...bindActionCreators(TodoActions, dispatch)} />\n      </div>\n    );\n  }\n}\n\nexport default connect(state => ({ todos: state.todos }))(Home)"
+  },
+  {
+    "__docId__": 21,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Home",
+    "memberof": "src/shared/components/TodosHome.jsx",
+    "longname": "src/shared/components/TodosHome.jsx~Home",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/components/TodosHome.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "interface": false,
+    "extends": [
+      "react~Component"
+    ]
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "render",
+    "memberof": "src/shared/components/TodosHome.jsx~Home",
+    "longname": "src/shared/components/TodosHome.jsx~Home#render",
+    "access": null,
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/components/TodosView.jsx",
+    "memberof": null,
+    "longname": "src/shared/components/TodosView.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { PropTypes } from 'react';\nimport Immutable     from 'immutable';\n\n// Here we display each todo item in the store alongside edit and delete buttons\n// which are mapped to our pre-bound action creators.\n\nexport default class TodosView extends React.Component {\n\n  static propTypes = {\n    todos:      PropTypes.instanceOf(Immutable.List).isRequired,\n    editTodo:   PropTypes.func.isRequired,\n    deleteTodo: PropTypes.func.isRequired\n  };\n\n  handleDelete = (e) => {\n    const id = Number(e.target.dataset.id);\n\n    // Equivalent to `dispatch(deleteTodo())`\n    this.props.deleteTodo(id);\n  }\n\n  handleEdit = (e) => {\n    const id  = Number(e.target.dataset.id);\n    const currentVal = this.props.todos.get(id);\n\n    // For cutting edge UX\n    let text = window.prompt('', currentVal);\n\n    this.props.editTodo(id, text);\n  }\n\n  render() {\n    const btnStyle = {\n      'margin': '1em 0 1em 1em'\n    };\n\n    return (\n      <div id=\"todo-list\">\n        {\n          this.props.todos.map( (todo, index) => {\n            return (\n              <div style={btnStyle} key={index}>\n                <span>{todo}</span>\n\n                <button style={btnStyle} data-id={index} onClick={this.handleDelete}>\n                  X\n                </button>\n                <button style={btnStyle} data-id={index} onClick={this.handleEdit}>\n                  Edit\n                </button>\n              </div>\n            );\n          })\n        }\n      </div>\n    );\n  }\n}"
+  },
+  {
+    "__docId__": 24,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "TodosView",
+    "memberof": "src/shared/components/TodosView.jsx",
+    "longname": "src/shared/components/TodosView.jsx~TodosView",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/components/TodosView.jsx",
+    "importStyle": "TodosView",
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "interface": false,
+    "extends": [
+      "react~React.Component"
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "render",
+    "memberof": "src/shared/components/TodosView.jsx~TodosView",
+    "longname": "src/shared/components/TodosView.jsx~TodosView#render",
+    "access": null,
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 26,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/lib/fetchComponentData.js",
+    "memberof": null,
+    "longname": "src/shared/lib/fetchComponentData.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/*\n function which promises to gather all the data and dispatch it\n for state rehydration with Async\n */\n\nexport default function fetchComponentData(dispatch, components, params) {\n  const needs = components.reduce( (prev, current) => {\n    return (current.needs || [])\n      .concat((current.WrappedComponent ? current.WrappedComponent.needs : []) || [])\n      .concat(prev);\n  }, []);\n\n  const promises = needs.map(need => dispatch(need(params)));\n  return Promise.all(promises);\n}"
+  },
+  {
+    "__docId__": 27,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "fetchComponentData",
+    "memberof": "src/shared/lib/fetchComponentData.js",
+    "longname": "src/shared/lib/fetchComponentData.js~fetchComponentData",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/lib/fetchComponentData.js",
+    "importStyle": "fetchComponentData",
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "params": [
+      {
+        "name": "dispatch",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "components",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "params",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 28,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/lib/immutifyState.js",
+    "memberof": null,
+    "longname": "src/shared/lib/immutifyState.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { fromJS } from 'immutable';\nimport assign     from 'object-assign';\n\nObject.assign = Object.assign || assign;\n\n// Abstraction to handle pre-composedstate received from server\n// (ie, leave top level keys untouched)\nexport default function immutifyState(obj) {\n  let objMut = Object.assign({}, obj);\n\n  Object\n    .keys(objMut)\n    .forEach(key => {\n      objMut[key] = fromJS(objMut[key]);\n    });\n\n  return objMut;\n}"
+  },
+  {
+    "__docId__": 29,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "immutifyState",
+    "memberof": "src/shared/lib/immutifyState.js",
+    "longname": "src/shared/lib/immutifyState.js~immutifyState",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/lib/immutifyState.js",
+    "importStyle": "immutifyState",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 30,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/lib/promiseMiddleware.js",
+    "memberof": null,
+    "longname": "src/shared/lib/promiseMiddleware.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/*\n  Helper for asynchronous actions( dispatcher middleware to transform actions ):\n    Keeps actions simple\n    Keeps action creators synchronous\n    uses promises\n */\n\n/*\n we just define a promise key on our actions and have them automatically resolved and rejected.\n We can also optionally listen in the reducers for auto-generated <TYPE>_REQUEST and <TYPE>_FAILURE\n if we care about mutating state along the way.\n */\nfunction promiseMiddleware() {\n  return next => action => {\n    const { promise, type, ...rest } = action;\n\n    if (!promise) return next(action);\n\n    const SUCCESS = type;\n    const REQUEST = type + '_REQUEST';\n    const FAILURE = type + '_FAILURE';\n\n    next({ ...rest, type: REQUEST });\n\n    return promise\n      .then(res => {\n        next({ ...rest, res, type: SUCCESS });\n\n        return true;\n      })\n      .catch(error => {\n        next({ ...rest, error, type: FAILURE });\n\n        // Another benefit is being able to log all failures here\n        console.log(error);\n        return false;\n      });\n  };\n}\n\nexport default promiseMiddleware;"
+  },
+  {
+    "__docId__": 31,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "promiseMiddleware",
+    "memberof": "src/shared/lib/promiseMiddleware.js",
+    "longname": "src/shared/lib/promiseMiddleware.js~promiseMiddleware",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/lib/promiseMiddleware.js",
+    "importStyle": "promiseMiddleware",
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 32,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/reducers/TodoReducer.js",
+    "memberof": null,
+    "longname": "src/shared/reducers/TodoReducer.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Immutable from 'immutable';\n\n/*\n Here we use an Immutable List object to store our state (though a more complex app would probably have a more elaborate structure),\n and return a newly transformed version depending on the action.\n\n Redux isn’t very opinionated, and only has two expectations of its redeucers:\n 1. The reducer has the signature (state, action) => newState.\n 2. The reducer does not mutate the state it is given, but returns a new one\n */\n\nconst defaultState = new Immutable.List();\n\nexport default function todoReducer(state = defaultState, action) {\n  switch(action.type) {\n    case 'GET_TODOS':\n      return new Immutable.List(action.res.data);\n\n    case 'CREATE_TODO':\n      return state.concat(action.res.data.text);\n\n    case 'EDIT_TODO':\n      return state.set(action.id, action.text);\n\n    case 'DELETE_TODO':\n      return state.delete(action.id);\n\n    default:\n      return state;\n  }\n}"
+  },
+  {
+    "__docId__": 33,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultState",
+    "memberof": "src/shared/reducers/TodoReducer.js",
+    "longname": "src/shared/reducers/TodoReducer.js~defaultState",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/reducers/TodoReducer.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 34,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "todoReducer",
+    "memberof": "src/shared/reducers/TodoReducer.js",
+    "longname": "src/shared/reducers/TodoReducer.js~todoReducer",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/reducers/TodoReducer.js",
+    "importStyle": "todoReducer",
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "params": [
+      {
+        "name": "state",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": "defaultState",
+        "defaultValue": "defaultState"
+      },
+      {
+        "name": "action",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 35,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/reducers/index.js",
+    "memberof": null,
+    "longname": "src/shared/reducers/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n */\n\nexport { default as todos } from './TodoReducer';"
+  },
+  {
+    "__docId__": 36,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/rootReducer.js",
+    "memberof": null,
+    "longname": "src/shared/rootReducer.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n */\nimport { combineReducers } from 'redux';\nimport * as reducers from './reducers';\n\nconst rootReducer = combineReducers(reducers);\n\nexport default rootReducer;"
+  },
+  {
+    "__docId__": 37,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "rootReducer",
+    "memberof": "src/shared/rootReducer.js",
+    "longname": "src/shared/rootReducer.js~rootReducer",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/rootReducer.js",
+    "importStyle": "rootReducer",
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 38,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/routes.jsx",
+    "memberof": null,
+    "longname": "src/shared/routes.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React from 'react';\nimport { Route, IndexRoute } from 'react-router';\nimport App from 'containers/App';\nimport Home from 'components/TodosHome.jsx'\n\nexport default (\n  <Route name=\"app\" component={App} path=\"/\">\n    <IndexRoute component={Home} />\n  </Route>\n);"
+  },
+  {
+    "__docId__": 39,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/style.js",
+    "memberof": null,
+    "longname": "src/shared/style.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "// Define global style vars here\n\nconst sans = '\"Helvetica Neue\", sans-serif';\nconst serif = 'Georgia, serif';\nconst blue = '#0070ff';\n\nexport const Type = {\n  sans,\n  serif\n};\n\nexport const Color = { blue };"
+  },
+  {
+    "__docId__": 40,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sans",
+    "memberof": "src/shared/style.js",
+    "longname": "src/shared/style.js~sans",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/style.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "serif",
+    "memberof": "src/shared/style.js",
+    "longname": "src/shared/style.js~serif",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/style.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 42,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "blue",
+    "memberof": "src/shared/style.js",
+    "longname": "src/shared/style.js~blue",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/style.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 43,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Type",
+    "memberof": "src/shared/style.js",
+    "longname": "src/shared/style.js~Type",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/style.js",
+    "importStyle": "{Type}",
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 44,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Color",
+    "memberof": "src/shared/style.js",
+    "longname": "src/shared/style.js~Color",
+    "access": null,
+    "export": true,
+    "importPath": "cs419-frontend/src/shared/style.js",
+    "importStyle": "{Color}",
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  }
+]

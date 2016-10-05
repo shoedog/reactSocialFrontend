@@ -1,0 +1,114 @@
+{
+  "coverage": "0%",
+  "expectCount": 29,
+  "actualCount": 0,
+  "files": {
+    "src/shared/actions/TodoActions.js": {
+      "expectCount": 5,
+      "actualCount": 0,
+      "undocumentLines": [
+        6,
+        16,
+        40,
+        31,
+        9
+      ]
+    },
+    "src/shared/Containers/App.jsx": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        14,
+        25
+      ]
+    },
+    "src/shared/style.js": {
+      "expectCount": 5,
+      "actualCount": 0,
+      "undocumentLines": [
+        12,
+        7,
+        5,
+        3,
+        4
+      ]
+    },
+    "src/shared/components/TodosHome.jsx": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        20,
+        30
+      ]
+    },
+    "src/shared/Containers/NavBar.jsx": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        8,
+        20
+      ]
+    },
+    "src/server/server.jsx": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        32,
+        30,
+        31
+      ]
+    },
+    "src/shared/components/TodosForm.jsx": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        5,
+        19
+      ]
+    },
+    "src/shared/components/TodosView.jsx": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        7,
+        32
+      ]
+    },
+    "src/shared/reducers/TodoReducer.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        12,
+        14
+      ]
+    },
+    "src/shared/lib/fetchComponentData.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        6
+      ]
+    },
+    "src/shared/lib/immutifyState.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/shared/lib/promiseMiddleware.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        13
+      ]
+    },
+    "src/shared/rootReducer.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        10
+      ]
+    }
+  }
+}
