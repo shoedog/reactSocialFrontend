@@ -3,6 +3,11 @@ cs419-frontend
 
 Welcome.
 
+Windows OS Environment
+---
+- Setup:  ```npm install```
+- Build: ```npm run win-build```
+- Run:  ```npm run win-dev```
 
 Usage
 ---
