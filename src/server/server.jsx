@@ -117,6 +117,13 @@ app.use((req, res) => {
                     margin: 0;
                     padding: 0;
                   }
+                  .img {
+                    width:500px;
+                    height:500px;
+                    border-radius: 50%;
+                    display: block;
+                    margin: auto;
+                  }
                 </style>
                 <style data-aphrodite>${componentHTML.css.content}</style>
           </head>
