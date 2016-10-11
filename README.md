@@ -9,6 +9,16 @@ Windows OS Environment
 - Build: ```npm run win-build```
 - Run:  ```npm run win-dev```
 
+Webpack-dev-server (localhost:8080) & node server (localhost:3000)
+
+Mac OS Environment
+---
+- Setup:  ```npm install```
+- Build: ```npm run build```
+- Run:  ```npm run dev```
+
+Webpack-dev-server (localhost:8080) & node server (localhost:3000)
+
 Usage
 ---
 
