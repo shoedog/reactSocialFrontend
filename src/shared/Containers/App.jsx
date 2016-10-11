@@ -13,7 +13,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
  */
 const App = ({children}) => (
     <div className={css(styles.root)}>
-      <h1 className={css(styles.title)}>Another Social Media Site</h1>
+      <h1 className={css(styles.title)}>Moonwalk</h1>
       <Nav className={css(styles.nav)}/>
       {children}
       <footer className={css(styles.footer)}>

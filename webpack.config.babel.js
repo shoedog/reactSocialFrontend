@@ -8,7 +8,11 @@ module.exports = {
     './src/client'
   ],
   output: {
+<<<<<<< HEAD
     path: path.join(__dirname, 'public'),
+=======
+    path: path.join(__dirname, 'src/build'),
+>>>>>>> d028a4cbbc3fbcc739e12219c5d351505b422309
     filename: 'bundle.js'
   },
   resolve: {

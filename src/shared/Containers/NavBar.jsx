@@ -6,12 +6,19 @@ import { connect } from 'react-redux';
 
 
 const Nav = () => (
-  <div>
+  <div className={css(styles.navbar)}>
     <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
       Home
     </IndexLink>
-    <Link to='/posts' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed:<br/> Not Implemented
-    </Link>
+
+    <IndexLink to='/home' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
+      Login Page
+    </IndexLink>
+
+    <IndexLink to='/todo' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
+      Todo List
+    </IndexLink>
+
     <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>
   </div>
 );
@@ -20,18 +27,25 @@ const Nav = () => (
 const styles = StyleSheet.create({
   link: {
     maxWidth: '25%',
-    color: '#	0000FF',
-    margin: '1.5rem 1rem 1.5rem 0',
+    color: '#FFFFFF',
+    margin: "0 10px 0 10px",
+    padding: "20px",
     display: 'inline-block',
     textDecoration: 'none',
     fontWeight: 'bold',
+    border: "solid black round",
     transition: '.2s opacity ease',
     ':hover': {
       opacity: 0.4
     }
   },
   activeLink: {
-    color: '#000080'
+    backgroundColor: '#FFFFFF',
+    color: '#585555'
+  },
+  navbar: {
+    backgroundColor: '#585555',
+    paddingLeft: "20px"
   }
 });
 
