@@ -32,7 +32,11 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">server</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PORT">PORT</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-history">history</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-initialState">initialState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reducer">reducer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-store">store</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">server</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PORT">PORT</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-app">app</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-history">history</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rootReducer">rootReducer</a></span></span></li>
@@ -50,9 +54,13 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-editTodo">editTodo</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTodos">getTodos</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-API_URL">API_URL</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosForm.jsx~TodosForm.html">TodosForm</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosHome.jsx~Home.html">Home</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosView.jsx~TodosView.html">TodosView</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/components/TodosForm</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosForm/TodosForm.jsx~TodosForm.html">TodosForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wrapper">wrapper</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/components/TodosHome</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosHome/TodosHome.jsx~Home.html">Home</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/components/TodosView</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/shared/components/TodosView/TodosView.jsx~TodosView.html">TodosView</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-propTypes">propTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-props">props</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wrapper">wrapper</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">shared/lib</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fetchComponentData">fetchComponentData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-immutifyState">immutifyState</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-promiseMiddleware">promiseMiddleware</a></span></span></li>
@@ -65,7 +73,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/shared/Containers/App.jsx</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React, { PropTypes } from &apos;react&apos;;
 import Nav from &apos;containers/NavBar&apos;;
-import { StyleSheet, css } from &apos;aphrodite&apos;;
+import { StyleSheet, css } from &apos;aphrodite/no-important&apos;;
 
 /*
  * React-router&apos;s &lt;Router&gt; component renders &lt;Route&gt;&apos;s
@@ -119,7 +127,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;</code></pre>
+export default App;
+
+</code></pre>
 
 </div>
 

@@ -18,9 +18,9 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "cs419-frontend/src/shared/components/todoshome.jsx~home",
-    "class/src/shared/components/TodosHome.jsx~Home.html",
-    "<span>Home</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosHome.jsx</span>",
+    "cs419-frontend/src/shared/components/todoshome/todoshome.jsx~home",
+    "class/src/shared/components/TodosHome/TodosHome.jsx~Home.html",
+    "<span>Home</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosHome/TodosHome.jsx</span>",
     "class"
   ],
   [
@@ -36,15 +36,15 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "cs419-frontend/src/shared/components/todosform.jsx~todosform",
-    "class/src/shared/components/TodosForm.jsx~TodosForm.html",
-    "<span>TodosForm</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosForm.jsx</span>",
+    "cs419-frontend/src/shared/components/todosform/todosform.jsx~todosform",
+    "class/src/shared/components/TodosForm/TodosForm.jsx~TodosForm.html",
+    "<span>TodosForm</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosForm/TodosForm.jsx</span>",
     "class"
   ],
   [
-    "cs419-frontend/src/shared/components/todosview.jsx~todosview",
-    "class/src/shared/components/TodosView.jsx~TodosView.html",
-    "<span>TodosView</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosView.jsx</span>",
+    "cs419-frontend/src/shared/components/todosview/todosview.jsx~todosview",
+    "class/src/shared/components/TodosView/TodosView.jsx~TodosView.html",
+    "<span>TodosView</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosView/TodosView.jsx</span>",
     "class"
   ],
   [
@@ -102,6 +102,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "cs419-frontend/src/client.js~history",
+    "variable/index.html#static-variable-history",
+    "<span>history</span> <span class=\"search-result-import-path\">cs419-frontend/src/client.js</span>",
+    "variable"
+  ],
+  [
     "cs419-frontend/src/server/server.jsx~history",
     "variable/index.html#static-variable-history",
     "<span>history</span> <span class=\"search-result-import-path\">cs419-frontend/src/server/server.jsx</span>",
@@ -114,10 +120,34 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "cs419-frontend/src/client.js~initialstate",
+    "variable/index.html#static-variable-initialState",
+    "<span>initialState</span> <span class=\"search-result-import-path\">cs419-frontend/src/client.js</span>",
+    "variable"
+  ],
+  [
     "cs419-frontend/src/shared/lib/promisemiddleware.js~promisemiddleware",
     "function/index.html#static-function-promiseMiddleware",
     "<span>promiseMiddleware</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/lib/promiseMiddleware.js</span>",
     "function"
+  ],
+  [
+    "cs419-frontend/src/shared/components/todosview/todosview.jsx~proptypes",
+    "variable/index.html#static-variable-propTypes",
+    "<span>propTypes</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosView/TodosView.jsx</span>",
+    "variable"
+  ],
+  [
+    "cs419-frontend/src/shared/components/todosview/test.js~props",
+    "variable/index.html#static-variable-props",
+    "<span>props</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosView/test.js</span>",
+    "variable"
+  ],
+  [
+    "cs419-frontend/src/client.js~reducer",
+    "variable/index.html#static-variable-reducer",
+    "<span>reducer</span> <span class=\"search-result-import-path\">cs419-frontend/src/client.js</span>",
+    "variable"
   ],
   [
     "cs419-frontend/src/shared/rootreducer.js~rootreducer",
@@ -138,6 +168,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "cs419-frontend/src/client.js~store",
+    "variable/index.html#static-variable-store",
+    "<span>store</span> <span class=\"search-result-import-path\">cs419-frontend/src/client.js</span>",
+    "variable"
+  ],
+  [
     "cs419-frontend/src/shared/containers/app.jsx~styles",
     "variable/index.html#static-variable-styles",
     "<span>styles</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/Containers/App.jsx</span>",
@@ -154,6 +190,18 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-todoReducer",
     "<span>todoReducer</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/reducers/TodoReducer.js</span>",
     "function"
+  ],
+  [
+    "cs419-frontend/src/shared/components/todosform/test.js~wrapper",
+    "variable/index.html#static-variable-wrapper",
+    "<span>wrapper</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosForm/test.js</span>",
+    "variable"
+  ],
+  [
+    "cs419-frontend/src/shared/components/todosview/test.js~wrapper",
+    "variable/index.html#static-variable-wrapper",
+    "<span>wrapper</span> <span class=\"search-result-import-path\">cs419-frontend/src/shared/components/TodosView/test.js</span>",
+    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -486,6 +534,12 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/client.js",
+    "file/src/client.js.html",
+    "src/client.js",
+    "file"
+  ],
+  [
     "src/server/index.js",
     "file/src/server/index.js.html",
     "src/server/index.js",
@@ -516,40 +570,52 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/shared/components/todosform.jsx",
-    "file/src/shared/components/TodosForm.jsx.html",
-    "src/shared/components/TodosForm.jsx",
+    "src/shared/components/todosform/todosform.jsx",
+    "file/src/shared/components/TodosForm/TodosForm.jsx.html",
+    "src/shared/components/TodosForm/TodosForm.jsx",
     "file"
   ],
   [
-    "src/shared/components/todosform.jsx~todosform#render",
-    "class/src/shared/components/TodosForm.jsx~TodosForm.html#instance-method-render",
-    "src/shared/components/TodosForm.jsx~TodosForm#render",
+    "src/shared/components/todosform/todosform.jsx~todosform#render",
+    "class/src/shared/components/TodosForm/TodosForm.jsx~TodosForm.html#instance-method-render",
+    "src/shared/components/TodosForm/TodosForm.jsx~TodosForm#render",
     "method"
   ],
   [
-    "src/shared/components/todoshome.jsx",
-    "file/src/shared/components/TodosHome.jsx.html",
-    "src/shared/components/TodosHome.jsx",
+    "src/shared/components/todosform/test.js",
+    "file/src/shared/components/TodosForm/test.js.html",
+    "src/shared/components/TodosForm/test.js",
     "file"
   ],
   [
-    "src/shared/components/todoshome.jsx~home#render",
-    "class/src/shared/components/TodosHome.jsx~Home.html#instance-method-render",
-    "src/shared/components/TodosHome.jsx~Home#render",
-    "method"
-  ],
-  [
-    "src/shared/components/todosview.jsx",
-    "file/src/shared/components/TodosView.jsx.html",
-    "src/shared/components/TodosView.jsx",
+    "src/shared/components/todoshome/todoshome.jsx",
+    "file/src/shared/components/TodosHome/TodosHome.jsx.html",
+    "src/shared/components/TodosHome/TodosHome.jsx",
     "file"
   ],
   [
-    "src/shared/components/todosview.jsx~todosview#render",
-    "class/src/shared/components/TodosView.jsx~TodosView.html#instance-method-render",
-    "src/shared/components/TodosView.jsx~TodosView#render",
+    "src/shared/components/todoshome/todoshome.jsx~home#render",
+    "class/src/shared/components/TodosHome/TodosHome.jsx~Home.html#instance-method-render",
+    "src/shared/components/TodosHome/TodosHome.jsx~Home#render",
     "method"
+  ],
+  [
+    "src/shared/components/todosview/todosview.jsx",
+    "file/src/shared/components/TodosView/TodosView.jsx.html",
+    "src/shared/components/TodosView/TodosView.jsx",
+    "file"
+  ],
+  [
+    "src/shared/components/todosview/todosview.jsx~todosview#render",
+    "class/src/shared/components/TodosView/TodosView.jsx~TodosView.html#instance-method-render",
+    "src/shared/components/TodosView/TodosView.jsx~TodosView#render",
+    "method"
+  ],
+  [
+    "src/shared/components/todosview/test.js",
+    "file/src/shared/components/TodosView/test.js.html",
+    "src/shared/components/TodosView/test.js",
+    "file"
   ],
   [
     "src/shared/lib/fetchcomponentdata.js",

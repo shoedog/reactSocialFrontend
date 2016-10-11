@@ -4,16 +4,111 @@
     "kind": "file",
     "static": true,
     "variation": null,
+    "name": "src/client.js",
+    "memberof": null,
+    "longname": "src/client.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React from 'react';\nimport { render } from 'react-dom';\nimport { Router, browserHistory, useRouterHistory } from 'react-router';\nimport createBrowserHistory from 'history/createBrowserHistory';\nimport routes from './shared/routes';\n\n// Redux imports\nimport { createStore, applyMiddleware } from 'redux';\nimport { Provider } from 'react-redux';\nimport { fromJS } from 'immutable';\nimport rootReducer from './shared/rootReducer.js';\n\n// Middleware for async actions\nimport promiseMiddleware from './shared/lib/promiseMiddleware';\nimport immutifyState from './shared/lib/immutifyState';\n\n//Styling\nimport { StyleSheet } from 'aphrodite/no-important'\n\nconst history = browserHistory;\n\n/**\n * We hydrate/initialize the store with the state passed from the server.\n */\nconst initialState = immutifyState(window.__INITIAL_STATE__);\n\nconst reducer = rootReducer;\n\n/**\n * Async Middleware applied here\n */\nconst store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);\n\n/**\n * Apply Styles for client\n */\nStyleSheet.rehydrate(window.renderedClassNames);\n\n/**\n * Render\n * @param {Object} store - this applies the store\n * @param {Object} routes - this applies the routes\n * @param {Object} history - this applies the history\n */\nrender(\n<Provider store={store}>\n<Router children={routes} history={history} />\n</Provider>,\n  document.getElementById('app')\n);\n\n\n\n"
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "history",
+    "memberof": "src/client.js",
+    "longname": "src/client.js~history",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/client.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "initialState",
+    "memberof": "src/client.js",
+    "longname": "src/client.js~initialState",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/client.js",
+    "importStyle": null,
+    "description": "We hydrate/initialize the store with the state passed from the server.",
+    "lineNumber": 25,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "reducer",
+    "memberof": "src/client.js",
+    "longname": "src/client.js~reducer",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/client.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "store",
+    "memberof": "src/client.js",
+    "longname": "src/client.js~store",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/client.js",
+    "importStyle": null,
+    "description": "Async Middleware applied here",
+    "lineNumber": 32,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "static": true,
+    "variation": null,
     "name": "src/server/index.js",
     "memberof": null,
     "longname": "src/server/index.js",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "require('babel-register');\nrequire('./server.jsx');\n"
+    "content": "require('babel-register');\nrequire('./server.jsx');\n\n"
   },
   {
-    "__docId__": 1,
+    "__docId__": 6,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -23,10 +118,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import express from 'express';\nimport React from 'react';\n\n//Axios is a promise based HTTP client we use for async requests\nimport axios from 'axios';\n\n// Need to render to string on server and to send string to client\nimport { renderToString } from 'react-dom/server'\n\n// Routes and History using react-router\nimport { createMemoryHistory, RouterContext, match } from 'react-router';\n//import createHistory from 'history/createMemoryHistory';\nimport routes from '../shared/routes';\n\n// Redux Imports\n//\nimport { createStore, applyMiddleware } from 'redux';\nimport { Provider } from 'react-redux';\nimport rootReducer from '../shared/rootReducer.js';\n\n// Middleware for async actions + applyMiddleware import from 'redux'\nimport promiseMiddleware from 'lib/promiseMiddleware';\n\n// Handles State Rehydration\nimport fetchComponentData from 'lib/fetchComponentData';\n\n//Inline Styling\nimport { StyleSheetServer } from 'aphrodite'\n\nconst app = express();\nconst history = createMemoryHistory();\nconst PORT = process.env.PORT || 3000;\n\napp.use((req, res) => {\n  const reducer  = rootReducer;\n\n  // Async middleware applied same as in client except without initialState\n  const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);\n\n  /*\n   * From the react-router docs:\n   *\n   * This function is to be used for server-side rendering. It matches a set of routes to\n   * a location, without rendering, and calls a callback(err, redirect, props)\n   * when it's done.\n   *\n   * The function will create a `history` for you, passing additional `options` to create it.\n   * These options can include `basename` to control the base name for URLs, as well as the pair\n   * of `parseQueryString` and `stringifyQuery` to control query string parsing and serializing.\n   * You can also pass in an already instantiated `history` object, which can be constructured\n   * however you like.\n   *\n   * The three arguments to the callback function you pass to `match` are:\n   * - err:       A javascript Error object if an error occured, `undefined` otherwise.\n   * - redirect:  A `Location` object if the route is a redirect, `undefined` otherwise\n   * - props:     The props you should pass to the routing context if the route matched,\n   *              `undefined` otherwise.\n   * If all three parameters are `undefined`, this means that there was no route found matching the\n   * given location.\n   */\n  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {\n    if (err) {\n      console.error(err);\n      return res.status(500).end('Internal server error');\n    }\n    if (!renderProps) return res.status(404).end('Not found.');\n\n    /**\n     * We create a new instance of a Redux store on every request, and inject that through the component tree\n     * (available as <component>.context.redux, if you ever want to access it directly)\n     * by wrapping the root component in Provider.\n     */\n    function renderView() {\n      const InitialView = (\n        <Provider store={store}>\n          <RouterContext {...renderProps} />\n        </Provider>\n      );\n\n      // We’ll also want to pass an initial state to the client, so it can hydrate its stores.\n      const initialState = store.getState();\n\n      const componentHTML = StyleSheetServer.renderStatic(\n        () => renderToString(InitialView)\n      )\n      const HTML = `\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <meta charset=\"utf-8\">\n            <title>Isomorphic Redux Demo</title>\n            <style>\n                  html {\n                    box-sizing: border-box\n                  }\n                  *,\n                  *::before,\n                  *::after {\n                    box-sizing: border-box\n                  }\n                  html {\n                    font-size: 100%;\n                    -ms-overflow-style: scrollbar;\n                    -webkit-tap-highlight-color: rgba(0,0,0,0);\n                    height: 100%;\n                  }\n                  body {\n                    font-size: 1rem;\n                    background-color: #fff;\n                    color: #555;\n                    -webkit-font-smoothing: antialiased;\n                    -moz-osx-font-smoothing: grayscale;\n                    font-family: -apple-system,BlinkMacSystemFont,\"Helvetica Neue\",Helvetica,Arial,sans-serif;\n                    margin: 0;\n                  }\n                  h1,h2,h3,h4,h5,h6 {\n                    margin: 0;\n                    padding: 0;\n                  }\n                </style>\n                <style data-aphrodite>${componentHTML.css.content}</style>\n          </head>\n          <body>\n            <div id=\"app\">${componentHTML.html}</div>\n            <script>window.renderedClassNames = ${JSON.stringify(componentHTML.css.renderedClassNames)};</script>\n            <!-- This sends the state to the client -->\n            <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>\n            <script type=\"application/javascript\" src=\"/bundle.js\"></script>\n          </body>\n      </html>\n    `;\n      return HTML;\n    }\n\n    fetchComponentData(store.dispatch, renderProps.components, renderProps.params)\n      .then(renderView)\n      .then(html => res.end(html))\n      .catch(err => res.end(err.message));\n  });\n});\n\n\napp.listen(PORT, () => {\n  console.log(`Server listening on: ${PORT}`);\n});\n"
+    "content": "import express from 'express';\nimport React from 'react';\n\n//Axios is a promise based HTTP client we use for async requests\nimport axios from 'axios';\n\n// Need to render to string on server and to send string to client\nimport { renderToString } from 'react-dom/server'\n\n// Routes and History using react-router\nimport { createMemoryHistory, RouterContext, match } from 'react-router';\n//import createHistory from 'history/createMemoryHistory';\nimport routes from '../shared/routes';\n\n// Redux Imports\n//\nimport { createStore, applyMiddleware } from 'redux';\nimport { Provider } from 'react-redux';\nimport rootReducer from '../shared/rootReducer.js';\n\n// Middleware for async actions + applyMiddleware import from 'redux'\nimport promiseMiddleware from 'lib/promiseMiddleware';\n\n// Handles State Rehydration\nimport fetchComponentData from 'lib/fetchComponentData';\n\n//Inline Styling\nimport { StyleSheetServer } from 'aphrodite'\n\nconst app = express();\nconst history = createMemoryHistory();\nconst PORT = process.env.PORT || 3000;\n\napp.use((req, res) => {\n  const reducer  = rootReducer;\n\n  // Async middleware applied same as in client except without initialState\n  const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);\n\n  /*\n   * From the react-router docs:\n   *\n   * This function is to be used for server-side rendering. It matches a set of routes to\n   * a location, without rendering, and calls a callback(err, redirect, props)\n   * when it's done.\n   *\n   * The function will create a `history` for you, passing additional `options` to create it.\n   * These options can include `basename` to control the base name for URLs, as well as the pair\n   * of `parseQueryString` and `stringifyQuery` to control query string parsing and serializing.\n   * You can also pass in an already instantiated `history` object, which can be constructured\n   * however you like.\n   *\n   * The three arguments to the callback function you pass to `match` are:\n   * - err:       A javascript Error object if an error occured, `undefined` otherwise.\n   * - redirect:  A `Location` object if the route is a redirect, `undefined` otherwise\n   * - props:     The props you should pass to the routing context if the route matched,\n   *              `undefined` otherwise.\n   * If all three parameters are `undefined`, this means that there was no route found matching the\n   * given location.\n   */\n  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {\n    if (err) {\n      console.error(err);\n      return res.status(500).end('Internal server error');\n    }\n    if (!renderProps) return res.status(404).end('Not found.');\n\n    /**\n     * We create a new instance of a Redux store on every request, and inject that through the component tree\n     * (available as <component>.context.redux, if you ever want to access it directly)\n     * by wrapping the root component in Provider.\n     */\n    function renderView() {\n      const InitialView = (\n        <Provider store={store}>\n          <RouterContext {...renderProps} />\n        </Provider>\n      );\n\n      // We’ll also want to pass an initial state to the client, so it can hydrate its stores.\n      const initialState = store.getState();\n\n      const componentHTML = StyleSheetServer.renderStatic(\n        () => renderToString(InitialView)\n      )\n      const HTML = `\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <meta charset=\"utf-8\">\n            <title>Isomorphic Redux Demo</title>\n            <style>\n                  html {\n                    box-sizing: border-box\n                  }\n                  *,\n                  *::before,\n                  *::after {\n                    box-sizing: border-box\n                  }\n                  html {\n                    font-size: 100%;\n                    -ms-overflow-style: scrollbar;\n                    -webkit-tap-highlight-color: rgba(0,0,0,0);\n                    height: 100%;\n                  }\n                  body {\n                    font-size: 1rem;\n                    background-color: #fff;\n                    color: #555;\n                    -webkit-font-smoothing: antialiased;\n                    -moz-osx-font-smoothing: grayscale;\n                    font-family: -apple-system,BlinkMacSystemFont,\"Helvetica Neue\",Helvetica,Arial,sans-serif;\n                    margin: 0;\n                  }\n                  h1,h2,h3,h4,h5,h6 {\n                    margin: 0;\n                    padding: 0;\n                  }\n                </style>\n                <style data-aphrodite>${componentHTML.css.content}</style>\n          </head>\n          <body>\n            <div id=\"app\">${componentHTML.html}</div>\n            <script>window.renderedClassNames = ${JSON.stringify(componentHTML.css.renderedClassNames)};</script>\n            <!-- This sends the state to the client -->\n            <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>\n            <script type=\"application/javascript\" src=\"/bundle.js\"></script>\n          </body>\n      </html>\n    `;\n      return HTML;\n    }\n\n    fetchComponentData(store.dispatch, renderProps.components, renderProps.params)\n      .then(renderView)\n      .then(html => res.end(html))\n      .catch(err => res.end(err.message));\n  });\n});\n\n\napp.listen(PORT, () => {\n  console.log(`Server listening on: ${PORT}`);\n});\n\n"
   },
   {
-    "__docId__": 2,
+    "__docId__": 7,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -47,7 +142,7 @@
     }
   },
   {
-    "__docId__": 3,
+    "__docId__": 8,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -68,7 +163,7 @@
     }
   },
   {
-    "__docId__": 4,
+    "__docId__": 9,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -89,7 +184,7 @@
     }
   },
   {
-    "__docId__": 5,
+    "__docId__": 10,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -99,10 +194,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React, { PropTypes } from 'react';\nimport Nav from 'containers/NavBar';\nimport { StyleSheet, css } from 'aphrodite';\n\n/*\n * React-router's <Router> component renders <Route>'s\n * and replaces `this.props.children` with the proper React Component.\n *\n * Please refer to `routes.jsx` for the route config.\n *\n * A better explanation of react-router is available here:\n * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md\n */\nconst App = ({children}) => (\n    <div className={css(styles.root)}>\n      <h1 className={css(styles.title)}>Another Social Media Site</h1>\n      <Nav className={css(styles.nav)}/>\n      {children}\n      <footer className={css(styles.footer)}>\n         <p className={css(styles.footerLink)} target='_blank'>Copyright © 2016 Team Moonwalk</p>\n      </footer>\n    </div>\n);\n\nconst styles = StyleSheet.create({\n  root: {\n    maxWidth: \"100%\",\n    backgroundColor: \"#c0c0c0\",\n    color: '#000',\n    margin: '0',\n    padding: '0'\n  },\n  title: {\n    color: '#000',\n    backgroundColor: \"#d8d8d8\",\n    textAlign: \"center\",\n    maxWidth: \"100%\",\n    fontWeight: 'bold',\n    fontSize: 56\n  },\n  footer: {\n    margin: '4rem auto',\n    textAlign: 'center',\n    color: '#b7b7b7'\n  },\n  footerLink: {\n    display: 'inline-block',\n    color: '#000',\n    textDecoration: 'none'\n  },\n  nav: {\n    width: '100%',\n    align: 'center'\n  }\n});\n\nexport default App;"
+    "content": "import React, { PropTypes } from 'react';\nimport Nav from 'containers/NavBar';\nimport { StyleSheet, css } from 'aphrodite/no-important';\n\n/*\n * React-router's <Router> component renders <Route>'s\n * and replaces `this.props.children` with the proper React Component.\n *\n * Please refer to `routes.jsx` for the route config.\n *\n * A better explanation of react-router is available here:\n * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md\n */\nconst App = ({children}) => (\n    <div className={css(styles.root)}>\n      <h1 className={css(styles.title)}>Another Social Media Site</h1>\n      <Nav className={css(styles.nav)}/>\n      {children}\n      <footer className={css(styles.footer)}>\n         <p className={css(styles.footerLink)} target='_blank'>Copyright © 2016 Team Moonwalk</p>\n      </footer>\n    </div>\n);\n\nconst styles = StyleSheet.create({\n  root: {\n    maxWidth: \"100%\",\n    backgroundColor: \"#c0c0c0\",\n    color: '#000',\n    margin: '0',\n    padding: '0'\n  },\n  title: {\n    color: '#000',\n    backgroundColor: \"#d8d8d8\",\n    textAlign: \"center\",\n    maxWidth: \"100%\",\n    fontWeight: 'bold',\n    fontSize: 56\n  },\n  footer: {\n    margin: '4rem auto',\n    textAlign: 'center',\n    color: '#b7b7b7'\n  },\n  footerLink: {\n    display: 'inline-block',\n    color: '#000',\n    textDecoration: 'none'\n  },\n  nav: {\n    width: '100%',\n    align: 'center'\n  }\n});\n\nexport default App;\n\n"
   },
   {
-    "__docId__": 6,
+    "__docId__": 11,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -123,7 +218,7 @@
     }
   },
   {
-    "__docId__": 7,
+    "__docId__": 12,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -144,7 +239,7 @@
     }
   },
   {
-    "__docId__": 8,
+    "__docId__": 13,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -154,10 +249,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React, { PropTypes } from 'react';\nimport { IndexLink, Link } from 'react-router';\nimport { StyleSheet, css } from 'aphrodite';\n\nimport { connect } from 'react-redux';\n\n\nconst Nav = () => (\n  <div>\n    <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>\n      Home\n    </IndexLink>\n    <Link to='/posts' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed:<br/> Not Implemented\n    </Link>\n    <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>\n  </div>\n);\n\n\nconst styles = StyleSheet.create({\n  link: {\n    maxWidth: '25%',\n    color: '#\t0000FF',\n    margin: '1.5rem 1rem 1.5rem 0',\n    display: 'inline-block',\n    textDecoration: 'none',\n    fontWeight: 'bold',\n    transition: '.2s opacity ease',\n    ':hover': {\n      opacity: 0.4\n    }\n  },\n  activeLink: {\n    color: '#000080'\n  }\n});\n\nexport default Nav;"
+    "content": "import React, { PropTypes } from 'react';\nimport { IndexLink, Link } from 'react-router';\nimport { StyleSheet, css } from 'aphrodite/no-important';\n\nimport { connect } from 'react-redux';\n\n\nconst Nav = () => (\n  <div>\n    <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>\n      Home\n    </IndexLink>\n    <Link to='/posts' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed:<br/> Not Implemented\n    </Link>\n    <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>\n  </div>\n);\n\n\nconst styles = StyleSheet.create({\n  link: {\n    maxWidth: '25%',\n    color: '#\t0000FF',\n    margin: '1.5rem 1rem 1.5rem 0',\n    display: 'inline-block',\n    textDecoration: 'none',\n    fontWeight: 'bold',\n    transition: '.2s opacity ease',\n    ':hover': {\n      opacity: 0.4\n    }\n  },\n  activeLink: {\n    color: '#000080'\n  }\n});\n\nexport default Nav;\n\n"
   },
   {
-    "__docId__": 9,
+    "__docId__": 14,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -178,7 +273,7 @@
     }
   },
   {
-    "__docId__": 10,
+    "__docId__": 15,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -199,7 +294,7 @@
     }
   },
   {
-    "__docId__": 11,
+    "__docId__": 16,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -209,10 +304,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/*\n Redux action creators are just functions that return consistently formatted objects.\n No magic here, we just need a reducer to handle them.\n */\nimport request from 'axios';\nconst API_URL = 'https://webtask.it.auth0.com/api/run/wt-milomord-gmail_com-0/redux-tutorial-backend?webtask_no_cache=1';\n\n\nexport function getTodos() {\n  return {\n    type: 'GET_TODOS',\n    promise: request.get(API_URL)\n  }\n}\n\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    promise: request.post(API_URL, { time: Date.now(), text })\n  }\n}\n/*\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    text,\n    date: Date.now()\n  }\n}\n*/\nexport function editTodo(id, text) {\n  return {\n    type: 'EDIT_TODO',\n    id,\n    text,\n    date: Date.now()\n  };\n}\n\nexport function deleteTodo(id) {\n  return {\n    type: 'DELETE_TODO',\n    id\n  };\n}"
+    "content": "/*\n Redux action creators are just functions that return consistently formatted objects.\n No magic here, we just need a reducer to handle them.\n */\nimport request from 'axios';\nconst API_URL = 'https://webtask.it.auth0.com/api/run/wt-milomord-gmail_com-0/redux-tutorial-backend?webtask_no_cache=1';\n\n\nexport function getTodos() {\n  return {\n    type: 'GET_TODOS',\n    promise: request.get(API_URL)\n  }\n}\n\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    promise: request.post(API_URL, { time: Date.now(), text })\n  }\n}\n/*\nexport function createTodo(text) {\n  return {\n    type: 'CREATE_TODO',\n    text,\n    date: Date.now()\n  }\n}\n*/\nexport function editTodo(id, text) {\n  return {\n    type: 'EDIT_TODO',\n    id,\n    text,\n    date: Date.now()\n  };\n}\n\nexport function deleteTodo(id) {\n  return {\n    type: 'DELETE_TODO',\n    id\n  };\n}\n"
   },
   {
-    "__docId__": 12,
+    "__docId__": 17,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -233,7 +328,7 @@
     }
   },
   {
-    "__docId__": 13,
+    "__docId__": 18,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -256,7 +351,7 @@
     "generator": false
   },
   {
-    "__docId__": 14,
+    "__docId__": 19,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -286,7 +381,7 @@
     "generator": false
   },
   {
-    "__docId__": 15,
+    "__docId__": 20,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -322,7 +417,7 @@
     "generator": false
   },
   {
-    "__docId__": 16,
+    "__docId__": 21,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -352,29 +447,29 @@
     "generator": false
   },
   {
-    "__docId__": 17,
+    "__docId__": 22,
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/shared/components/TodosForm.jsx",
+    "name": "src/shared/components/TodosForm/TodosForm.jsx",
     "memberof": null,
-    "longname": "src/shared/components/TodosForm.jsx",
+    "longname": "src/shared/components/TodosForm/TodosForm.jsx",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React, { PropTypes } from 'react';\n\n// This is also a ‘dumb’ component, and just lets the user add a todo to the store.\n\nexport default class TodosForm extends React.Component {\n\n  static propTypes = {\n    createTodo: PropTypes.func.isRequired\n  };\n\n  handleSubmit = () => {\n    let node = this.refs['todo-input'];\n\n    this.props.createTodo(node.value);\n\n    node.value = '';\n  }\n\n  render() {\n    return (\n      <div id=\"todo-form\">\n        <input type=\"text\" placeholder=\"type todo\" ref=\"todo-input\" />\n        <input type=\"submit\" value=\"OK!\" onClick={this.handleSubmit} />\n      </div>\n    );\n  }\n}"
+    "content": "import React, { PropTypes } from 'react';\n\n// This is also a ‘dumb’ component, and just lets the user add a todo to the store.\n\nexport default class TodosForm extends React.Component {\n\n  static propTypes = {\n    createTodo: PropTypes.func.isRequired\n  };\n\n  handleSubmit = () => {\n    let node = this.refs['todo-input'];\n\n    this.props.createTodo(node.value);\n\n    node.value = '';\n  }\n\n  render() {\n    return (\n      <div id=\"todo-form\">\n        <input type=\"text\" placeholder=\"type todo\" ref=\"todo-input\" />\n        <input type=\"submit\" value=\"OK!\" onClick={this.handleSubmit} />\n      </div>\n    );\n  }\n}\n"
   },
   {
-    "__docId__": 18,
+    "__docId__": 23,
     "kind": "class",
     "static": true,
     "variation": null,
     "name": "TodosForm",
-    "memberof": "src/shared/components/TodosForm.jsx",
-    "longname": "src/shared/components/TodosForm.jsx~TodosForm",
+    "memberof": "src/shared/components/TodosForm/TodosForm.jsx",
+    "longname": "src/shared/components/TodosForm/TodosForm.jsx~TodosForm",
     "access": null,
     "export": true,
-    "importPath": "cs419-frontend/src/shared/components/TodosForm.jsx",
+    "importPath": "cs419-frontend/src/shared/components/TodosForm/TodosForm.jsx",
     "importStyle": "TodosForm",
     "description": null,
     "lineNumber": 5,
@@ -385,13 +480,13 @@
     ]
   },
   {
-    "__docId__": 19,
+    "__docId__": 24,
     "kind": "method",
     "static": false,
     "variation": null,
     "name": "render",
-    "memberof": "src/shared/components/TodosForm.jsx~TodosForm",
-    "longname": "src/shared/components/TodosForm.jsx~TodosForm#render",
+    "memberof": "src/shared/components/TodosForm/TodosForm.jsx~TodosForm",
+    "longname": "src/shared/components/TodosForm/TodosForm.jsx~TodosForm#render",
     "access": null,
     "description": null,
     "lineNumber": 19,
@@ -405,29 +500,63 @@
     "generator": false
   },
   {
-    "__docId__": 20,
+    "__docId__": 25,
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/shared/components/TodosHome.jsx",
+    "name": "src/shared/components/TodosForm/test.js",
     "memberof": null,
-    "longname": "src/shared/components/TodosHome.jsx",
+    "longname": "src/shared/components/TodosForm/test.js",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React, { Component, PropTypes } from 'react';\nimport TodosView              from 'components/TodosView';\nimport TodosForm              from 'components/TodosForm';\nimport { bindActionCreators } from 'redux';\nimport * as TodoActions       from 'actions/TodoActions';\nimport { connect }            from 'react-redux';\n\n/*\n If you’re not familiar with decorators (the @connector section here),\n then it’s easiest to think of them as a replacement for what you would used to use a ‘mixin’ for.\n You may have actually seen them in other languages, like Python, for instance.\n If not, in Javascript they are just functions that modify another given function (here a ‘class’) in some way.\n Notice how when defined like this (‘class leading’) they are attached to the following class definition,\n hence the lack of ;.\n Redux’s @connect decorator wraps our class in another component ( <Connector>),\n giving it access to the requested parts of state as props, hence why we can use todos as we do.\n It also passes in Redux’s dispatch function which can be used to dispatch actions like so: dispatch(actionCreator());\n */\n\nclass Home extends Component {\n  static propTypes = {\n    todos:    PropTypes.any.isRequired,\n    dispatch: PropTypes.func.isRequired\n  };\n\n  static needs = [\n    TodoActions.getTodos\n  ];\n\n  render() {\n    const { todos, dispatch } = this.props;\n\n    /*\n     Finally we use redux’s bindActionCreators method to pass in… ermm… bound action creators.\n     What this means is that, in the child components, we can just call the action creators directly,\n     without wrapping them in a dispatch() call as above.\n     */\n    return (\n      <div id=\"todo-list\">\n\n        <TodosView todos={todos}\n           {...bindActionCreators(TodoActions, dispatch)} />\n\n        <TodosForm\n          {...bindActionCreators(TodoActions, dispatch)} />\n      </div>\n    );\n  }\n}\n\nexport default connect(state => ({ todos: state.todos }))(Home)"
+    "content": "import React from 'react'\nimport { shallow } from 'enzyme'\nimport TodosForm from './TodosForm'\n\nconst wrapper = shallow(<TodosForm />);\n\ndescribe('(Component) TodosForm', () => {\n  it('renders...', () => {\n    expect(wrapper).to.have.length(1);\n  });\n});\n"
   },
   {
-    "__docId__": 21,
+    "__docId__": 26,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "wrapper",
+    "memberof": "src/shared/components/TodosForm/test.js",
+    "longname": "src/shared/components/TodosForm/test.js~wrapper",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/components/TodosForm/test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/components/TodosHome/TodosHome.jsx",
+    "memberof": null,
+    "longname": "src/shared/components/TodosHome/TodosHome.jsx",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React, { Component, PropTypes } from 'react';\nimport TodosView              from '../TodosView';\nimport TodosForm              from '../TodosForm';\nimport { bindActionCreators } from 'redux';\nimport * as TodoActions       from '../../actions/TodoActions';\nimport { connect }            from 'react-redux';\n\n/*\n If you’re not familiar with decorators (the @connector section here),\n then it’s easiest to think of them as a replacement for what you would used to use a ‘mixin’ for.\n You may have actually seen them in other languages, like Python, for instance.\n If not, in Javascript they are just functions that modify another given function (here a ‘class’) in some way.\n Notice how when defined like this (‘class leading’) they are attached to the following class definition,\n hence the lack of ;.\n Redux’s @connect decorator wraps our class in another component ( <Connector>),\n giving it access to the requested parts of state as props, hence why we can use todos as we do.\n It also passes in Redux’s dispatch function which can be used to dispatch actions like so: dispatch(actionCreator());\n */\n\nclass Home extends Component {\n  static propTypes = {\n    todos:    PropTypes.any.isRequired,\n    dispatch: PropTypes.func.isRequired\n  };\n\n  static needs = [\n    TodoActions.getTodos\n  ];\n\n  render() {\n    const { todos, dispatch } = this.props;\n\n    /*\n     Finally we use redux’s bindActionCreators method to pass in… ermm… bound action creators.\n     What this means is that, in the child components, we can just call the action creators directly,\n     without wrapping them in a dispatch() call as above.\n     */\n    return (\n      <div id=\"todo-list\">\n\n        <TodosView todos={todos}\n           {...bindActionCreators(TodoActions, dispatch)} />\n\n        <TodosForm\n          {...bindActionCreators(TodoActions, dispatch)} />\n      </div>\n    );\n  }\n}\n\nexport default connect(state => ({ todos: state.todos }))(Home)\n"
+  },
+  {
+    "__docId__": 28,
     "kind": "class",
     "static": true,
     "variation": null,
     "name": "Home",
-    "memberof": "src/shared/components/TodosHome.jsx",
-    "longname": "src/shared/components/TodosHome.jsx~Home",
+    "memberof": "src/shared/components/TodosHome/TodosHome.jsx",
+    "longname": "src/shared/components/TodosHome/TodosHome.jsx~Home",
     "access": null,
     "export": false,
-    "importPath": "cs419-frontend/src/shared/components/TodosHome.jsx",
+    "importPath": "cs419-frontend/src/shared/components/TodosHome/TodosHome.jsx",
     "importStyle": null,
     "description": null,
     "lineNumber": 20,
@@ -438,13 +567,13 @@
     ]
   },
   {
-    "__docId__": 22,
+    "__docId__": 29,
     "kind": "method",
     "static": false,
     "variation": null,
     "name": "render",
-    "memberof": "src/shared/components/TodosHome.jsx~Home",
-    "longname": "src/shared/components/TodosHome.jsx~Home#render",
+    "memberof": "src/shared/components/TodosHome/TodosHome.jsx~Home",
+    "longname": "src/shared/components/TodosHome/TodosHome.jsx~Home#render",
     "access": null,
     "description": null,
     "lineNumber": 30,
@@ -458,46 +587,67 @@
     "generator": false
   },
   {
-    "__docId__": 23,
+    "__docId__": 30,
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/shared/components/TodosView.jsx",
+    "name": "src/shared/components/TodosView/TodosView.jsx",
     "memberof": null,
-    "longname": "src/shared/components/TodosView.jsx",
+    "longname": "src/shared/components/TodosView/TodosView.jsx",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React, { PropTypes } from 'react';\nimport Immutable     from 'immutable';\n\n// Here we display each todo item in the store alongside edit and delete buttons\n// which are mapped to our pre-bound action creators.\n\nexport default class TodosView extends React.Component {\n\n  static propTypes = {\n    todos:      PropTypes.instanceOf(Immutable.List).isRequired,\n    editTodo:   PropTypes.func.isRequired,\n    deleteTodo: PropTypes.func.isRequired\n  };\n\n  handleDelete = (e) => {\n    const id = Number(e.target.dataset.id);\n\n    // Equivalent to `dispatch(deleteTodo())`\n    this.props.deleteTodo(id);\n  }\n\n  handleEdit = (e) => {\n    const id  = Number(e.target.dataset.id);\n    const currentVal = this.props.todos.get(id);\n\n    // For cutting edge UX\n    let text = window.prompt('', currentVal);\n\n    this.props.editTodo(id, text);\n  }\n\n  render() {\n    const btnStyle = {\n      'margin': '1em 0 1em 1em'\n    };\n\n    return (\n      <div id=\"todo-list\">\n        {\n          this.props.todos.map( (todo, index) => {\n            return (\n              <div style={btnStyle} key={index}>\n                <span>{todo}</span>\n\n                <button style={btnStyle} data-id={index} onClick={this.handleDelete}>\n                  X\n                </button>\n                <button style={btnStyle} data-id={index} onClick={this.handleEdit}>\n                  Edit\n                </button>\n              </div>\n            );\n          })\n        }\n      </div>\n    );\n  }\n}"
+    "content": "import React, { Component, PropTypes } from 'react';\nimport Immutable     from 'immutable';\n\n// Here we display each todo item in the store alongside edit and delete buttons\n// which are mapped to our pre-bound action creators.\n\nconst propTypes = {\n  todos:      PropTypes.instanceOf(Immutable.List).isRequired,\n  editTodo:   PropTypes.func.isRequired,\n  deleteTodo: PropTypes.func.isRequired,\n};\n\nclass TodosView extends Component {\n\n  handleDelete = (e) => {\n    const id = Number(e.target.dataset.id);\n\n    // Equivalent to `dispatch(deleteTodo())`\n    this.props.deleteTodo(id);\n  }\n\n  handleEdit = (e) => {\n    const id  = Number(e.target.dataset.id);\n    const currentVal = this.props.todos.get(id);\n\n    // For cutting edge UX\n    let text = window.prompt('', currentVal);\n\n    this.props.editTodo(id, text);\n  }\n\n  render() {\n    const btnStyle = {\n      'margin': '1em 0 1em 1em'\n    };\n\n    return (\n      <div id=\"todo-list\">\n        {\n          this.props.todos.map( (todo, index) => {\n            return (\n              <div style={btnStyle} key={index}>\n                <span>{todo}</span>\n\n                <button style={btnStyle} data-id={index} onClick={this.handleDelete}>\n                  X\n                </button>\n                <button style={btnStyle} data-id={index} onClick={this.handleEdit}>\n                  Edit\n                </button>\n              </div>\n            );\n          })\n        }\n      </div>\n    );\n  }\n}\n\nTodosView.propTypes = propTypes;\nexport default TodosView;\n"
   },
   {
-    "__docId__": 24,
+    "__docId__": 31,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "propTypes",
+    "memberof": "src/shared/components/TodosView/TodosView.jsx",
+    "longname": "src/shared/components/TodosView/TodosView.jsx~propTypes",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/components/TodosView/TodosView.jsx",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 32,
     "kind": "class",
     "static": true,
     "variation": null,
     "name": "TodosView",
-    "memberof": "src/shared/components/TodosView.jsx",
-    "longname": "src/shared/components/TodosView.jsx~TodosView",
+    "memberof": "src/shared/components/TodosView/TodosView.jsx",
+    "longname": "src/shared/components/TodosView/TodosView.jsx~TodosView",
     "access": null,
     "export": true,
-    "importPath": "cs419-frontend/src/shared/components/TodosView.jsx",
+    "importPath": "cs419-frontend/src/shared/components/TodosView/TodosView.jsx",
     "importStyle": "TodosView",
     "description": null,
-    "lineNumber": 7,
+    "lineNumber": 13,
     "undocument": true,
     "interface": false,
     "extends": [
-      "react~React.Component"
+      "react~Component"
     ]
   },
   {
-    "__docId__": 25,
+    "__docId__": 33,
     "kind": "method",
     "static": false,
     "variation": null,
     "name": "render",
-    "memberof": "src/shared/components/TodosView.jsx~TodosView",
-    "longname": "src/shared/components/TodosView.jsx~TodosView#render",
+    "memberof": "src/shared/components/TodosView/TodosView.jsx~TodosView",
+    "longname": "src/shared/components/TodosView/TodosView.jsx~TodosView#render",
     "access": null,
     "description": null,
     "lineNumber": 32,
@@ -511,7 +661,62 @@
     "generator": false
   },
   {
-    "__docId__": 26,
+    "__docId__": 34,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/shared/components/TodosView/test.js",
+    "memberof": null,
+    "longname": "src/shared/components/TodosView/test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import React from 'react'\nimport {\n  mount,\n  shallow,\n} from 'enzyme';\n\nimport TodosView from './TodosView'\n\nconst props = {\n  todos: [],\n  editTodo: () => {},\n};\n\nconst wrapper = shallow(<div>\n  <TodosView todos={props.todos} editTodo={[0, 0]} deleteTodo={0} />\n  </div>);\n\ndescribe('(Component) TodosView', () => {\n  it('renders...', () => {\n    expect(wrapper).to.have.length(1);\n  });\n});"
+  },
+  {
+    "__docId__": 35,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "props",
+    "memberof": "src/shared/components/TodosView/test.js",
+    "longname": "src/shared/components/TodosView/test.js~props",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/components/TodosView/test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 36,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "wrapper",
+    "memberof": "src/shared/components/TodosView/test.js",
+    "longname": "src/shared/components/TodosView/test.js~wrapper",
+    "access": null,
+    "export": false,
+    "importPath": "cs419-frontend/src/shared/components/TodosView/test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 37,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -521,10 +726,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/*\n function which promises to gather all the data and dispatch it\n for state rehydration with Async\n */\n\nexport default function fetchComponentData(dispatch, components, params) {\n  const needs = components.reduce( (prev, current) => {\n    return (current.needs || [])\n      .concat((current.WrappedComponent ? current.WrappedComponent.needs : []) || [])\n      .concat(prev);\n  }, []);\n\n  const promises = needs.map(need => dispatch(need(params)));\n  return Promise.all(promises);\n}"
+    "content": "/*\n function which promises to gather all the data and dispatch it\n for state rehydration with Async\n */\n\nexport default function fetchComponentData(dispatch, components, params) {\n  const needs = components.reduce( (prev, current) => {\n    return (current.needs || [])\n      .concat((current.WrappedComponent ? current.WrappedComponent.needs : []) || [])\n      .concat(prev);\n  }, []);\n\n  const promises = needs.map(need => dispatch(need(params)));\n  return Promise.all(promises);\n}\n"
   },
   {
-    "__docId__": 27,
+    "__docId__": 38,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -566,7 +771,7 @@
     "generator": false
   },
   {
-    "__docId__": 28,
+    "__docId__": 39,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -576,10 +781,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import { fromJS } from 'immutable';\nimport assign     from 'object-assign';\n\nObject.assign = Object.assign || assign;\n\n// Abstraction to handle pre-composedstate received from server\n// (ie, leave top level keys untouched)\nexport default function immutifyState(obj) {\n  let objMut = Object.assign({}, obj);\n\n  Object\n    .keys(objMut)\n    .forEach(key => {\n      objMut[key] = fromJS(objMut[key]);\n    });\n\n  return objMut;\n}"
+    "content": "import { fromJS } from 'immutable';\nimport assign     from 'object-assign';\n\nObject.assign = Object.assign || assign;\n\n// Abstraction to handle pre-composedstate received from server\n// (ie, leave top level keys untouched)\nexport default function immutifyState(obj) {\n  let objMut = Object.assign({}, obj);\n\n  Object\n    .keys(objMut)\n    .forEach(key => {\n      objMut[key] = fromJS(objMut[key]);\n    });\n\n  return objMut;\n}\n"
   },
   {
-    "__docId__": 29,
+    "__docId__": 40,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -609,7 +814,7 @@
     "generator": false
   },
   {
-    "__docId__": 30,
+    "__docId__": 41,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -619,10 +824,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/*\n  Helper for asynchronous actions( dispatcher middleware to transform actions ):\n    Keeps actions simple\n    Keeps action creators synchronous\n    uses promises\n */\n\n/*\n we just define a promise key on our actions and have them automatically resolved and rejected.\n We can also optionally listen in the reducers for auto-generated <TYPE>_REQUEST and <TYPE>_FAILURE\n if we care about mutating state along the way.\n */\nfunction promiseMiddleware() {\n  return next => action => {\n    const { promise, type, ...rest } = action;\n\n    if (!promise) return next(action);\n\n    const SUCCESS = type;\n    const REQUEST = type + '_REQUEST';\n    const FAILURE = type + '_FAILURE';\n\n    next({ ...rest, type: REQUEST });\n\n    return promise\n      .then(res => {\n        next({ ...rest, res, type: SUCCESS });\n\n        return true;\n      })\n      .catch(error => {\n        next({ ...rest, error, type: FAILURE });\n\n        // Another benefit is being able to log all failures here\n        console.log(error);\n        return false;\n      });\n  };\n}\n\nexport default promiseMiddleware;"
+    "content": "/*\n  Helper for asynchronous actions( dispatcher middleware to transform actions ):\n    Keeps actions simple\n    Keeps action creators synchronous\n    uses promises\n */\n\n/*\n we just define a promise key on our actions and have them automatically resolved and rejected.\n We can also optionally listen in the reducers for auto-generated <TYPE>_REQUEST and <TYPE>_FAILURE\n if we care about mutating state along the way.\n */\nfunction promiseMiddleware() {\n  return next => (action) => {\n    const { promise, type, ...rest } = action;\n\n    if (!promise) return next(action);\n\n    const SUCCESS = type;\n    const REQUEST = `${type}_REQUEST`;\n    const FAILURE = `${type}_FAILURE`;\n\n    next({ ...rest, type: REQUEST });\n\n    return promise\n      .then((res) => {\n        next({ ...rest, res, type: SUCCESS });\n\n        return true;\n      })\n      .catch((error) => {\n        next({ ...rest, error, type: FAILURE });\n\n        // Another benefit is being able to log all failures here\n        console.log(error);\n        return false;\n      });\n  };\n}\n\nexport default promiseMiddleware;\n"
   },
   {
-    "__docId__": 31,
+    "__docId__": 42,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -645,7 +850,7 @@
     "generator": false
   },
   {
-    "__docId__": 32,
+    "__docId__": 43,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -655,10 +860,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import Immutable from 'immutable';\n\n/*\n Here we use an Immutable List object to store our state (though a more complex app would probably have a more elaborate structure),\n and return a newly transformed version depending on the action.\n\n Redux isn’t very opinionated, and only has two expectations of its redeucers:\n 1. The reducer has the signature (state, action) => newState.\n 2. The reducer does not mutate the state it is given, but returns a new one\n */\n\nconst defaultState = new Immutable.List();\n\nexport default function todoReducer(state = defaultState, action) {\n  switch(action.type) {\n    case 'GET_TODOS':\n      return new Immutable.List(action.res.data);\n\n    case 'CREATE_TODO':\n      return state.concat(action.res.data.text);\n\n    case 'EDIT_TODO':\n      return state.set(action.id, action.text);\n\n    case 'DELETE_TODO':\n      return state.delete(action.id);\n\n    default:\n      return state;\n  }\n}"
+    "content": "import Immutable from 'immutable';\n\n/*\n Here we use an Immutable List object to store our state\n (though a more complex app would probably have a more elaborate structure),\n and return a newly transformed version depending on the action.\n\n Redux isn’t very opinionated, and only has two expectations of its redeucers:\n 1. The reducer has the signature (state, action) => newState.\n 2. The reducer does not mutate the state it is given, but returns a new one\n */\n\nconst defaultState = new Immutable.List();\n\nexport default function todoReducer(state = defaultState, action) {\n  switch (action.type) {\n    case 'GET_TODOS':\n      return new Immutable.List(action.res.data);\n\n    case 'CREATE_TODO':\n      return state.concat(action.res.data.text);\n\n    case 'EDIT_TODO':\n      return state.set(action.id, action.text);\n\n    case 'DELETE_TODO':\n      return state.delete(action.id);\n\n    default:\n      return state;\n  }\n}\n"
   },
   {
-    "__docId__": 33,
+    "__docId__": 44,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -670,7 +875,7 @@
     "importPath": "cs419-frontend/src/shared/reducers/TodoReducer.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 12,
+    "lineNumber": 13,
     "undocument": true,
     "type": {
       "types": [
@@ -679,7 +884,7 @@
     }
   },
   {
-    "__docId__": 34,
+    "__docId__": 45,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -691,7 +896,7 @@
     "importPath": "cs419-frontend/src/shared/reducers/TodoReducer.js",
     "importStyle": "todoReducer",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 15,
     "undocument": true,
     "params": [
       {
@@ -718,7 +923,7 @@
     "generator": false
   },
   {
-    "__docId__": 35,
+    "__docId__": 46,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -728,10 +933,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n */\n\nexport { default as todos } from './TodoReducer';"
+    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful,\n but it’s a nice structure to have.\n */\n\nexport { default as todos } from './TodoReducer';\n"
   },
   {
-    "__docId__": 36,
+    "__docId__": 47,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -741,10 +946,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n */\nimport { combineReducers } from 'redux';\nimport * as reducers from './reducers';\n\nconst rootReducer = combineReducers(reducers);\n\nexport default rootReducer;"
+    "content": "/*\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful,\n but it’s a nice structure to have.\n */\nimport { combineReducers } from 'redux';\nimport * as reducers from './reducers';\n\nconst rootReducer = combineReducers(reducers);\n\nexport default rootReducer;\n"
   },
   {
-    "__docId__": 37,
+    "__docId__": 48,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -756,7 +961,7 @@
     "importPath": "cs419-frontend/src/shared/rootReducer.js",
     "importStyle": "rootReducer",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 11,
     "undocument": true,
     "type": {
       "types": [
@@ -765,7 +970,7 @@
     }
   },
   {
-    "__docId__": 38,
+    "__docId__": 49,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -775,10 +980,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import React from 'react';\nimport { Route, IndexRoute } from 'react-router';\nimport App from 'containers/App';\nimport Home from 'components/TodosHome.jsx'\n\nexport default (\n  <Route name=\"app\" component={App} path=\"/\">\n    <IndexRoute component={Home} />\n  </Route>\n);"
+    "content": "import React from 'react';\nimport { Route, IndexRoute } from 'react-router';\nimport App from 'containers/App';\nimport Home from 'components/TodosHome/TodosHome.jsx'\n\nexport default (\n  <Route name=\"app\" component={App} path=\"/\">\n    <IndexRoute component={Home} />\n  </Route>\n);\n"
   },
   {
-    "__docId__": 39,
+    "__docId__": 50,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -788,10 +993,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "// Define global style vars here\n\nconst sans = '\"Helvetica Neue\", sans-serif';\nconst serif = 'Georgia, serif';\nconst blue = '#0070ff';\n\nexport const Type = {\n  sans,\n  serif\n};\n\nexport const Color = { blue };"
+    "content": "// Define global style vars here\n\nconst sans = '\"Helvetica Neue\", sans-serif';\nconst serif = 'Georgia, serif';\nconst blue = '#0070ff';\n\nexport const Type = {\n  sans,\n  serif,\n};\n\nexport const Color = { blue };\n"
   },
   {
-    "__docId__": 40,
+    "__docId__": 51,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -812,7 +1017,7 @@
     }
   },
   {
-    "__docId__": 41,
+    "__docId__": 52,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -833,7 +1038,7 @@
     }
   },
   {
-    "__docId__": 42,
+    "__docId__": 53,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -854,7 +1059,7 @@
     }
   },
   {
-    "__docId__": 43,
+    "__docId__": 54,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -875,7 +1080,7 @@
     }
   },
   {
-    "__docId__": 44,
+    "__docId__": 55,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -896,7 +1101,7 @@
     }
   },
   {
-    "__docId__": 46,
+    "__docId__": 57,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -909,7 +1114,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 58,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -922,7 +1127,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 59,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -935,7 +1140,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 49,
+    "__docId__": 60,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -948,7 +1153,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 61,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -961,7 +1166,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 51,
+    "__docId__": 62,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -974,7 +1179,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 63,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -987,7 +1192,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 64,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1000,7 +1205,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 65,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1013,7 +1218,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 55,
+    "__docId__": 66,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1026,7 +1231,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 67,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1039,7 +1244,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 57,
+    "__docId__": 68,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1052,7 +1257,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 69,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1065,7 +1270,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 59,
+    "__docId__": 70,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1078,7 +1283,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 60,
+    "__docId__": 71,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1091,7 +1296,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 61,
+    "__docId__": 72,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1104,7 +1309,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 62,
+    "__docId__": 73,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1117,7 +1322,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 63,
+    "__docId__": 74,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1130,7 +1335,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 64,
+    "__docId__": 75,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1143,7 +1348,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 65,
+    "__docId__": 76,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1156,7 +1361,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 66,
+    "__docId__": 77,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1169,7 +1374,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 67,
+    "__docId__": 78,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1182,7 +1387,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 68,
+    "__docId__": 79,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1195,7 +1400,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 69,
+    "__docId__": 80,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1208,7 +1413,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 70,
+    "__docId__": 81,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1221,7 +1426,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 71,
+    "__docId__": 82,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1234,7 +1439,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 72,
+    "__docId__": 83,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1247,7 +1452,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 73,
+    "__docId__": 84,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1260,7 +1465,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 74,
+    "__docId__": 85,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1273,7 +1478,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 75,
+    "__docId__": 86,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1286,7 +1491,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 76,
+    "__docId__": 87,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1299,7 +1504,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 77,
+    "__docId__": 88,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1312,7 +1517,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 78,
+    "__docId__": 89,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1325,7 +1530,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 79,
+    "__docId__": 90,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1338,7 +1543,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 80,
+    "__docId__": 91,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1351,7 +1556,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 81,
+    "__docId__": 92,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1364,7 +1569,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 82,
+    "__docId__": 93,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1377,7 +1582,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 83,
+    "__docId__": 94,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1390,7 +1595,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 84,
+    "__docId__": 95,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1403,7 +1608,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 85,
+    "__docId__": 96,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1416,7 +1621,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 86,
+    "__docId__": 97,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1429,7 +1634,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 87,
+    "__docId__": 98,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1442,7 +1647,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 88,
+    "__docId__": 99,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1455,7 +1660,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 100,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1468,7 +1673,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 90,
+    "__docId__": 101,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1481,7 +1686,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 91,
+    "__docId__": 102,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1494,7 +1699,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 92,
+    "__docId__": 103,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1507,7 +1712,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 94,
+    "__docId__": 105,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1520,7 +1725,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 95,
+    "__docId__": 106,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1533,7 +1738,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 96,
+    "__docId__": 107,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1546,7 +1751,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 97,
+    "__docId__": 108,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1559,7 +1764,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 98,
+    "__docId__": 109,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1572,7 +1777,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 99,
+    "__docId__": 110,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1585,7 +1790,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 100,
+    "__docId__": 111,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1598,7 +1803,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 101,
+    "__docId__": 112,
     "kind": "external",
     "static": true,
     "variation": null,

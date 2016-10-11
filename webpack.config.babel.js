@@ -8,7 +8,7 @@ module.exports = {
     './src/client'
   ],
   output: {
-    path: path.join(__dirname, 'src/dist'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
   resolve: {

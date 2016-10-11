@@ -94,7 +94,7 @@
     "eslint": "eslint -c .eslintrc src",
     "start": "cross-env NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./src/shared node ./src/server/",
     "dev": "npm run start & webpack-dev-server --progress --color",
-    "build": "NODE_ENV=production webpack --progress --color -p --config webpack.prod.config.js",
+    "build": "NODE_ENV=production webpack --progress --color -p --config webpack.config.babel.js",
     "test": "mocha --require ./tools/testSetup.js --compilers js:babel-register \"src/**/test.js\"",
     "win-build": "set NODE_ENV=production && webpack --progress --color -p --config webpack.config.babel.js",
     "win-start": "start cmd.exe /c \"set NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./src/shared && node ./src/server/\"",

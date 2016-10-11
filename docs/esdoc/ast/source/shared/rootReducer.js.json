@@ -1,59 +1,59 @@
 {
   "type": "Program",
   "start": 0,
-  "end": 376,
+  "end": 378,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 12,
-      "column": 27
+      "line": 14,
+      "column": 0
     }
   },
   "sourceType": "module",
   "body": [
     {
       "type": "ImportDeclaration",
-      "start": 219,
-      "end": 259,
+      "start": 220,
+      "end": 260,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 8,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 8,
           "column": 40
         }
       },
       "specifiers": [
         {
           "type": "ImportSpecifier",
-          "start": 228,
-          "end": 243,
+          "start": 229,
+          "end": 244,
           "loc": {
             "start": {
-              "line": 7,
+              "line": 8,
               "column": 9
             },
             "end": {
-              "line": 7,
+              "line": 8,
               "column": 24
             }
           },
           "imported": {
             "type": "Identifier",
-            "start": 228,
-            "end": 243,
+            "start": 229,
+            "end": 244,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 8,
                 "column": 9
               },
               "end": {
-                "line": 7,
+                "line": 8,
                 "column": 24
               }
             },
@@ -62,15 +62,15 @@
           },
           "local": {
             "type": "Identifier",
-            "start": 228,
-            "end": 243,
+            "start": 229,
+            "end": 244,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 8,
                 "column": 9
               },
               "end": {
-                "line": 7,
+                "line": 8,
                 "column": 24
               }
             },
@@ -78,22 +78,22 @@
             "leadingComments": [
               {
                 "type": "Block",
-                "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n ",
+                "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful,\n but it’s a nice structure to have.\n ",
                 "start": 0,
-                "end": 218,
+                "end": 219,
                 "loc": {
                   "start": {
                     "line": 1,
                     "column": 0
                   },
                   "end": {
-                    "line": 6,
+                    "line": 7,
                     "column": 3
                   }
                 },
                 "range": [
                   0,
-                  218
+                  219
                 ]
               }
             ]
@@ -104,15 +104,15 @@
       "importKind": "value",
       "source": {
         "type": "Literal",
-        "start": 251,
-        "end": 258,
+        "start": 252,
+        "end": 259,
         "loc": {
           "start": {
-            "line": 7,
+            "line": 8,
             "column": 32
           },
           "end": {
-            "line": 7,
+            "line": 8,
             "column": 39
           }
         },
@@ -123,66 +123,66 @@
       "leadingComments": [
         {
           "type": "Block",
-          "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n ",
+          "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n\n Since we only have one reducer in this app, this isn’t that useful,\n but it’s a nice structure to have.\n ",
           "start": 0,
-          "end": 218,
+          "end": 219,
           "loc": {
             "start": {
               "line": 1,
               "column": 0
             },
             "end": {
-              "line": 6,
+              "line": 7,
               "column": 3
             }
           },
           "range": [
             0,
-            218
+            219
           ]
         }
       ]
     },
     {
       "type": "ImportDeclaration",
-      "start": 260,
-      "end": 299,
+      "start": 261,
+      "end": 300,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 0
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 39
         }
       },
       "specifiers": [
         {
           "type": "ImportNamespaceSpecifier",
-          "start": 267,
-          "end": 280,
+          "start": 268,
+          "end": 281,
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 7
             },
             "end": {
-              "line": 8,
+              "line": 9,
               "column": 20
             }
           },
           "local": {
             "type": "Identifier",
-            "start": 272,
-            "end": 280,
+            "start": 273,
+            "end": 281,
             "loc": {
               "start": {
-                "line": 8,
+                "line": 9,
                 "column": 12
               },
               "end": {
-                "line": 8,
+                "line": 9,
                 "column": 20
               }
             },
@@ -193,15 +193,15 @@
       "importKind": "value",
       "source": {
         "type": "Literal",
-        "start": 286,
-        "end": 298,
+        "start": 287,
+        "end": 299,
         "loc": {
           "start": {
-            "line": 8,
+            "line": 9,
             "column": 26
           },
           "end": {
-            "line": 8,
+            "line": 9,
             "column": 38
           }
         },
@@ -212,44 +212,44 @@
     },
     {
       "type": "Identifier",
-      "start": 301,
-      "end": 347,
+      "start": 302,
+      "end": 348,
       "loc": {
         "start": {
-          "line": 10,
+          "line": 11,
           "column": 0
         },
         "end": {
-          "line": 10,
+          "line": 11,
           "column": 46
         }
       },
       "declarations": [
         {
           "type": "VariableDeclarator",
-          "start": 307,
-          "end": 346,
+          "start": 308,
+          "end": 347,
           "loc": {
             "start": {
-              "line": 10,
+              "line": 11,
               "column": 6
             },
             "end": {
-              "line": 10,
+              "line": 11,
               "column": 45
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 307,
-            "end": 318,
+            "start": 308,
+            "end": 319,
             "loc": {
               "start": {
-                "line": 10,
+                "line": 11,
                 "column": 6
               },
               "end": {
-                "line": 10,
+                "line": 11,
                 "column": 17
               }
             },
@@ -257,29 +257,29 @@
           },
           "init": {
             "type": "CallExpression",
-            "start": 321,
-            "end": 346,
+            "start": 322,
+            "end": 347,
             "loc": {
               "start": {
-                "line": 10,
+                "line": 11,
                 "column": 20
               },
               "end": {
-                "line": 10,
+                "line": 11,
                 "column": 45
               }
             },
             "callee": {
               "type": "Identifier",
-              "start": 321,
-              "end": 336,
+              "start": 322,
+              "end": 337,
               "loc": {
                 "start": {
-                  "line": 10,
+                  "line": 11,
                   "column": 20
                 },
                 "end": {
-                  "line": 10,
+                  "line": 11,
                   "column": 35
                 }
               },
@@ -288,15 +288,15 @@
             "arguments": [
               {
                 "type": "Identifier",
-                "start": 337,
-                "end": 345,
+                "start": 338,
+                "end": 346,
                 "loc": {
                   "start": {
-                    "line": 10,
+                    "line": 11,
                     "column": 36
                   },
                   "end": {
-                    "line": 10,
+                    "line": 11,
                     "column": 44
                   }
                 },
@@ -313,29 +313,29 @@
     },
     {
       "type": "Identifier",
-      "start": 349,
-      "end": 376,
+      "start": 350,
+      "end": 377,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 0
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 27
         }
       },
       "declaration": {
         "type": "Identifier",
-        "start": 364,
-        "end": 375,
+        "start": 365,
+        "end": 376,
         "loc": {
           "start": {
-            "line": 12,
+            "line": 13,
             "column": 15
           },
           "end": {
-            "line": 12,
+            "line": 13,
             "column": 26
           }
         },
@@ -347,58 +347,58 @@
     },
     {
       "type": "ExportDefaultDeclaration",
-      "start": 349,
-      "end": 376,
+      "start": 350,
+      "end": 377,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 0
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 27
         }
       },
       "declaration": {
         "type": "VariableDeclaration",
-        "start": 301,
-        "end": 347,
+        "start": 302,
+        "end": 348,
         "loc": {
           "start": {
-            "line": 10,
+            "line": 11,
             "column": 0
           },
           "end": {
-            "line": 10,
+            "line": 11,
             "column": 46
           }
         },
         "declarations": [
           {
             "type": "VariableDeclarator",
-            "start": 307,
-            "end": 346,
+            "start": 308,
+            "end": 347,
             "loc": {
               "start": {
-                "line": 10,
+                "line": 11,
                 "column": 6
               },
               "end": {
-                "line": 10,
+                "line": 11,
                 "column": 45
               }
             },
             "id": {
               "type": "Identifier",
-              "start": 307,
-              "end": 318,
+              "start": 308,
+              "end": 319,
               "loc": {
                 "start": {
-                  "line": 10,
+                  "line": 11,
                   "column": 6
                 },
                 "end": {
-                  "line": 10,
+                  "line": 11,
                   "column": 17
                 }
               },
@@ -406,29 +406,29 @@
             },
             "init": {
               "type": "CallExpression",
-              "start": 321,
-              "end": 346,
+              "start": 322,
+              "end": 347,
               "loc": {
                 "start": {
-                  "line": 10,
+                  "line": 11,
                   "column": 20
                 },
                 "end": {
-                  "line": 10,
+                  "line": 11,
                   "column": 45
                 }
               },
               "callee": {
                 "type": "Identifier",
-                "start": 321,
-                "end": 336,
+                "start": 322,
+                "end": 337,
                 "loc": {
                   "start": {
-                    "line": 10,
+                    "line": 11,
                     "column": 20
                   },
                   "end": {
-                    "line": 10,
+                    "line": 11,
                     "column": 35
                   }
                 },
@@ -437,15 +437,15 @@
               "arguments": [
                 {
                   "type": "Identifier",
-                  "start": 337,
-                  "end": 345,
+                  "start": 338,
+                  "end": 346,
                   "loc": {
                     "start": {
-                      "line": 10,
+                      "line": 11,
                       "column": 36
                     },
                     "end": {
-                      "line": 10,
+                      "line": 11,
                       "column": 44
                     }
                   },

@@ -1,30 +1,30 @@
 {
   "type": "Program",
   "start": 0,
-  "end": 268,
+  "end": 270,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 7,
-      "column": 49
+      "line": 9,
+      "column": 0
     }
   },
   "sourceType": "module",
   "body": [
     {
       "type": "ExportNamedDeclaration",
-      "start": 219,
-      "end": 268,
+      "start": 220,
+      "end": 269,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 8,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 8,
           "column": 49
         }
       },
@@ -32,29 +32,29 @@
       "specifiers": [
         {
           "type": "ExportSpecifier",
-          "start": 228,
-          "end": 244,
+          "start": 229,
+          "end": 245,
           "loc": {
             "start": {
-              "line": 7,
+              "line": 8,
               "column": 9
             },
             "end": {
-              "line": 7,
+              "line": 8,
               "column": 25
             }
           },
           "local": {
             "type": "Identifier",
-            "start": 228,
-            "end": 235,
+            "start": 229,
+            "end": 236,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 8,
                 "column": 9
               },
               "end": {
-                "line": 7,
+                "line": 8,
                 "column": 16
               }
             },
@@ -63,15 +63,15 @@
           },
           "exported": {
             "type": "Identifier",
-            "start": 239,
-            "end": 244,
+            "start": 240,
+            "end": 245,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 8,
                 "column": 20
               },
               "end": {
-                "line": 7,
+                "line": 8,
                 "column": 25
               }
             },
@@ -82,15 +82,15 @@
       ],
       "source": {
         "type": "Literal",
-        "start": 252,
-        "end": 267,
+        "start": 253,
+        "end": 268,
         "loc": {
           "start": {
-            "line": 7,
+            "line": 8,
             "column": 33
           },
           "end": {
-            "line": 7,
+            "line": 8,
             "column": 48
           }
         },
@@ -101,22 +101,22 @@
       "leadingComments": [
         {
           "type": "Block",
-          "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful, but it’s a nice structure to have.\n ",
+          "value": "\n So that Redux can pick up multiple reducers in the future,\n you’ll want also to have a reducers/index.js:\n Since we only have one reducer in this app, this isn’t that useful,\n but it’s a nice structure to have.\n ",
           "start": 0,
-          "end": 217,
+          "end": 218,
           "loc": {
             "start": {
               "line": 1,
               "column": 0
             },
             "end": {
-              "line": 5,
+              "line": 6,
               "column": 3
             }
           },
           "range": [
             0,
-            217
+            218
           ]
         }
       ]
