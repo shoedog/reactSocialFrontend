@@ -2,27 +2,29 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory, useRouterHistory } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
-import routes from './shared/routes';
+import routes from './routes';
 
 // Redux imports
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { fromJS } from 'immutable';
-import rootReducer from './shared/rootReducer.js';
+import rootReducer from './reducers/rootReducer.js';
 
 // Middleware for async actions
-import promiseMiddleware from './shared/lib/promiseMiddleware';
-import immutifyState from './shared/lib/immutifyState';
+import promiseMiddleware from './lib/promiseMiddleware';
+import immutifyState from './lib/immutifyState';
 
 //Styling
-import { StyleSheet } from 'aphrodite/no-important'
+import { StyleSheet } from 'aphrodite/no-important';
+
+import Root from './containers/Root';
 
 const history = browserHistory;
 
 /**
  * We hydrate/initialize the store with the state passed from the server.
  */
-const initialState = immutifyState(window.__INITIAL_STATE__);
+const initialState = immutifyState(window.__PRELOADED_STATE__);
 
 const reducer = rootReducer;
 
@@ -43,11 +45,6 @@ StyleSheet.rehydrate(window.renderedClassNames);
  * @param {Object} history - this applies the history
  */
 render(
-<Provider store={store}>
-<Router children={routes} history={history} />
-</Provider>,
-  document.getElementById('app')
+<Root store={store} history={history}/>,
+  document.getElementById('root')
 );
-
-
-

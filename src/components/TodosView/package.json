@@ -1,0 +1,6 @@
+{
+  "name": "TodosView",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TodosView.jsx"
+}

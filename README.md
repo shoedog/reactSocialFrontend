@@ -3,7 +3,7 @@ cs419-frontend
 
 Welcome.
 
-Windows OS Environment
+###Windows OS Environment
 ---
 - Setup:  ```npm install```
 - Build: ```npm run win-build```
@@ -11,45 +11,39 @@ Windows OS Environment
 
 Webpack-dev-server (localhost:8080) & node server (localhost:3000)
 
-Mac OS Environment
+###Mac OS Environment
 ---
 - Setup:  ```npm install```
 - Build: ```npm run build```
-- Run:  ```npm run dev```
+  - NOTE: need webpack production build. Right now its using the dev config.
+- Run Dev Mode:  ```npm run dev```
+  - localhost:8080 -> webpack-dev-server running client
+  - localhost:3000 -> Rendering Server
+  - localhost:3001 -> API Server: only responds to /api request right now
+- Linting: ```npm run eslint```
+- DocGen: ```npm run esdoc```
+- Test: ```npm run test```
 
-Webpack-dev-server (localhost:8080) & node server (localhost:3000)
+###Directory Structure
+---
+```
+├── bin   #Has apiServer, renderingServer, some configs, & unused express webpack-dev-server
+├── src    # Application code + client.js( if client expands, it should get own Directory)
+    ├── actions     #redux actions
+    ├── components  #'dumb' components -> stateless
+    ├── containers  #'smart' components -> hold/manage states/actions
+    ├── lib         # middlewares, could add constants here
+    ├── store       # configure store
+    ├── rootReducer.js  #reducers reducers
+    ├── routes.js          #routing
+    ├── client.js         #client
+```
 
 Usage
 ---
+### Documentation
 
-Start the development server with this command:
-
-```
-npm start
-```
-
-
-Setup
----
-
-```
-npm install
-```
-
-
-Compile
----
-
-```
-npm run compile
-```
-
-ESLint
----
-
-```
-npm run eslint
-```
+* [Exploring the  App](docs/ExploringTheDemoApp.md)
 ___
 StyleGuide
 ---
