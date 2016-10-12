@@ -11,11 +11,13 @@ import LaunchPageReducer from './LaunchPageReducer';
 import RouterReducer from './RouterReducer';
 import AuthReducer from './AuthReducer';
 
-const rootReducer = combineReducers({
-  LaunchPageReducer,
-  RouterReducer,
-  AuthReducer,
-  formReducer,
-});
+const reducers = {
+  launchPage: LaunchPageReducer,
+  router: RouterReducer,
+  auth: AuthReducer,
+  form: formReducer
+}
+
+const rootReducer = combineReducers(reducers);
 
 export default rootReducer;
