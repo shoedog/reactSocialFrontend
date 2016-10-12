@@ -43,8 +43,9 @@ Usage
 ---
 ### Documentation
 
-* [Exploring the  App](docs/ExploringTheDemoApp.md)
+* [Exploring the  App](./docs/ExploringTheDemoApp.md)
 ___
-StyleGuide
+
 ---
-* /docs
+* [AirBnB React StyleGuide](./docs/Airbnb-React-JSX-Style-Guide.md)
+* [StyleGuide Additions to AirBnB's](./docs/react-style-guide.md)
