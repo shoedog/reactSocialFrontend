@@ -1,6 +1,11 @@
 var path    = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 //var WebpackDevServer = require('webpack-dev-server');
+
+const GLOBALS = {
+  'process.env.NODE_ENV': DEBUG = "development"
+}
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -15,7 +20,7 @@ module.exports = {
     //Will be public or set as an env variable in production
     path: path.resolve(__dirname, '../static/dist'),
     filename: 'bundle.js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name].[bundle].js',
     // Dev server or set as an env variable in production
     publicPath: `/assets/`
   },
@@ -35,17 +40,23 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$|\.js$/, exclude: /node_modules/, loader: 'babel' }
+      { test: /\.jsx?$|\.js$/, loader: 'babel', exclude: /node_modules/,  },
+      { test: /\.css/, loader: 'style-loader' },
+      { test: /\.css/, loader: 'css-loader', query: { modules: true, localIdentName: '[name]__[local]___[hash:base64:5]'}  },
+      //  'css', 'css?outputStyle=expanded&sourceMap=true&sourceMapContents=true&modules=true',
+      //{ test: /\.css/, loaders: ['style', 'css',]}
     ]
   },
   plugins: [
+    //new extractTextPlugin("[name].css"),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'BABEL_ENV': JSON.stringify('dev')
+        'BABEL_ENV': JSON.stringify('dev'),
+        'BROWSER': JSON.stringify(true)
       }
     }),
   ],
@@ -53,6 +64,7 @@ module.exports = {
 
   devServer: {
     hot: true,
+    inline: true,
     proxy: {
       '*': 'http://127.0.0.1:' + (process.env.PORT || 3000)
     },

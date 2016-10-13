@@ -17,6 +17,7 @@ import fetchComponentData from '../src/lib/fetchComponentData';
 import { StyleSheetServer } from 'aphrodite'
 import { HOST, PORT, API_HOST, API_PORT, WEBPACK_URL } from '../tools/config';
 
+process.env.BROWSER = false;
 //API Server
 const targetUrl = `http://${API_HOST}:${API_PORT}`;
 const app = express();
@@ -53,6 +54,8 @@ proxy.on('error', (error, req, res) => {
 const history = createMemoryHistory();
 
 app.use((req, res) => {
+  const css = new Set(); // CSS for all rendered React components
+  const context = { insertCss: (...styles) => styles.forEach(style => css.add(style._getCss())) };
   const reducer  = rootReducer;
 
   // Async middleware applied same as in client except without initialState
@@ -125,6 +128,7 @@ app.use((req, res) => {
                   }
                 </style>
                 <style data-aphrodite>${componentHTML.css.content}</style>
+                <style type="text/css">${[...css].join('')}</style>
           </head>
           <body>
             <div id="root">${componentHTML.html}</div>

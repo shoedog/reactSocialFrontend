@@ -6,22 +6,9 @@
     "transform-decorators-legacy"
   ],
   "env": {
-    "node": {
-      "plugins": [
-        [
-          "babel-plugin-transform-require-ignore",
-          {
-            "extensions": [".less", ".css"]
-          }
-        ]
-      ]
-    },
-    "dev": {
-      //"presets": ["react-hmre"]
-    },
     "test": {
       "plugins": [
-        //"babel-plugin-rewire"
+        "babel-plugin-rewire",
       ]
     }
   }

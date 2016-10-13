@@ -1,0 +1,24 @@
+.link {
+  max-width: 25%;
+  color: #FFFFFF;
+  margin: 0 10px 0 10px;
+  padding: 20px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  border: solid black round;
+  transition: .2s opacity ease;
+  :hover: {
+    opacity: 0.4;
+  }
+}
+
+.activeLink {
+  background-color: #FFFFFF;
+  color: #585555;
+}
+
+.navbar {
+  background-color: #585555;
+  padding-left: 20px;
+}
