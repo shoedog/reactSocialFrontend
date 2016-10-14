@@ -5,7 +5,7 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 var path = require('path');
 
 //const { HOST, PORT, WEBPACK_PORT } = require('../tools/config');
-const webpackConfig = require('../webpack/devConfig');
+const webpackConfig = require('../devConfig');
 const compiler = webpack(webpackConfig);
 const serverOptions = {
   serverSideRender: true,

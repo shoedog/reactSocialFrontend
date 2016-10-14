@@ -4,6 +4,10 @@ import { API_PORT } from '../tools/config';
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('API Index Path!');
+});
+
 app.get('/api', (req, res) => {
   res.send('Hello, API!');
 });

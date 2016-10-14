@@ -1,15 +1,24 @@
 {
   "presets": ["es2015", "react", "stage-1"],
+  "env": {
+    "node": {
+      "plugins": [
+        [
+          "babel-plugin-transform-require-ignore",
+          {
+            "extensions": [".less", ".css"]
+          }
+        ]
+      ]
+    }
+  },
   "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread",
     "transform-runtime",
     "react-hot-loader/babel",
     "transform-decorators-legacy"
+
   ],
-  "env": {
-    "test": {
-      "plugins": [
-        "babel-plugin-rewire"
-      ]
-    }
-  }
+
 }

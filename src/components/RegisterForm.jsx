@@ -60,6 +60,8 @@ const RegisterForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
 
   return(
+    <div>
+      <div style={{"align":"center", "backgroundColor":"#CBC5C4", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
       <form onSubmit={handleSubmit(submit)}>
         <Field name="email" component="input" type="email" component={renderField} label="Email" />
         <Field name="username" component="input" type="text" component={renderField} label="User Name" />
@@ -69,6 +71,8 @@ const RegisterForm = (props) => {
           <button type="submit" disabled={ submitting }>Submit</button>
         </div>
       </form>
+        </div>
+    </div>
     );
 }
 

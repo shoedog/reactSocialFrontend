@@ -1,29 +1,26 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
-import { StyleSheet, css } from 'aphrodite/no-important';
+//import { StyleSheet, css } from 'aphrodite/no-important';
 import { connect } from 'react-redux';
-if (process.env.BROWSER) {
-  var s = require('./NavBar.css');
-  console.log(s);
-}
+import '!style!css!./NavBar.css';
 
 
 const Nav = () => (
-  <div className={css(styles.navbar)}>
-    <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
+  <div className="navbar">
+    <IndexLink to='/' className="link" activeClassName="link activeLink">
       Home
     </IndexLink>
 
-    <IndexLink to='/home' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
+    <IndexLink to='/home' className="link" activeClassName="link activeLink">
       Login Page
     </IndexLink>
 
 
-    <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>
+    <a href='https://github.com/jaredpalmer/react-production-starter' className="link" target='_blank'>GitHub Inspiration</a>
   </div>
 );
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   link: {
     maxWidth: '25%',
     color: '#FFFFFF',
@@ -46,6 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#585555',
     paddingLeft: "20px"
   }
-});
+});*/
 
 export default Nav;

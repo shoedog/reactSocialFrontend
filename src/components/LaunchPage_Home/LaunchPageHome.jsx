@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as LaunchPageActions from '../../actions/LaunchPageActions';
 import { connect }            from 'react-redux';
 import RegisterForm           from '../RegisterForm';
+require("!style!css!./LaunchPageHome.css");
 
 const showResults = values =>
   new Promise(resolve => {
@@ -29,11 +30,11 @@ class LaunchPageHome extends Component {
     return (
       <div id="todo-list">
         <LaunchPageView/>
-        <div>
-          <span onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>SIGN IN</span>
-          <span onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}> SIGN UP</span>
+        <div className="loginOptions">
+          <span className="signInBox" onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>SIGN IN</span>
+          <span className="signUpBox" onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}> SIGN UP</span>
         </div>
-        {this.state.toggle ? <LaunchPageForm onSubmit={showResults}/> : <RegisterForm onSubmit={showResults}/>}
+        {this.state.toggle ? <LaunchPageForm onSubmit={showResults}/> : <RegisterForm className="registerForm" onSubmit={showResults}/>}
       </div>
     );
   }
