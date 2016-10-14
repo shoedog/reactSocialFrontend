@@ -1,11 +1,8 @@
 var path    = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+//var ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const NpmInstallPlugin = require('npm-install-webpack-plugin');
 //var WebpackDevServer = require('webpack-dev-server');
-
-const GLOBALS = {
-  'process.env.NODE_ENV': DEBUG = "development"
-}
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -56,15 +53,19 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'BABEL_ENV': JSON.stringify('dev'),
-        'BROWSER': JSON.stringify(true)
       }
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'BROWSER': JSON.stringify(true)
+      }
+    })
   ],
 
 
   devServer: {
     hot: true,
-    inline: true,
+    //inline: true,
     proxy: {
       '*': 'http://127.0.0.1:' + (process.env.PORT || 3000)
     },

@@ -6,12 +6,13 @@
   display: inline-block;
   text-decoration: none;
   font-weight: bold;
-  border: solid black round;
+  border: solid black;
   transition: .2s opacity ease;
-  :hover: {
-    opacity: 0.4;
-  }
 }
+.link.hover {
+  opacity: 0.4;
+}
+
 
 .activeLink {
   background-color: #FFFFFF;

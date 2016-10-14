@@ -4,25 +4,25 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { connect } from 'react-redux';
 if (process.env.BROWSER) {
   var s = require('./NavBar.css');
+  console.log(s);
 }
 
 
 const Nav = () => (
-  <div className={s.navbar}>
-    <IndexLink to='/' className={s.link} activeClassName={s.activeLink}>
+  <div className={css(styles.navbar)}>
+    <IndexLink to='/' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
       Home
     </IndexLink>
 
-    <IndexLink to='/home' className={s.link} activeClassName={s.activeLink}>
+    <IndexLink to='/home' className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
       Login Page
     </IndexLink>
 
 
-    <a href='https://github.com/jaredpalmer/react-production-starter' className={s.link} target='_blank'>GitHub Inspiration</a>
+    <a href='https://github.com/jaredpalmer/react-production-starter' className={css(styles.link)} target='_blank'>GitHub Inspiration</a>
   </div>
 );
 
-/*
 const styles = StyleSheet.create({
   link: {
     maxWidth: '25%',
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#585555',
     paddingLeft: "20px"
   }
-});*/
+});
 
 export default Nav;

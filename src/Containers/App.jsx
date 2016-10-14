@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import Nav from './NavBar';
 import { StyleSheet, css } from 'aphrodite/no-important';
-if (process.env.BROWSER) {
-  var s = require('./app.css');
-}
+/*if (process.env.BROWSER) {
+  var s = require('./../../app.css');
+}*/
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -15,18 +15,18 @@ if (process.env.BROWSER) {
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
 const App = ({children}) => (
-    <div className={s.root}>
-      <h1 className={s.title}>Moonwalk</h1>
-      <Nav className={s.nav}/>
-      {children}
-      <footer className={s.footer}>
-        <p className={s.footerLink} target='_blank'>Copyright © 2016 Team Moonwalk</p>
-      </footer>
-    </div>
+  <div className={css(styles.root)}>
+    <h1 className={css(styles.title)}>Moonwalk</h1>
+    <Nav className={css(styles.nav)}/>
+    {children}
+    <footer className={css(styles.footer)}>
+      <p className={css(styles.footerLink)} target='_blank'>Copyright © 2016 Team Moonwalk</p>
+    </footer>
+  </div>
 );
 
-/*
-const inline_styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   root: {
     maxWidth: "100%",
     backgroundColor: "#c0c0c0",
@@ -56,6 +56,6 @@ const inline_styles = StyleSheet.create({
     width: '100%',
     align: 'center'
   }
-});*/
+});
 
 export default App;

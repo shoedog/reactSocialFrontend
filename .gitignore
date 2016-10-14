@@ -2,4 +2,12 @@ node_modules
 build/assets/
 /node_modules/
 .idea/
-npm_debug.log
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+#Docs
+docs/esdoc/
