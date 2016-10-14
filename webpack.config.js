@@ -2,13 +2,14 @@ var path    = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin      = require('assets-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 var buildHash = process.env.NODE_ENV === "production" ? "[hash]" : "dev";
 
 module.exports = {
 
   entry:  [
-    path.resolve('./src/client.js')
+    path.resolve('./src/client.js'),
   ],
   output: {
     path: path.join(__dirname, 'public/static/dist/', buildHash),
@@ -16,8 +17,8 @@ module.exports = {
     publicPath: "static/dist/" + buildHash + "/"
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    modulesDirectories: ['node_modules', 'src'],
+    extensions: ['', '.js', '.jsx', '.css', '.scss', '.json'],
+    modulesDirectories: ['node_modules',  path.resolve(__dirname, './node_modules'), 'src'],
     root: [
       path.resolve('./src'),
     ]
@@ -32,29 +33,39 @@ module.exports = {
   },
   module: {
     loaders: [
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", `css-loader?modules&importLoaders=1&localIdentName=[name]_[local]__[hash:base64:5]`)
-      },
       { test: /\.jsx?$|\.js$/, loader: 'babel', exclude: [/node_modules/, /static/]  },
+      {
+        test: /(\.scss|\.css)$/,
+        loader: ExtractTextPlugin.extract('style', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[local]__[hash:base64:5]!postcss!sass')
+      },
 
       //{ test: /\.css/, loader: 'css-loader', query: { modules: true, localIdentName: '[name]__[local]___[hash:base64:5]'}  },
       { test: /\.json$/, loader: "json-loader" },
     ]
   },
+  postcss: [autoprefixer],
+  sassLoader: {
+    //We use this if we create a custom theme
+    //data: '@import "' + path.resolve(__dirname, 'theme/_theme.scss') + '";',
+    //includePaths: [path.resolve(__dirname, './src/app')]
+  },
+
   plugins: [
-    //Extracts CSS for a separate bundle so we can SSR
-    new ExtractTextPlugin('style.css', { allChunks: true}),
-    //Splits CSS and JS so we can SSR!
-    new AssetsPlugin({path: path.join(__dirname, 'Assets')}),
     new webpack.DefinePlugin({
       'process.env': {
         'BROWSER': JSON.stringify(true),
         'NODE_ENV': JSON.stringify( process.env.NODE_ENV || 'development' ),
       }
     }),
-
+    //Extracts CSS for a separate bundle so we can SSR
+    new ExtractTextPlugin('bundle.css', { allChunks: true}),
+    //Splits CSS and JS so we can SSR!
+    new AssetsPlugin({path: path.join(__dirname, 'Assets')}),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.DedupePlugin(),
   ],
+
+//  , { allChunks: true}
 
 /*
   devServer: {

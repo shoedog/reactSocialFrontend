@@ -1,4 +1,3 @@
-//import "babel-polyfill";
 import express from 'express';
 import React from 'react';
 import axios from 'axios';
@@ -112,6 +111,9 @@ app.use((req, res) => {
   });
 });
 
+// We can add css assets and serve them with this, but the asset bundling in webpack might not work with css modules?
+//<link rel="stylesheet" href="${config.staticUrl}/${getAssetsPaths().css}">
+
 function renderHTML({ componentHTML, initialState, config }) {
   return `
         <!DOCTYPE html>
@@ -123,7 +125,7 @@ function renderHTML({ componentHTML, initialState, config }) {
             <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">            
             <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.2.65/css/materialdesignicons.min.css">
-            <link rel="stylesheet" href="${config.staticUrl}/${getAssetsPaths().css}">   
+               
         </head>
         <body>
         <div id="root">${componentHTML}</div>

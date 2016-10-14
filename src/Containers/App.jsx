@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Nav from './NavBar';
-//import { StyleSheet, css } from 'aphrodite/no-important';
 require('!style!css!./App.css');
 
 /*

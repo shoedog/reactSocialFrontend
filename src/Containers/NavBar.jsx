@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
-//import { StyleSheet, css } from 'aphrodite/no-important';
 import { connect } from 'react-redux';
 import '!style!css!./NavBar.css';
+//import { Button } from 'react-toolbox/lib/button';
 
 
 const Nav = () => (
   <div className="navbar">
     <IndexLink to='/' className="link" activeClassName="link activeLink">
       Home
+
     </IndexLink>
 
     <IndexLink to='/home' className="link" activeClassName="link activeLink">
