@@ -62,7 +62,7 @@ const RegisterForm = (props) => {
   return(
     <div className="registration">
       <h1 style={{"textAlign":"center"}}>Register New User</h1>
-      <div style={{"align":"center", "backgroundColor":"#CBC5C4", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
+      <div style={{"align":"center", "backgroundColor":"#d8d8d8", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
       <form onSubmit={handleSubmit(submit)}>
         <Field name="email" component="input" type="email" component={renderField} label="Email" />
         <Field name="username" component="input" type="text" component={renderField} label="User Name" />

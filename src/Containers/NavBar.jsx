@@ -12,10 +12,13 @@ const Nav = () => (
 
     </IndexLink>
 
-    <IndexLink to='/home' className="link" activeClassName="link activeLink">
-      Login Page
+    <IndexLink to='/about' className="link" activeClassName="link activeLink">
+      About
     </IndexLink>
 
+    <IndexLink to='/contact' className="link" activeClassName="link activeLink">
+      Contact
+    </IndexLink>
 
     <a href='https://github.com/jaredpalmer/react-production-starter' className="link" target='_blank'>GitHub Inspiration</a>
   </div>

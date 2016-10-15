@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { classNames } from 'classnames';
-import LaunchPageView         from '../LaunchPage_View';
-import LaunchPageForm         from '../LaunchPage_Form/LaunchPageForm';
+import HomeForms         from '../HomeForms/HomeForms';
 import { bindActionCreators } from 'redux';
 import * as LaunchPageActions from '../../actions/LaunchPageActions';
 import { connect }            from 'react-redux';
-import RegisterForm           from '../RegisterForm';
-require("!style!css!./LaunchPageHome.css");
+import RegisterForm           from '../HomeForms/RegisterForm';
+require("!style!css!./Home.css");
 
 const showResults = values =>
   new Promise(resolve => {
@@ -16,7 +15,7 @@ const showResults = values =>
     }, 500)
   })
 
-class LaunchPageHome extends Component {
+class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {toggle: true};
@@ -28,16 +27,15 @@ class LaunchPageHome extends Component {
 
   render() {
     return (
-      <div className="LaunchPageHome">
-        <LaunchPageView/>
+      <div className="Home">
         <div className="loginOptions">
           <button className="signInBox" onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Log In</button>
           <button className="signUpBox" onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Register</button>
         </div>
-        {this.state.toggle ? <LaunchPageForm onSubmit={showResults}/> : <RegisterForm className="registerForm" onSubmit={showResults}/>}
+        {this.state.toggle ? <HomeForms onSubmit={showResults}/> : <RegisterForm className="registerForm" onSubmit={showResults}/>}
       </div>
     );
   }
 }
 
-export default LaunchPageHome
+export default Home

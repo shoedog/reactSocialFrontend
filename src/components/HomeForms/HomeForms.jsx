@@ -55,7 +55,7 @@ const LoginForm = (props) => {
     return (
       <div id="login-form">
         <h1 style={{"textAlign":"center"}}>Welcome Back!</h1>
-        <div style={{"align":"center", "backgroundColor":"#CBC5C4", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
+        <div style={{"align":"center", "backgroundColor":"#d8d8d8", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
           <form onSubmit={handleSubmit}>
             {error && <div className="form-error">{error}</div>}
             <Field name="email" component="input" type="email" component={renderField} label="Email" value={email} onChange={ e => e.target.value }/>
