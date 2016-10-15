@@ -54,7 +54,7 @@ const LoginForm = (props) => {
 
     return (
       <div id="login-form">
-        <h1 style={{"textAlign":"center"}}>Login stuffs here!</h1>
+        <h1 style={{"textAlign":"center"}}>Welcome Back!</h1>
         <div style={{"align":"center", "backgroundColor":"#CBC5C4", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
           <form onSubmit={handleSubmit}>
             {error && <div className="form-error">{error}</div>}

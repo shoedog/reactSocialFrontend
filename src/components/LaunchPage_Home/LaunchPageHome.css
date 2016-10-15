@@ -1,17 +1,16 @@
+.LaunchPageHome {
+
+}
+
 .loginOptions {
     text-align: center;
     margin-top: 15px;
     margin-bottom: 25px;
 }
 
-.signInBox {
-    border: 5px solid black;
-    padding: 5px;
-}
-
-.signUpBox {
-    border: 5px solid black;
-    padding: 5px;
+.signInBox, .signUpBox {
+	padding: 5px;
+	margin: 5px;
 }
 
 .registerForm {

@@ -28,11 +28,11 @@ class LaunchPageHome extends Component {
 
   render() {
     return (
-      <div id="todo-list">
+      <div className="LaunchPageHome">
         <LaunchPageView/>
         <div className="loginOptions">
-          <span className="signInBox" onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>SIGN IN</span>
-          <span className="signUpBox" onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}> SIGN UP</span>
+          <button className="signInBox" onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Log In</button>
+          <button className="signUpBox" onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Register</button>
         </div>
         {this.state.toggle ? <LaunchPageForm onSubmit={showResults}/> : <RegisterForm className="registerForm" onSubmit={showResults}/>}
       </div>

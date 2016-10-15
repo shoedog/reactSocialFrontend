@@ -60,7 +60,8 @@ const RegisterForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
 
   return(
-    <div>
+    <div className="registration">
+      <h1 style={{"textAlign":"center"}}>Register New User</h1>
       <div style={{"align":"center", "backgroundColor":"#CBC5C4", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
       <form onSubmit={handleSubmit(submit)}>
         <Field name="email" component="input" type="email" component={renderField} label="Email" />
