@@ -122,9 +122,6 @@
     "esdoc": "esdoc -c ./tools/esdoc.json && open ./docs/esdoc/index.html",
     "eslint": "eslint -c .eslintrc src",
     "test": "mocha --require ./tools/testSetup.js --compilers js:babel-register \"src/**/test.js\"",
-    "dev-api": "cross-env NODE_ENV=development nodemon --exec babel-node ./bin/apiServer.js",
-    "win-build": "set NODE_ENV=production && webpack --progress --color -p --config ./webpack/devConfig.js",
-    "win-start": "start cmd.exe /c \"set NODE_ENV=development BABEL_ENV=dev NODE_PATH=$NODE_PATH:./src/shared && node ./bin/renderingServer/\"",
-    "win-dev": "npm run win-start && webpack-dev-server --progress --color"
+    "dev-api": "cross-env NODE_ENV=development nodemon --exec babel-node ./bin/apiServer.js"
   }
 }
