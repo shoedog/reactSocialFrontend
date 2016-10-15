@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import LaunchPageHome from './components/LaunchPage_Home/LaunchPageHome'
-import App from './containers/App';
+import App from './Containers/App';
 
 
 export default (

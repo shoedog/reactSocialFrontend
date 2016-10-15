@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { fromJS } from 'immutable';
 import configureStore from './configureStore';
 
-import Root from './containers/Root';
+import Root from './Containers/Root';
 
 const history = browserHistory;
 
