@@ -20,6 +20,8 @@
   max-width: 100%;
   font-weight: bold;
   font-size: 56px;
+  padding: 10px;
+  margin: 0px;
 }
 
 .footer {
@@ -34,7 +36,10 @@
   text-decoration: none;
 }
 
-.navbar {
-  width: 100%;
-  text-align: center;
+.img {
+  width:500px;
+  height:500px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }
