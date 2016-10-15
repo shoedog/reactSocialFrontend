@@ -14,6 +14,10 @@ Webpack-dev-server (localhost:8080) & node server (localhost:3000)
 ###Mac OS Environment
 ---
 - Setup:  ```npm install```
+- Global installs needed:
+```npm i -g cross-env```
+```npm i -g concurrently```
+```npm i -g nodemon```
 - Run Dev Mode:  ```npm run dev```
   - webpack-dev-server build & serve: ```npm run webpack-devserver```
   - Rendering Server(:3000): ```npm run nodemon```
@@ -28,9 +32,9 @@ Webpack-dev-server (localhost:8080) & node server (localhost:3000)
 - Run:      ```npm start```
   - TODO: need to test production build.
 
-:star: :star: Dev and Production Builds split CSS & JS. They are mapped via webpack-assets.json in ./Assets Folder. 
+:star: :star: Dev and Production Builds split CSS & JS. They are mapped via webpack-assets.json in ./Assets Folder.
 Also in ./Assets is client-config.json It lets us plug things into the html we render. See https://github.com/WebbyLab/itsquiz-wall.
-  
+
 
 ###Directory Structure
 ---
