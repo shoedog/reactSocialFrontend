@@ -36,6 +36,7 @@ Docker
 ---
 To build the image, run
 ``` docker build -t moonwalk-frontend . ```
+
 Once this has completed, run this command to run the app:
 ```
 docker run -t -p 3000:3000 -p 8050:8050  moonwalk-frontend
