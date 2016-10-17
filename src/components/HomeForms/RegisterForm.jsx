@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import axios from 'axios';
+import qs from 'qs';
+
+
+var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 
 const submit = (values, dispatch) => {
-//  return new Promise((resolve, reject) => {
-    if( values.email && values.password && values.username ) {
-/*      axios.get(`http://${config.apiHost}:${config.apiPort}/auth/${values.email}/${values.password}`)
+  return new Promise((resolve, reject) => {
+    if( values.email && values.password1 && values.username ) {
+      axios.post(`http://0.0.0.0:5000/user`, qs.stringify({
+        username: values.username,
+        password: values.password1
+      }), headers)
      .then (response => {
-       if(response.status === 200) {
-         dispatch(auth(values.email, values.password))
-         resolve()
-       }
+       console.log(response)
      })
      .catch(response => {
        if(response.status !== 200) {
+         console.log(response);
          reject({ username: 'Invalid username or password', _error: 'Login failed!' })
        }
-     })*/
+     })
    } console.log(values);
-//  })
+  })
 }
 
 
