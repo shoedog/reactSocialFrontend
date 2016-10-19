@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-require("!style!css!./about.css");
+//require("!style!css!./about.css");
+import s from './about.css';
 
 class About extends Component {
 	render() {
 		return (
-			<div className="about">
-				<h1 className="title">About Our Project</h1>
-				<div className="context">
+			<div className={s.about}>
+				<h1 className={s.title}>About Our Project</h1>
+				<div className={s.content}>
 				Moonwalk is a web based platform which integrates major social media networks. It allows users to seamlessly
 				read, post, and share content across social media profiles. Moonwalk is capable of organizing content in a
 				meaningful way by providing custom filter controls empowering users to curate their social media content. Our

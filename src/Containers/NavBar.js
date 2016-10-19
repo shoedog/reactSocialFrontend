@@ -1,26 +1,26 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
-import '!style!css!./NavBar.css';
-//import { Button } from 'react-toolbox/lib/button';
+//import '!style!css!./NavBar.css';
+import s from './NavBar.css';
+
 
 
 const Nav = () => (
-  <div className="navbar">
-    <IndexLink to='/' className="link" activeClassName="link activeLink">
+  <div className={s.navbar}>
+    <IndexLink to='/' className={s.link} activeClassName="link activeLink">
       Home
-
     </IndexLink>
 
-    <IndexLink to='/about' className="link" activeClassName="link activeLink">
+    <IndexLink to='/about' className={s.link} activeClassName="link activeLink">
       About
     </IndexLink>
 
-    <IndexLink to='/contact' className="link" activeClassName="link activeLink">
+    <IndexLink to='/contact' className={s.link} activeClassName="link activeLink">
       Contact
     </IndexLink>
 
-    <a href='https://github.com/jaredpalmer/react-production-starter' className="link" target='_blank'>GitHub Inspiration</a>
+    <a href='https://github.com/jaredpalmer/react-production-starter' className={s.link} target='_blank'>GitHub Inspiration</a>
   </div>
 );
 

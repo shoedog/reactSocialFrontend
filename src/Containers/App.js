@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Nav from './NavBar';
-require('!style!css!./App.css');
+//require('!style!css!./App.css');
+import s from './App.css';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -12,12 +13,12 @@ require('!style!css!./App.css');
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
 const App = ({children}) => (
-  <div className="rootstyle">
-    <h1 className="title">Moonwalk</h1>
-    <Nav className="navbar"/>
+  <div className={s.rootstyle}>
+    <h1 className={s.title}>Moonwalk</h1>
+    <Nav className={s.navbar}/>
     {children}
-    <footer className="footer">
-      <p className="footerLink" target='_blank'>Copyright © 2016 Team Moonwalk</p>
+    <footer className={s.footer}>
+      <p className={s.footerLink} target='_blank'>Copyright © 2016 Team Moonwalk</p>
     </footer>
   </div>
 );

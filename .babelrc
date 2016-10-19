@@ -6,7 +6,7 @@
         [
           "babel-plugin-transform-require-ignore",
           {
-            "extensions": [".less", ".css"]
+            "extensions": [".scss", ".css"]
           }
         ]
       ]

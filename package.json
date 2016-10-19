@@ -81,7 +81,11 @@
     "mddir": "^1.1.0",
     "mocha": "^3.1.0",
     "node-sass": "^3.10.1",
+    "postcss-import": "^8.1.2",
     "postcss-loader": "^0.13.0",
+    "postcss-mixins": "^5.4.0",
+    "postcss-nested": "^1.0.0",
+    "postcss-simple-vars": "^3.0.0",
     "react-addons-test-utils": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.5",
     "react-tap-event-plugin": "^1.0.0",
@@ -92,7 +96,8 @@
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.1",
     "webpack-dev-server": "^1.16.1",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack-hot-middleware": "^2.12.2",
+    "webpack-node-externals": "^1.5.4"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -115,11 +120,10 @@
     }
   },
   "scripts": {
-    "build": "cross-env NODE_ENV='production' webpack -p",
-    "start": "cross-env NODE_ENV='production' BABEL_ENV='node' start bin/runner.js --name moonwalk",
-    "dev": "concurrently --kill-others \"npm run webpack-devserver\" \"npm run nodemon\" \"npm run dev-api\"",
-    "nodemon": "cross-env BABEL_ENV='node' nodemon bin/runner.js",
-    "webpack-devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8050 --host 0.0.0.0",
+    "build": "cross-env NODE_ENV='production' webpack",
+    "start": "cross-env NODE_ENV='production'  node ./public/static/dist/server.js --name moonwalk",
+    "prod": "cross-env npm run build & npm start",
+    "dev": "cross-env node dev-server.js",
     "esdoc": "esdoc -c ./tools/esdoc.json && open ./docs/esdoc/index.html",
     "eslint": "eslint -c .eslintrc src",
     "test": "mocha --require ./tools/testSetup.js --compilers js:babel-register \"src/**/test.js\"",

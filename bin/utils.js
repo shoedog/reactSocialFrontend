@@ -16,7 +16,7 @@ export function fetchComponentsData({ dispatch, components, params }) {
 
 export function getAssetsPaths() {
   return {
-    js:  webpackAssets.main.js,
-    css: webpackAssets.main.css
+    js:  webpackAssets.client.js,
+    css: webpackAssets.client.css
   };
 }

@@ -1,0 +1,99 @@
+.Home__Home___1exmz {
+
+}
+
+.Home__loginOptions___33jyt {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.Home__signInBox___13Iej, .Home__signUpBox___3nrs- {
+	padding: 5px;
+	margin: 5px;
+}
+
+.Home__registerForm___2JhfZ {
+    text-align: center;
+}.about__about___2SZ67 .about__title___2zi04 {
+	text-align: center;
+	background-color: #c0c0c0;
+}
+.about__about___2SZ67 .about__context___1kIoE {
+	font-size: 15pt;
+    text-align: center;
+    margin-left: 200px;
+    margin-right: 200px;
+    border: solid black;
+    background-color: #d8d8d8;
+    padding: 15px;
+}.Page404__page404___3zE9M > h1 {
+	text-align: center;
+	padding: 50px;
+}.NavBar__link___j8SB_ {
+  max-width: 25%;
+  color: #FFFFFF;
+  padding: 20px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  transition: .2s opacity ease;
+}
+.NavBar__link___j8SB_:hover {
+  background-color: #9b9797;
+  color: white;
+}
+.NavBar__activeLink___2N4zb {
+  background-color: #FFFFFF;
+  color: #585555;
+
+}
+.NavBar__navbar___2VuQh {
+  background-color: #585555;
+  text-align: center;
+}
+.App__mtest___9w9M8 {
+  background-color: blue;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+}
+
+.App__rootstyle____HH7o {
+  max-width: 100%;
+  background-color: #c0c0c0;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.App__title___IuW1T {
+  color: #000;
+  background-color: #d8d8d8;
+  text-align: center;
+  max-width: 100%;
+  font-weight: bold;
+  font-size: 56px;
+  padding: 10px;
+  margin: 0px;
+}
+
+.App__footer___IqPZA {
+  margin: 4rem auto;
+  text-align: center;
+  color: #b7b7b7;
+}
+
+.App__footerLink___2M90K {
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
+}
+
+.App__img___x1Vqa {
+  width:500px;
+  height:500px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}

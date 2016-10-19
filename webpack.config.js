@@ -1,53 +1,60 @@
-var path    = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var AssetsPlugin      = require('assets-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+var fs = require('fs');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const AssetsPlugin = require('assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const { removeEmpty, ifElse, merge } = require('./utils');
 
-var buildHash = process.env.NODE_ENV === "production" ? "[hash]" : "dev";
+//const buildHash = process.env.NODE_ENV === 'production' ? '[hash]' : 'dev';
 
-module.exports = {
+var clientConfig = {
+  name: 'client',
 
-  entry:  [
-    path.resolve('./src/client.js'),
-  ],
+  entry: {
+    main: path.resolve('./src/client.js'),
+    //path: path.resolve(__dirname, 'src')
+  },
+
   output: {
-    path: path.join(__dirname, 'public/static/dist/', buildHash),
-    filename: 'bundle.js',
-    publicPath: "static/dist/" + buildHash + "/"
+    path: path.resolve(__dirname, 'public/static/dist/'),
+    filename: 'client.js',
+    publicPath: '/',
   },
+
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css', '.scss', '.json'],
-    modulesDirectories: ['node_modules',  path.resolve(__dirname, './node_modules'), 'src'],
-    root: [
-      path.resolve('./src'),
-    ]
-    /** TODO we can use this with the paths in config so we don't
-     * have to use relative paths in our file imports in src
-     * need to import mapValues from 'lodash/mapValues';
-     *
-     * alias: mapValues(RESOLVE_PATHS, (str) => (
-     * path.join(process.cwd(), ...str.split('/'))
-     * ))
-     */
+    extensions: ['', '.js', '.jsx', '.json', '.css', 'scss'],
+    modulesDirectories: ['node_modules', path.resolve(__dirname, './node_modules'), 'src'],
+    alias: {
+      'components': 'src/components'
+    },
   },
+
   module: {
     loaders: [
-      { test: /\.jsx?$|\.js$/, loader: 'babel', exclude: [/node_modules/, /static/]  },
-      {
-        test: /(\.scss|\.css)$/,
-        loader: ExtractTextPlugin.extract('style', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]_[local]__[hash:base64:5]!postcss!sass')
+      { test: /\.jsx?$|\.js$/, loader: 'babel', exclude: [/node_modules/, /static/] },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style','css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'),
       },
-
-      //{ test: /\.css/, loader: 'css-loader', query: { modules: true, localIdentName: '[name]__[local]___[hash:base64:5]'}  },
-      { test: /\.json$/, loader: "json-loader" },
-    ]
+      {
+       test: /\.scss$/,
+       loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass-loader')
+     },
+      { test: /\.json$/, loader: 'json-loader' },
+    ],
   },
-  postcss: [autoprefixer],
+
+  postcss: [
+    require('autoprefixer'),
+    require('postcss-import'),
+    require('postcss-nested'),
+    require('postcss-simple-vars'),
+  ],
+
   sassLoader: {
     //We use this if we create a custom theme
-    //data: '@import "' + path.resolve(__dirname, 'theme/_theme.scss') + '";',
-    //includePaths: [path.resolve(__dirname, './src/app')]
+    data: '@import "' + path.resolve(__dirname, 'theme/_theme.scss') + '";',
+    includePaths: [path.resolve(__dirname, './src/')]
   },
 
   plugins: [
@@ -57,15 +64,15 @@ module.exports = {
         'NODE_ENV': JSON.stringify( process.env.NODE_ENV || 'development' ),
       }
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     //Extracts CSS for a separate bundle so we can SSR
-    new ExtractTextPlugin('bundle.css', { allChunks: true}),
+    new ExtractTextPlugin('styles.css'),
     //Splits CSS and JS so we can SSR!
-    new AssetsPlugin({path: path.join(__dirname, 'Assets')}),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.DedupePlugin(),
+    //new AssetsPlugin({path: path.join(__dirname, 'Assets')}),
+    //new webpack.optimize.UglifyJsPlugin(),
+    //new webpack.optimize.DedupePlugin(),
   ],
-
-//  , { allChunks: true}
 
 /*
   devServer: {
@@ -78,3 +85,37 @@ module.exports = {
     noInfo: true
   }*/
 };
+
+const serverConfig = {
+  name: 'server',
+  target: 'node',
+  externals: [nodeExternals()],
+  entry: [
+    './src/renderingServer.js'
+  ],
+  output: {
+    path: path.resolve(__dirname, 'public/static/dist/'),
+    filename: 'server.js',
+    publicPath: '/',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$|\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+      },
+      {
+        test: /\.css$/,
+        loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+      },
+      {
+        test: /\.scss$/,
+        loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+      }
+    ]
+  },
+};
+
+module.exports = [clientConfig, serverConfig];

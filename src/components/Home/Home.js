@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import * as LaunchPageActions from '../../actions/LaunchPageActions';
 import { connect }            from 'react-redux';
 import RegisterForm           from '../HomeForms/RegisterForm';
-require("!style!css!./Home.css");
+//require("!style!css!./Home.css");
+import s from './Home.css';
 
 const showResults = values =>
   new Promise(resolve => {
@@ -27,12 +28,12 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="Home">
-        <div className="loginOptions">
-          <button className="signInBox" onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Log In</button>
-          <button className="signUpBox" onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Register</button>
+      <div className={s.Home}>
+        <div className={s.loginOptions}>
+          <button className={s.signInBox} onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Log In</button>
+          <button className={s.signUpBox} onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Register</button>
         </div>
-        {this.state.toggle ? <HomeForms onSubmit={showResults}/> : <RegisterForm className="registerForm" onSubmit={showResults}/>}
+        {this.state.toggle ? <HomeForms onSubmit={showResults}/> : <RegisterForm className={s.registerForm} onSubmit={showResults}/>}
       </div>
     );
   }
