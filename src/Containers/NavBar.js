@@ -8,15 +8,15 @@ import s from './NavBar.css';
 
 const Nav = () => (
   <div className={s.navbar}>
-    <IndexLink to='/' className={s.link} activeClassName="link activeLink">
+    <IndexLink to='/' className={s.link} activeClassName={s.activeLink}>
       Home
     </IndexLink>
 
-    <IndexLink to='/about' className={s.link} activeClassName="link activeLink">
+    <IndexLink to='/about' className={s.link} activeClassName={s.activeLink}>
       About
     </IndexLink>
 
-    <IndexLink to='/contact' className={s.link} activeClassName="link activeLink">
+    <IndexLink to='/contact' className={s.link} activeClassName={s.activeLink}>
       Contact
     </IndexLink>
 
