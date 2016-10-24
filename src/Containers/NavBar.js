@@ -20,6 +20,10 @@ const Nav = () => (
       Contact
     </IndexLink>
 
+    <IndexLink to='/stream' className={s.link} activeClassName={s.activeLink}>
+      Stream
+    </IndexLink>
+
     <a href='https://github.com/jaredpalmer/react-production-starter' className={s.link} target='_blank'>GitHub Inspiration</a>
   </div>
 );
