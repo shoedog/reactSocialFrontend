@@ -14,12 +14,19 @@ import s from './App.css';
  */
 const App = ({children}) => (
   <div className={s.rootstyle}>
-    <h1 className={s.title}>Moonwalk</h1>
+  
+    <div className={s.pageHeader}>
+      <img className={s.headerImage} src="https://c6.staticflickr.com/8/7163/6435110613_ca006aed57_o.jpg"></img>
+      <h1 className={s.title}>Moonwalk</h1>
+    </div>
+
     <Nav className={s.navbar}/>
     {children}
+    
     <footer className={s.footer}>
       <p className={s.footerLink} target='_blank'>Copyright © 2016 Team Moonwalk</p>
     </footer>
+  
   </div>
 );
 
