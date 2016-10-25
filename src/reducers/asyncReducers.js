@@ -3,6 +3,7 @@ import { OPEN_FEED_ITEM, CLOSE_FEED_ITEM, UPDATE_FEED_ITEM } from '../actions/as
 
 /**
  * See lib/selectors.js for functions to sort/select items using byId, ids, openFeedItemId
+ * Reducers use parts of ramda library ( like lodash but pure functional lib )
  */
 
 // Reducer for a feed item Object (byId) in state
