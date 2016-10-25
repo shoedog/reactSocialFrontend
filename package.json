@@ -30,6 +30,7 @@
     "object-assign": "^4.1.0",
     "qs": "^6.3.0",
     "querystring": "^0.2.0",
+    "ramda": "^0.22.1",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.2",
