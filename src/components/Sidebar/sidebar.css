@@ -1,0 +1,41 @@
+.avatar {
+	width: 58px;
+	height: 58px;
+}
+
+div.Sidebar {
+	position: absolute;
+	z-index: 1;
+	top: 150px;
+	width: 20%;
+	background-color: #585555;
+}
+
+.userInfo {
+
+}
+
+.userInfo-name {
+	
+}
+div.Sidebar ul {
+    list-style-type: none;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+}
+
+div.Sidebar li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+div.Sidebar li a:hover {
+    background-color: #555;
+    color: white;
+}
