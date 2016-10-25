@@ -77,12 +77,12 @@ function handleRender(res, renderProps) {
   const initialState = store.getState();
   const strState = JSON.stringify(initialState);
 
-  fs.readFile('./index.html', 'utf8', (err, file) => {
+  fs.readFile('./public/static/index.html', 'utf8', function (err, file) {
     if (err) {
       return console.log(err);
     }
     let document = file.replace(/<div id="root"><\/div>/, `<div id="root">${html}</div>`);
-    document = file.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${strState}</script>`);
+    document = document.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${strState}</script>`);
     res.send(document);
   });
 }

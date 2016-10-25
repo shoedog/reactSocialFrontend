@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const AssetsPlugin = require('assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const { removeEmpty, ifElse, merge } = require('./utils');
 
 //const buildHash = process.env.NODE_ENV === 'production' ? '[hash]' : 'dev';
 
@@ -38,7 +37,7 @@ var clientConfig = {
       },
       {
        test: /\.scss$/,
-       loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass-loader')
+       loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader')
      },
       { test: /\.json$/, loader: 'json-loader' },
     ],
@@ -53,8 +52,8 @@ var clientConfig = {
 
   sassLoader: {
     //We use this if we create a custom theme
-    data: '@import "' + path.resolve(__dirname, 'theme/_theme.scss') + '";',
-    includePaths: [path.resolve(__dirname, './src/')]
+    data: '@import "' + path.resolve(__dirname, './src/theme/_theme.scss') + '";',
+    includePaths: [path.resolve(__dirname, './src/'), path.resolve(__dirname, './node_modules/react-toolbox/')]
   },
 
   plugins: [
@@ -112,7 +111,7 @@ const serverConfig = {
       },
       {
         test: /\.scss$/,
-        loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        loader: 'css-loader/locals?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader',
       }
     ]
   },

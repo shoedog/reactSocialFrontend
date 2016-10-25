@@ -88,7 +88,7 @@ module.exports =
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _promiseMiddleware = __webpack_require__(46);
+	var _promiseMiddleware = __webpack_require__(45);
 
 	var _promiseMiddleware2 = _interopRequireDefault(_promiseMiddleware);
 
@@ -160,12 +160,12 @@ module.exports =
 	  var initialState = store.getState();
 	  var strState = (0, _stringify2.default)(initialState);
 
-	  _fs2.default.readFile('./index.html', 'utf8', function (err, file) {
+	  _fs2.default.readFile('./public/static/index.html', 'utf8', function (err, file) {
 	    if (err) {
 	      return console.log(err);
 	    }
 	    var document = file.replace(/<div id="root"><\/div>/, '<div id="root">' + html + '</div>');
-	    document = file.replace(/<script text="initialState"><\/script>/, '<script>window.__INITIAL_STATE__ = ' + strState + '</script>');
+	    document = document.replace(/<script text="initialState"><\/script>/, '<script>window.__INITIAL_STATE__ = ' + strState + '</script>');
 	    res.send(document);
 	  });
 	}
@@ -673,7 +673,7 @@ module.exports =
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _App = __webpack_require__(42);
+	var _App = __webpack_require__(41);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -1356,13 +1356,11 @@ module.exports =
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _Button = __webpack_require__(41);
-
-	var _Button2 = _interopRequireDefault(_Button);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//require("!style!css!./Page404.css");
+	// import { Button } from 'react-toolbox/lib/button';
+	// <Button label="React-ToolBox Button" />
+
 	var Page404 = function (_Component) {
 		(0, _inherits3.default)(Page404, _Component);
 
@@ -1381,13 +1379,14 @@ module.exports =
 						'h1',
 						null,
 						'404 - Page Not Found'
-					),
-					_react2.default.createElement(_Button2.default, { label: 'React-ToolBox Button' })
+					)
 				);
 			}
 		}]);
 		return Page404;
 	}(_react.Component);
+	//require("!style!css!./Page404.css");
+
 
 	exports.default = Page404;
 
@@ -1401,12 +1400,6 @@ module.exports =
 
 /***/ },
 /* 41 */
-/***/ function(module, exports) {
-
-	module.exports = require("react-toolbox/lib/button/Button.js");
-
-/***/ },
-/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1419,11 +1412,11 @@ module.exports =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(43);
+	var _NavBar = __webpack_require__(42);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _App = __webpack_require__(45);
+	var _App = __webpack_require__(44);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -1498,7 +1491,7 @@ module.exports =
 	exports.default = App;
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1515,7 +1508,7 @@ module.exports =
 
 	var _reactRedux = __webpack_require__(8);
 
-	var _NavBar = __webpack_require__(44);
+	var _NavBar = __webpack_require__(43);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
@@ -1577,7 +1570,7 @@ module.exports =
 	exports.default = Nav;
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -1587,7 +1580,7 @@ module.exports =
 	};
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -1600,7 +1593,7 @@ module.exports =
 	};
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1613,7 +1606,7 @@ module.exports =
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _objectWithoutProperties2 = __webpack_require__(47);
+	var _objectWithoutProperties2 = __webpack_require__(46);
 
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
@@ -1665,7 +1658,7 @@ module.exports =
 	exports.default = promiseMiddleware;
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/helpers/objectWithoutProperties");
