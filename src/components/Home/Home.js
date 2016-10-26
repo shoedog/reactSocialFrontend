@@ -6,7 +6,7 @@ import * as LaunchPageActions from '../../actions/LaunchPageActions';
 import { connect }            from 'react-redux';
 import RegisterForm           from '../HomeForms/RegisterForm';
 //require("!style!css!./Home.css");
-// import s from './Home.css';
+import s from './Home.css';
 import {Tabs, Tab, TextField, RaisedButton} from 'material-ui';
 
 const showResults = values =>
@@ -34,31 +34,11 @@ class Home extends Component {
       <Tabs value={this.state.value} onChange={this.handleToggle}>
 
         <Tab label="Sign In" value="1">
-          <div id="login-form">
-            <h1>Welcome Back!</h1>
-
-            <TextField
-              hintText="Email"
-              errorText="A Valid Email Adress is Required"
-              type="email"
-              id="email"
-            /><br />
-
-            <TextField
-              hintText="Password"
-              errorText="Password is Required"
-              type="password"
-              id="password"
-            /><br />
-
-            <RaisedButton label="Log In" primary={true} />
-
-          </div>
+          <HomeForms onSubmit={showResults}/>
         </Tab>
 
         <Tab label="Register" value="2">
-          <h1>Sign Up!</h1>
-          <p>Add registration form here</p>
+          <RegisterForm className={s.registerForm} onSubmit={showResults}/>
         </Tab>
           
       </Tabs>
