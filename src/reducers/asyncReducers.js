@@ -41,7 +41,7 @@ export const ids = (state = [], { type, payload, meta, error}) => {
   switch (type) {
     case 'fetchFeedItems':
       if (meta.done && !error) {
-        return payload.feedItemsIds;
+        return payload.feedItemIds;
       }
       return state;
     case 'addFeedItem':

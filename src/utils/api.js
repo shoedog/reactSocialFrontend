@@ -35,7 +35,7 @@ export const fetchJson = (url, options = {}) => (
 // Process data from fetch:
 export const normalizeFeedItems = (data) => normalize(data, arrayOf(feedItems));
 
-// Process object returned from normalizeSongList into songs and songdIds
+// Process object returned from normalizeSongList into feedItems and feedItemIds
 export const returnFeedItemsAndIds = ({ entities: {feedItems}, result: feedItemIds }) => ({
   feedItems,
   feedItemIds,

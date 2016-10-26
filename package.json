@@ -135,6 +135,7 @@
     "test": "npm run tape:test",
     "mocha:test": "mocha --require ./tools/testSetup.js --compilers js:babel-register src/**/**.test.js",
     "tape:test": "tape --require babel-register src/**/**.spec.js",
-    "dev-api": "cross-env NODE_ENV=development nodemon --exec babel-node ./bin/apiServer.js"
+    "dev-api": "cross-env NODE_ENV=development nodemon --exec babel-node ./bin/apiServer.js",
+    "printJson": "cross-env node parse.js"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './stream.css';
+import style from '../StreamList/stream.css';
 
 const StreamContent = (props) => {
 	return(

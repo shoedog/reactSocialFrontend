@@ -56,6 +56,33 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
+app.get('/feedItems', (req, res) => {
+  //For testing/mocking components, just get local file
+  const fs = require('fs');
+  const tweetFeed = require('../tweets.json');
+
+  if(err) {
+    var returnStatus = 500;
+    if (err.code === 'ConditionalCheckFailedException') {
+      returnStatus = 409;
+    }
+    res.status(returnStatus).end();
+    console.log('DDB Error: ' + err);
+  } else {
+    // For some reason JSON.parse for the whole file was giving errors...
+    // So I parsed each object and just extracted the text and id.
+    const tweets = tweetFeed.map((json) => {
+      var rObj = {};
+      obj = JSON.parse(json);
+      rObj['id'] = obj.id_str;
+      rObj['text'] = obj.text;
+      return rObj;
+    });
+    res.status(200).send(Object.keys(tweets)
+      .map((key) => tweets[key]));
+  }
+});
+
 app.listen(PORT, (err) => {
   if (err) {
     console.log(err);
