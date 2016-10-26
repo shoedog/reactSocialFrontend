@@ -1,56 +1,21 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
-//import '!style!css!./NavBar.css';
-import s from './NavBar.css';
+import {AppBar, FlatButton, IconButton} from 'material-ui';
 
+const NavBar = () => (
 
-
-const Nav = () => (
-  <div className={s.navbar}>
-    <IndexLink to='/' className={s.link} activeClassName={s.activeLink}>
-      Home
-    </IndexLink>
-
-    <IndexLink to='/about' className={s.link} activeClassName={s.activeLink}>
-      About
-    </IndexLink>
-
-    <IndexLink to='/contact' className={s.link} activeClassName={s.activeLink}>
-      Contact
-    </IndexLink>
-
-    <IndexLink to='/stream' className={s.link} activeClassName={s.activeLink}>
-      Stream
-    </IndexLink>
-
-    <a href='https://github.com/jaredpalmer/react-production-starter' className={s.link} target='_blank'>GitHub Inspiration</a>
-  </div>
+  <AppBar
+    title = {<FlatButton label="Moonwalk" href="/" />}
+    iconElementRight= {
+      <div>
+        <FlatButton label="About" href="/about" />
+        <FlatButton label="Contact" href="/contact"  />
+        <FlatButton label="Stream" href="/stream"  />
+        <IconButton iconClassName="muidocs-icon-custom-github" href="https://github.com/andrew310/cs419-frontend" tooltip="Frontend" />
+     </div>
+    }
+  />
 );
 
-/*const styles = StyleSheet.create({
-  link: {
-    maxWidth: '25%',
-    color: '#FFFFFF',
-    margin: "0 10px 0 10px",
-    padding: "20px",
-    display: 'inline-block',
-    textDecoration: 'none',
-    fontWeight: 'bold',
-    border: "solid black round",
-    transition: '.2s opacity ease',
-    ':hover': {
-      opacity: 0.4
-    }
-  },
-  activeLink: {
-    backgroundColor: '#FFFFFF',
-    color: '#585555'
-  },
-  navbar: {
-    backgroundColor: '#585555',
-    paddingLeft: "20px"
-  }
-});*/
-
-export default Nav;
+export default NavBar;

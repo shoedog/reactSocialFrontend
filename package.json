@@ -26,6 +26,7 @@
     "immutability-helper": "^2.0.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.16.1",
     "normalizr": "^2.2.1",
     "object-assign": "^4.1.0",
     "qs": "^6.3.0",
