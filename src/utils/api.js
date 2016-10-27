@@ -7,6 +7,17 @@ const feedItems = new Schema('feedItems');
 // Utility to convert response stream from fetch to JSON
 export const toJson = (res) => res.json();
 
+// Modify response for props
+export const objConvert = (data) => {
+  return data.map((json) => {
+    var rObj = {};
+    var obj = JSON.parse(json);
+    rObj['id'] = obj.id_str;
+    rObj['content'] = obj.text;
+    return rObj;
+  });
+};
+
 // Utility for bad status code for fetch
 // ( fetch promises by default are only rejected if connection fails )
 export const checkStatus = (res) => {
@@ -30,6 +41,7 @@ export const fetchJson = (url, options = {}) => (
   })
     .then(checkStatus)
     .then(toJson)
+
 );
 
 // Process data from fetch:
@@ -45,6 +57,7 @@ export default {
   feedItems: {
     fetch() {
       return fetchJson('/feedItems')
+        .then(objConvert)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);
     },

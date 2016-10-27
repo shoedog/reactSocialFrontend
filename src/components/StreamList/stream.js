@@ -22,6 +22,8 @@ class StreamList extends Component {
 
 	componentWillMount() {
 		this.props.fetchFeedItems();
+		// For easy console fun
+		console.log(this.props.fetchFeedItems());
 	}
 
 	render() {

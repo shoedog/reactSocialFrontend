@@ -40,6 +40,7 @@ var clientConfig = {
        loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader')
      },
       { test: /\.json$/, loader: 'json-loader' },
+      //{ test: /\.jpg$/, loader: "url-loader?limit=10000&mimetype=image/jpg" },
     ],
   },
 

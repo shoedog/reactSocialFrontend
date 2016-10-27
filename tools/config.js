@@ -1,9 +1,9 @@
 /* The webpack dev server's port to use, in development we
  *  use this to view the client's page
  */
-export const WEBPACK_PORT = process.env.WEBPACK_PORT || 8080;
+export const WEBPACK_PORT = process.env.WEBPACK_PORT || 9999;
 export const PORT = process.env.PORT || 3000;
-export const API_PORT = process.env.API_PORT || 3001;
+export const API_PORT = process.env.API_PORT || 5000;
 // The hostname to use for the webpack dev server
 export const HOST = process.env.HOST || 'localhost';
 // The hostname to use for the webpack dev server

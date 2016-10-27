@@ -1,31 +1,60 @@
 import express from 'express';
+import httpProxy from 'http-proxy';
+import HttpProxyRules from 'http-proxy-rules';
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
 import React from 'react';
-// import axoios from 'axios';
-// import serialize from 'serialize-javascript';
-// import path from 'path';
 import ReactDOMServer from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
-// import compression from 'compression';
-import fs from 'fs';
 import rootReducer from './reducers/rootReducer';
 import routes from './routes';
 import promiseMiddleware from './lib/promiseMiddleware';
-// import fetchComponentData from './lib/fetchComponentData';
-// import renderHTML from './renderHTML';
-
-// API server
-// const API_PORT = process.env.API_PORT || 3001;
-// const API_HOST = process.env.API_HOST || '0.0.0.0';
-// const targetUrl = `http://${API_HOST}:${API_PORT}`;
 
 const app = express();
+const server = new http.Server(app);
 app.use(express.static('public/static/dist'));
+app.use('/static', express.static('/public/static'));
 
-// const history = createMemoryHistory();
+// Transform routes to target routes for proxy service
+const proxyRules = new HttpProxyRules({
+  rules: {
+    '.*/feedItems': `http://0.0.0.0:5000/social/feed`
+  },
+  default: `http://0.0.0.0:5000`
+});
+const proxy = httpProxy.createProxy();
 
-app.use((req, res) => {
+// Proxy error handling
+proxy.on('error', (error, req, res) => {
+  let json;
+  if (error.code !== 'ECONNRESET') {
+    console.error('proxy error', error);
+  }
+  if (!res.headersSent) {
+    res.writeHead(500, {'content-type': 'application/json'});
+  }
+
+  json = {error: 'proxy_error', reason: error.message};
+  res.end(JSON.stringify(json));
+});
+
+// Api Proxy Requests
+app.route('/feedItems')
+  .get( (req, res) => {
+    var target = proxyRules.match(req);
+    if (target) {
+      proxy.web(req, res, {target: target});
+    } else {
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.status(returnStatus).end('The request url and path did not match any resources');
+      console.log('DDB Error: ' + req.err);
+    }
+  });
+
+app.get(['/', '/login', '/about', '/stream', '/404'], (req, res) => {
   // See react-router docs: match() for documentation
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -35,53 +64,12 @@ app.use((req, res) => {
     } else if (!renderProps) {
       return res.status(404).end('Not found.');
     } else {
-      /* const reducer = rootReducer;
-
-      // Async middleware applied same as in client except without initialState
-      const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);
-
-      const componentHTML = ReactDOM.renderToString(
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
-
-      const initialState = store.getState();
-
-      res.send(renderHTML(componentHTML, initialState));*/
       handleRender(res, renderProps);
     }
   });
 });
 
 const PORT = process.env.PORT || 3000;
-
-app.get('/feedItems', (req, res) => {
-  //For testing/mocking components, just get local file
-  const fs = require('fs');
-  const tweetFeed = require('../tweets.json');
-
-  if(err) {
-    var returnStatus = 500;
-    if (err.code === 'ConditionalCheckFailedException') {
-      returnStatus = 409;
-    }
-    res.status(returnStatus).end();
-    console.log('DDB Error: ' + err);
-  } else {
-    // For some reason JSON.parse for the whole file was giving errors...
-    // So I parsed each object and just extracted the text and id.
-    const tweets = tweetFeed.map((json) => {
-      var rObj = {};
-      obj = JSON.parse(json);
-      rObj['id'] = obj.id_str;
-      rObj['text'] = obj.text;
-      return rObj;
-    });
-    res.status(200).send(Object.keys(tweets)
-      .map((key) => tweets[key]));
-  }
-});
 
 app.listen(PORT, (err) => {
   if (err) {

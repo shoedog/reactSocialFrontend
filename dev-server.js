@@ -35,6 +35,7 @@ app.route('/feedItems')
       rObj['content'] = obj.text;
       return rObj;
     });
+    console.log(tweets);
     res.status(200).send(Object.keys(tweets)
       .map((key) => tweets[key]));
   }
