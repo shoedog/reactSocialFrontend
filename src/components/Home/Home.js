@@ -7,6 +7,7 @@ import { connect }            from 'react-redux';
 import RegisterForm           from '../HomeForms/RegisterForm';
 //require("!style!css!./Home.css");
 import s from './Home.css';
+import {Tabs, Tab, TextField, RaisedButton} from 'material-ui';
 
 const showResults = values =>
   new Promise(resolve => {
@@ -17,26 +18,33 @@ const showResults = values =>
   })
 
 class Home extends Component {
+
   constructor(props) {
-    super(props)
-    this.state = {toggle: true};
+    super(props);
+    this.state = {value: "1"};
   }
 
-  handleToggle() {
-    this.setState({toggle: !this.state.toggle})
+  handleToggle = (value) => {
+    this.setState({value: value});
   }
 
   render() {
     return (
-      <div className={s.Home}>
-        <div className={s.loginOptions}>
-          <button className={s.signInBox} onClick={!this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Log In</button>
-          <button className={s.signUpBox} onClick={ this.state.toggle ? () => this.handleToggle() : () => {}} selected={this.state.toggle}>Register</button>
-        </div>
-        {this.state.toggle ? <HomeForms onSubmit={showResults}/> : <RegisterForm className={s.registerForm} onSubmit={showResults}/>}
+      <div>
+      <Tabs value={this.state.value} onChange={this.handleToggle}>
+
+        <Tab label="Sign In" value="1">
+          <HomeForms onSubmit={showResults}/>
+        </Tab>
+
+        <Tab label="Register" value="2">
+          <RegisterForm className={s.registerForm} onSubmit={showResults}/>
+        </Tab>
+          
+      </Tabs>
       </div>
     );
   }
 }
 
-export default Home
+export default Home;

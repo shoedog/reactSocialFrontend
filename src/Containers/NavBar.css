@@ -1,4 +1,4 @@
-.link {
+/*.link {
   max-width: 25%;
   color: #FFFFFF;
   padding: 20px;
@@ -21,4 +21,9 @@
 .navbar {
   background-color: #585555;
   text-align: center;
+}
+*/
+
+IndexLink.RightElement {
+  text-decoration: none;
 }

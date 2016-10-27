@@ -142,29 +142,7 @@ div.stream__StreamContent___1JP8V {
 }.Page404__page404___3zE9M > h1 {
 	text-align: center;
 	padding: 50px;
-}.NavBar__link___j8SB_ {
-  max-width: 25%;
-  color: #FFFFFF;
-  padding: 20px;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: bold;
-  transition: .2s opacity ease;
-}
-.NavBar__link___j8SB_:hover {
-  background-color: #9b9797;
-  color: white;
-}
-.NavBar__activeLink___2N4zb {
-  background-color: #FFFFFF;
-  color: #585555;
-
-}
-.NavBar__navbar___2VuQh {
-  background-color: #585555;
-  text-align: center;
-}
-.App__mtest___9w9M8 {
+}.App__mtest___9w9M8 {
   background-color: blue;
   color: white;
   font-size: 20px;

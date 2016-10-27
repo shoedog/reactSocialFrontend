@@ -3,6 +3,9 @@ import httpProxy from 'http-proxy';
 import HttpProxyRules from 'http-proxy-rules';
 import http from 'http';
 import fs from 'fs';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import path from 'path';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -12,6 +15,7 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers/rootReducer';
 import routes from './routes';
 import promiseMiddleware from './lib/promiseMiddleware';
+import configureStore from './configureStore';
 
 const app = express();
 const server = new http.Server(app);
@@ -64,7 +68,7 @@ app.get(['/', '/login', '/about', '/stream', '/404'], (req, res) => {
     } else if (!renderProps) {
       return res.status(404).end('Not found.');
     } else {
-      handleRender(res, renderProps);
+      handleRender(req, res, renderProps);
     }
   });
 });
@@ -79,14 +83,23 @@ app.listen(PORT, (err) => {
   console.log(`Server listening on: ${PORT}`);
 });
 
-function handleRender(res, renderProps) {
+function handleRender(req, res, renderProps) {
+  global.navigator = {
+    userAgent: req.headers['user-agent']
+  };
+  console.log('>>>>>>>> navigator.userAgent')
+  console.log(navigator.userAgent)
+  const muiTheme = getMuiTheme({userAgent: req.headers['user-agent']});
    // Async middleware applied same as in client except without initialState
-  const store = applyMiddleware(promiseMiddleware)(createStore)(rootReducer);
+  //const store = applyMiddleware(promiseMiddleware)(createStore)(rootReducer);
+  const store = configureStore();
 
   const html = ReactDOMServer.renderToString(
+    <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <RouterContext {...renderProps} />
     </Provider>
+    </MuiThemeProvider>
   );
 
   const initialState = store.getState();
