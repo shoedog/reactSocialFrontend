@@ -1,23 +1,15 @@
 cs419-frontend
 ---
 
-Welcome.
-
-###Windows OS Environment
----
-- Setup:  ```npm install```
-- Build: ```npm run win-build```
-- Run:  ```npm run win-dev```
-
-Webpack-dev-server (localhost:8080) & node server (localhost:3000)
-
-###Mac OS Environment
----
+###Setup
+___
 - Setup:  ```npm install```
 - Global installs needed:
-```npm i -g cross-env```
-```npm i -g concurrently```
-```npm i -g nodemon```
+```npm i -g cross-env concurrently nodemon```
+
+
+##Scripts
+___
 - Run all dev: ```npm run dev:serve```
     - builds and runs server on 3000, backend on 5000
 - Build dev: ```npm run build:dev```
@@ -32,8 +24,8 @@ Webpack-dev-server (localhost:8080) & node server (localhost:3000)
 - Production Start:      ```npm start```
   - TODO: need to test production build.
 
-Docker
----
+##Docker
+___
 To build the image, run
 ``` docker build -t moonwalk-frontend . ```
 
@@ -58,13 +50,9 @@ To get a shell inside the docker container:
 ```
 docker exec -ti <container id> bash
 ```
+:star: :star:
 
-
-:star: :star: Dev and Production Builds split CSS & JS. They are mapped via webpack-assets.json in ./Assets Folder.
-Also in ./Assets is client-config.json It lets us plug things into the html we render. See https://github.com/WebbyLab/itsquiz-wall.
-
-
-###Directory Structure
+##Directory Structure
 ---
 ```
 ├── bin     # Unused -> Has: server/server config files saved for reference
@@ -79,7 +67,8 @@ Also in ./Assets is client-config.json It lets us plug things into the html we r
 ```
 
 ---
-### Documentation
+## Documentation
+___
 
 * [Adding Routes, Client Structure, Stream](./docs/ExploringTheApp.md)
 
