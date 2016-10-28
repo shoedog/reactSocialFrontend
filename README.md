@@ -22,12 +22,16 @@ ___
 - Production Start:      ```npm start```
   - TODO: need to test production build.
 ___
-##[Docker](./docs/docker.md)
+
+##Docker
+[Docker](./docs/docker.md)
 ___
-##[Directory Structure](./docs/director.md)
+
+##Directory Structure
+[Directory Structure](./docs/directory.md)
 ___
-## Documentation
-___
+
+##Documentation
 
 * [Adding Routes, Client Structure, Stream](./docs/ExploringTheApp.md)
 
@@ -35,6 +39,8 @@ ___
     * ```<div className={ s.[css-class or id] }/>```
 * Combining multiple style classes: ```import classnames from classnames```
     * usage: https://github.com/JedWatson/classnames
+
+___
 
 ### StyleGuide
 ---
