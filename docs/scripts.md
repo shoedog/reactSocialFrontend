@@ -1,0 +1,11 @@
+- **Dev run all:**    ```npm run dev:serve```
+    - builds and runs server on 3000, backend on 5000
+- API Backend Server(:5000):    ```npm run dev-api```
+    - runs Hapi Backend: path from project is '../cs419-backend...' for it to work
+- Run Dev Frontend via webpack( hot-reload UI):   ```npm run dev```
+- Linting:    ```npm run eslint```
+- DocGen:   ```npm run esdoc```
+- Test:   ```npm run test```
+- **Production Build:**   ```npm run build```
+- **Production Start:**   ```npm start```
+  - TODO: need to test production build.
