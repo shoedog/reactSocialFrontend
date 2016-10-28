@@ -6,7 +6,7 @@ ___
 - Global installs needed:
 ```npm i -g cross-env concurrently nodemon```
 
-___
+
 ##Scripts
 - Run all dev: ```npm run dev:serve```
     - builds and runs server on 3000, backend on 5000
@@ -21,28 +21,26 @@ ___
 - Production Build: ```npm run build```
 - Production Start:      ```npm start```
   - TODO: need to test production build.
-___
 
 ##Docker
 [Docker](./docs/docker.md)
-___
 
 ##Directory Structure
 [Directory Structure](./docs/directory.md)
-___
 
 ##Documentation
-
-* [Adding Routes, Client Structure, Stream](./docs/ExploringTheApp.md)
+* Add Route to:
+    * routes.js
+    * array of views in server/routes/index.js ( several lines about app.listen() near bottom )
+* [Async Actions, Reducers, Api](./docs/async.js)
 
 * Styling: ```import s from './[file].css;```
     * ```<div className={ s.[css-class or id] }/>```
 * Combining multiple style classes: ```import classnames from classnames```
     * usage: https://github.com/JedWatson/classnames
 
-___
 
-### StyleGuide
----
+###StyleGuide
+
 * [AirBnB React StyleGuide](./docs/Airbnb-React-JSX-Style-Guide.md)
 * [StyleGuide Additions to AirBnB's](./docs/react-style-guide.md)
