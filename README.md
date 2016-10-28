@@ -32,7 +32,7 @@ ___
 * Add Route to:
     * routes.js
     * array of views in server/routes/index.js ( several lines about app.listen() near bottom )
-* [Async Actions, Reducers, Api](./docs/async.js)
+* [Async Actions, Reducers, Api](./docs/async.md)
 
 * Styling: ```import s from './[file].css;```
     * ```<div className={ s.[css-class or id] }/>```
