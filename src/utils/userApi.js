@@ -30,7 +30,7 @@ export default {
   user: {
     register(userData) {
       return fetchJson(
-        '/register',
+        '/user/register',
         {
           method: 'POST',
           body: JSON.stringify({ userData }),
@@ -40,7 +40,7 @@ export default {
 
     login(user, password) {
       return fetchJson(
-        `/login/`,
+        `/user/login`,
         {
           method: 'POST',
           body: JSON.stringify({ user, password }),
@@ -55,14 +55,23 @@ export default {
         .then(returnUserData);
     },
 
-    updateProfile(user, profile) {
+    updateProfile(id, profile) {
       return fetchJson(
-        `/user`,
+        `/user/${id}`,
         {
           method: 'PUT',
           body: JSON.stringify({ user, profile }),
         }
       );
+    },
+
+    delete(id) {
+      return fetch(`/user/${id}`,
+        {
+          method: 'DELETE'
+        })
+        .then(checkStatus)
+        .then((res) => res.text());
     },
   },
 };

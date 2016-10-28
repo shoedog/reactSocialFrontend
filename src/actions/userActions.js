@@ -93,8 +93,24 @@ export const updateUserProfileServerStart = startAction(updateUserProfileType);
 export const updateUserProfileServerSuccess = successAction(updateUserProfileType);
 export const updateUserProfileServerFailure = failureAction(updateUserProfileType);
 export const updateUserProfileServer = asyncAction({
-  func: (id, content) => userApi.user.updateProfile(id, content),
+  func: (id, profile) => userApi.user.updateProfile(id, profile),
   start: updateUserProfileServerStart,
   success: updateUserProfileServerSuccess,
   failure: updateUserProfileServerFailure,
+});
+
+/**
+ * Login : POST
+ * Action Type, start, success, failure, and async actions
+ * using helpers from asyncActionUtils.js
+ */
+const deleteUserType = 'deleteUser';
+export const deleteUserStart = startAction(deleteUserType);
+export const deleteUserSuccess = successAction(deleteUserType);
+export const deleteUserFailure = failureAction(deleteUserType);
+export const deleteUser = asyncAction({
+  func: (id) => userApi.user.delete(),
+  start: deleteUserStart,
+  success: deleteUserSuccess,
+  failure: deleteUserFailure,
 });
