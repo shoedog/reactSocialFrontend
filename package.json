@@ -19,6 +19,7 @@
     "axios": "^0.14.0",
     "babel-runtime": "^6.11.6",
     "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "css-modules-require-hook": "^4.0.5",
@@ -143,7 +144,7 @@
     "start": "cross-env NODE_ENV='production'  node ./public/static/dist/server.js --name moonwalk",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "start:dev": "cross-env NODE_ENV=development nodemon ./public/static/dist/server.js",
-    "dev:api": "cross-env NODE_ENV=development nodemon --exec babel-node ./bin/apiServer.js",
+    "dev:api": "cross-env NODE_ENV=development nodemon --exec babel-node ../cs419-backend/index.js",
     "printJson": "cross-env node parse.js"
   }
 }

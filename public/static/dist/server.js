@@ -74,59 +74,21 @@ module.exports =
 
 	var _http2 = _interopRequireDefault(_http);
 
-	var _fs = __webpack_require__(7);
-
-	var _fs2 = _interopRequireDefault(_fs);
-
-	var _getMuiTheme = __webpack_require__(8);
-
-	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
-
-	var _MuiThemeProvider = __webpack_require__(9);
-
-	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
-
-	var _lightBaseTheme = __webpack_require__(10);
-
-	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
-
-	var _path = __webpack_require__(11);
-
-	var _path2 = _interopRequireDefault(_path);
-
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _server = __webpack_require__(13);
+	var _handleRender = __webpack_require__(8);
 
-	var _server2 = _interopRequireDefault(_server);
+	var _handleRender2 = _interopRequireDefault(_handleRender);
 
-	var _reactRouter = __webpack_require__(14);
-
-	var _redux = __webpack_require__(15);
-
-	var _reactRedux = __webpack_require__(16);
-
-	var _rootReducer = __webpack_require__(17);
-
-	var _rootReducer2 = _interopRequireDefault(_rootReducer);
-
-	var _routes = __webpack_require__(39);
-
-	var _routes2 = _interopRequireDefault(_routes);
-
-	var _promiseMiddleware = __webpack_require__(68);
-
-	var _promiseMiddleware2 = _interopRequireDefault(_promiseMiddleware);
-
-	var _configureStore = __webpack_require__(70);
-
-	var _configureStore2 = _interopRequireDefault(_configureStore);
+	var _feedItemsApi = __webpack_require__(71);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = (0, _express2.default)();
+	//import fetch from 'isomorphic-fetch';
+
 	var server = new _http2.default.Server(app);
 	app.use(_express2.default.static('public/static/dist'));
 	app.use('/static', _express2.default.static('/public/static'));
@@ -156,30 +118,20 @@ module.exports =
 
 	// Api Proxy Requests
 	app.route('/feedItems').get(function (req, res) {
-	  var target = proxyRules.match(req);
-	  if (target) {
-	    proxy.web(req, res, { target: target });
-	  } else {
-	    res.writeHead(500, { 'Content-Type': 'text/plain' });
-	    res.status(returnStatus).end('The request url and path did not match any resources');
-	    console.log('DDB Error: ' + req.err);
-	  }
+	  (0, _feedItemsApi.getFeed)(req, res);
+	}).post(function (req, res) {
+	  (0, _feedItemsApi.postFeedItem)(req, res);
+	}).put(function (req, res) {
+	  (0, _feedItemsApi.updateFeedItem)(req, res);
+	}).delete(function (req, res) {
+	  (0, _feedItemsApi.deleteFeedItem)(req, res);
 	});
 
-	app.get(['/', '/login', '/about', '/stream', '/404'], function (req, res) {
-	  // See react-router docs: match() for documentation
-	  (0, _reactRouter.match)({ routes: _routes2.default, location: req.url }, function (error, redirectLocation, renderProps) {
-	    if (error) {
-	      return res.status(500).send(error.message);
-	    } else if (redirectLocation) {
-	      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-	    } else if (!renderProps) {
-	      return res.status(404).end('Not found.');
-	    } else {
-	      handleRender(req, res, renderProps);
-	    }
-	  });
-	});
+	// Append view routes here i.e. routes from routes.js
+	app.get(['/', '/login', '/about', '/stream'], _handleRender2.default);
+
+	// 404 Page
+	app.get('*', _handleRender2.default);
 
 	var PORT = process.env.PORT || 3000;
 
@@ -190,40 +142,6 @@ module.exports =
 	  }
 	  console.log('Server listening on: ' + PORT);
 	});
-
-	function handleRender(req, res, renderProps) {
-	  global.navigator = {
-	    userAgent: req.headers['user-agent']
-	  };
-	  console.log('>>>>>>>> navigator.userAgent');
-	  console.log(navigator.userAgent);
-	  var muiTheme = (0, _getMuiTheme2.default)({ userAgent: req.headers['user-agent'] });
-	  // Async middleware applied same as in client except without initialState
-	  //const store = applyMiddleware(promiseMiddleware)(createStore)(rootReducer);
-	  var store = (0, _configureStore2.default)();
-
-	  var html = _server2.default.renderToString(_react2.default.createElement(
-	    _MuiThemeProvider2.default,
-	    { muiTheme: muiTheme },
-	    _react2.default.createElement(
-	      _reactRedux.Provider,
-	      { store: store },
-	      _react2.default.createElement(_reactRouter.RouterContext, renderProps)
-	    )
-	  ));
-
-	  var initialState = store.getState();
-	  var strState = (0, _stringify2.default)(initialState);
-
-	  _fs2.default.readFile('./public/static/index.html', 'utf8', function (err, file) {
-	    if (err) {
-	      return console.log(err);
-	    }
-	    var document = file.replace(/<div id="root"><\/div>/, '<div id="root">' + html + '</div>');
-	    document = document.replace(/<script text="initialState"><\/script>/, '<script>window.__INITIAL_STATE__ = ' + strState + '</script>');
-	    res.send(document);
-	  });
-	}
 	;
 
 	var _temp = function () {
@@ -231,17 +149,15 @@ module.exports =
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(app, 'app', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
+	  __REACT_HOT_LOADER__.register(app, 'app', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
 
-	  __REACT_HOT_LOADER__.register(server, 'server', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
+	  __REACT_HOT_LOADER__.register(server, 'server', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
 
-	  __REACT_HOT_LOADER__.register(proxyRules, 'proxyRules', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
+	  __REACT_HOT_LOADER__.register(proxyRules, 'proxyRules', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
 
-	  __REACT_HOT_LOADER__.register(proxy, 'proxy', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
+	  __REACT_HOT_LOADER__.register(proxy, 'proxy', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
 
-	  __REACT_HOT_LOADER__.register(PORT, 'PORT', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
-
-	  __REACT_HOT_LOADER__.register(handleRender, 'handleRender', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/renderingServer.js');
+	  __REACT_HOT_LOADER__.register(PORT, 'PORT', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
 	}();
 
 	;
@@ -280,49 +196,210 @@ module.exports =
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = require("fs");
+	module.exports = require("react");
 
 /***/ },
 /* 8 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("material-ui/styles/getMuiTheme");
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _stringify = __webpack_require__(2);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	var _fs = __webpack_require__(9);
+
+	var _fs2 = _interopRequireDefault(_fs);
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(10);
+
+	var _reactRouter = __webpack_require__(11);
+
+	var _getMuiTheme = __webpack_require__(12);
+
+	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+	var _MuiThemeProvider = __webpack_require__(13);
+
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+	var _configureStore = __webpack_require__(14);
+
+	var _configureStore2 = _interopRequireDefault(_configureStore);
+
+	var _server = __webpack_require__(40);
+
+	var _server2 = _interopRequireDefault(_server);
+
+	var _routes = __webpack_require__(41);
+
+	var _routes2 = _interopRequireDefault(_routes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function render(req, res, next) {
+	  // See react-router docs: match() for documentation
+	  (0, _reactRouter.match)({ routes: _routes2.default, location: req.url }, function (error, redirectLocation, renderProps) {
+	    if (error) {
+	      return res.status(500).send(error.message);
+	    } else if (redirectLocation) {
+	      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+	    } else if (!renderProps) {
+	      return res.status(404).end('Not found.');
+	    } else {
+	      handleRender(req, res, renderProps);
+	    }
+	  });
+	}
+
+	function handleRender(req, res, renderProps) {
+	  global.navigator = {
+	    userAgent: req.headers['user-agent']
+	  };
+	  console.log('>>>>>>>> navigator.userAgent');
+	  console.log(navigator.userAgent);
+	  var muiTheme = (0, _getMuiTheme2.default)({ userAgent: req.headers['user-agent'] });
+
+	  // Async middleware applied same as in client except without initial State
+	  var store = (0, _configureStore2.default)();
+
+	  var html = _server2.default.renderToString(_react2.default.createElement(
+	    _MuiThemeProvider2.default,
+	    { muiTheme: muiTheme },
+	    _react2.default.createElement(
+	      _reactRedux.Provider,
+	      { store: store },
+	      _react2.default.createElement(_reactRouter.RouterContext, renderProps)
+	    )
+	  ));
+
+	  var initialState = store.getState();
+	  var strState = (0, _stringify2.default)(initialState);
+
+	  _fs2.default.readFile('./public/static/index.html', 'utf8', function (err, file) {
+	    if (err) {
+	      return console.log(err);
+	    }
+	    var document = file.replace(/<div id="root"><\/div>/, '<div id="root">' + html + '</div>');
+	    document = document.replace(/<script text="initialState"><\/script>/, '<script>window.__INITIAL_STATE__ = ' + strState + '</script>');
+	    res.send(document);
+	  });
+	}
+
+	var _default = render;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(render, 'render', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
+
+	  __REACT_HOT_LOADER__.register(handleRender, 'handleRender', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
+	}();
+
+	;
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/styles/MuiThemeProvider");
+	module.exports = require("fs");
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/styles/baseThemes/lightBaseTheme");
+	module.exports = require("react-redux");
 
 /***/ },
 /* 11 */
 /***/ function(module, exports) {
 
-	module.exports = require("path");
+	module.exports = require("react-router");
 
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = require("react");
+	module.exports = require("material-ui/styles/getMuiTheme");
 
 /***/ },
 /* 13 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-dom/server");
+	module.exports = require("material-ui/styles/MuiThemeProvider");
 
 /***/ },
 /* 14 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("react-router");
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(15);
+
+	var _reduxThunk = __webpack_require__(16);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _rootReducer = __webpack_require__(17);
+
+	var _rootReducer2 = _interopRequireDefault(_rootReducer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default
+	// loggerMiddleware
+	)(_redux.createStore);
+
+	var configureStore = function configureStore(initialState) {
+	  var store = (0, _redux.createStore)(_rootReducer2.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+	  /*if (module.hot) {
+	    // Enable Webpack hot module replacement for reducers
+	    module.hot.accept('./reducers', () => {
+	      const nextRootReducer = require('./reducers');
+	       store.replaceReducer(nextRootReducer);
+	    });
+	  }*/
+
+	  return store;
+	};
+
+	var _default = configureStore;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(createStoreWithMiddleware, 'createStoreWithMiddleware', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+
+	  __REACT_HOT_LOADER__.register(configureStore, 'configureStore', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+	}();
+
+	;
 
 /***/ },
 /* 15 */
@@ -334,7 +411,7 @@ module.exports =
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-redux");
+	module.exports = require("redux-thunk");
 
 /***/ },
 /* 17 */
@@ -362,7 +439,7 @@ module.exports =
 
 	var _AuthReducer2 = _interopRequireDefault(_AuthReducer);
 
-	var _asyncReducers = __webpack_require__(29);
+	var _streamReducers = __webpack_require__(29);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -370,9 +447,9 @@ module.exports =
 	  launchPage: _LaunchPageReducer2.default,
 	  router: _RouterReducer2.default,
 	  auth: _AuthReducer2.default,
-	  byId: _asyncReducers.byId,
-	  ids: _asyncReducers.ids,
-	  openFeedItemId: _asyncReducers.openFeedItemId,
+	  byId: _streamReducers.byId,
+	  ids: _streamReducers.ids,
+	  openFeedItemId: _streamReducers.openFeedItemId,
 	  form: _reduxForm.reducer
 	};
 
@@ -878,7 +955,7 @@ module.exports =
 	});
 	exports.default = stringifyLocation;
 
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(11);
 
 	function stringifyLocation(location) {
 	  var query = (0, _reactRouter.stringifyQuery)(location.query);
@@ -914,7 +991,7 @@ module.exports =
 
 	var _ramda = __webpack_require__(31);
 
-	var _asyncActions = __webpack_require__(32);
+	var _streamActions = __webpack_require__(32);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -943,7 +1020,7 @@ module.exports =
 	        return (0, _ramda.merge)(state, (0, _defineProperty3.default)({}, payload.id, payload));
 	      }
 	      return state;
-	    case _asyncActions.UPDATE_FEED_ITEM:
+	    case _streamActions.UPDATE_FEED_ITEM:
 	      return (0, _ramda.merge)(state, (0, _defineProperty3.default)({}, payload.id, payload));
 	    case 'updateFeedItemServer':
 	      if (meta.done && !error) {
@@ -1005,9 +1082,9 @@ module.exports =
 	        return payload.id;
 	      }
 	      return state;
-	    case _asyncActions.OPEN_FEED_ITEM:
+	    case _streamActions.OPEN_FEED_ITEM:
 	      return payload.id;
-	    case _asyncActions.CLOSE_FEED_ITEM:
+	    case _streamActions.CLOSE_FEED_ITEM:
 	      return null;
 	    case 'removeFeedItem':
 	      if (meta.done && !error) {
@@ -1032,13 +1109,13 @@ module.exports =
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(byId, 'byId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/asyncReducers.js');
+	  __REACT_HOT_LOADER__.register(byId, 'byId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
 
-	  __REACT_HOT_LOADER__.register(ids, 'ids', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/asyncReducers.js');
+	  __REACT_HOT_LOADER__.register(ids, 'ids', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
 
-	  __REACT_HOT_LOADER__.register(openFeedItemId, 'openFeedItemId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/asyncReducers.js');
+	  __REACT_HOT_LOADER__.register(openFeedItemId, 'openFeedItemId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
 
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/asyncReducers.js');
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
 	}();
 
 	;
@@ -1070,9 +1147,9 @@ module.exports =
 
 	var _api2 = _interopRequireDefault(_api);
 
-	var _asyncActionUtils = __webpack_require__(37);
+	var _asyncActionUtils = __webpack_require__(38);
 
-	var _uuid = __webpack_require__(38);
+	var _uuid = __webpack_require__(39);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1188,57 +1265,57 @@ module.exports =
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(OPEN_FEED_ITEM, 'OPEN_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(OPEN_FEED_ITEM, 'OPEN_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(CLOSE_FEED_ITEM, 'CLOSE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(CLOSE_FEED_ITEM, 'CLOSE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(UPDATE_FEED_ITEM, 'UPDATE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(UPDATE_FEED_ITEM, 'UPDATE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(openFeedItem, 'openFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(openFeedItem, 'openFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(closeFeedItem, 'closeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(closeFeedItem, 'closeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItem, 'updateFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItem, 'updateFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsType, 'fetchFeedItemsType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(fetchFeedItemsType, 'fetchFeedItemsType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsStart, 'fetchFeedItemsStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(fetchFeedItemsStart, 'fetchFeedItemsStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsSuccess, 'fetchFeedItemsSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(fetchFeedItemsSuccess, 'fetchFeedItemsSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsFailure, 'fetchFeedItemsFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(fetchFeedItemsFailure, 'fetchFeedItemsFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(fetchFeedItems, 'fetchFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(fetchFeedItems, 'fetchFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(addFeedItemType, 'addFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(addFeedItemType, 'addFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(addFeedItemStart, 'addFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(addFeedItemStart, 'addFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(addFeedItemSuccess, 'addFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(addFeedItemSuccess, 'addFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(addFeedItemFailure, 'addFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(addFeedItemFailure, 'addFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(addFeedItem, 'addFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(addFeedItem, 'addFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerType, 'updateFeedItemServerType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItemServerType, 'updateFeedItemServerType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerStart, 'updateFeedItemServerStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItemServerStart, 'updateFeedItemServerStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerSuccess, 'updateFeedItemServerSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItemServerSuccess, 'updateFeedItemServerSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerFailure, 'updateFeedItemServerFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItemServerFailure, 'updateFeedItemServerFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(updateFeedItemServer, 'updateFeedItemServer', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItemServer, 'updateFeedItemServer', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(removeFeedItemType, 'removeFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(removeFeedItemType, 'removeFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(removeFeedItemStart, 'removeFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(removeFeedItemStart, 'removeFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(removeFeedItemSuccess, 'removeFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(removeFeedItemSuccess, 'removeFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(removeFeedItemFailure, 'removeFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(removeFeedItemFailure, 'removeFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 
-	  __REACT_HOT_LOADER__.register(removeFeedItem, 'removeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActions.js');
+	  __REACT_HOT_LOADER__.register(removeFeedItem, 'removeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
 	}();
 
 	;
@@ -1252,35 +1329,25 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.returnFeedItemsAndIds = exports.normalizeFeedItems = exports.fetchJson = exports.checkStatus = exports.objConvert = exports.toJson = undefined;
+	exports.returnFeedItemsAndIds = exports.normalizeFeedItems = exports.objConvert = undefined;
 
 	var _stringify = __webpack_require__(2);
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _extends2 = __webpack_require__(24);
+	__webpack_require__(34);
 
-	var _extends3 = _interopRequireDefault(_extends2);
+	var _normalizr = __webpack_require__(35);
 
-	var _promise = __webpack_require__(34);
-
-	var _promise2 = _interopRequireDefault(_promise);
-
-	__webpack_require__(35);
-
-	var _normalizr = __webpack_require__(36);
+	var _apiUtils = __webpack_require__(36);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Create  schema for normalizr
 	var feedItems = new _normalizr.Schema('feedItems');
 
-	// Utility to convert response stream from fetch to JSON
-	var toJson = exports.toJson = function toJson(res) {
-	  return res.json();
-	};
-
 	// Modify response for props
+	// We can do it here or on server
 	var objConvert = exports.objConvert = function objConvert(data) {
 	  return data.map(function (json) {
 	    var rObj = {};
@@ -1289,6 +1356,108 @@ module.exports =
 	    rObj['content'] = obj.text;
 	    return rObj;
 	  });
+	};
+
+	// Process data from fetch:
+	var normalizeFeedItems = exports.normalizeFeedItems = function normalizeFeedItems(data) {
+	  return (0, _normalizr.normalize)(data, (0, _normalizr.arrayOf)(feedItems));
+	};
+
+	// Process object returned from normalizeSongList into feedItems and feedItemIds
+	var returnFeedItemsAndIds = exports.returnFeedItemsAndIds = function returnFeedItemsAndIds(_ref) {
+	  var feedItems = _ref.entities.feedItems;
+	  var feedItemIds = _ref.result;
+	  return {
+	    feedItems: feedItems,
+	    feedItemIds: feedItemIds
+	  };
+	};
+
+	var _default = {
+	  feedItems: {
+	    fetch: function fetch() {
+	      return (0, _apiUtils.fetchJson)('/feedItems')
+	      //.then(objConvert)
+	      .then(normalizeFeedItems).then(returnFeedItemsAndIds);
+	    },
+	    add: function add(content) {
+	      return (0, _apiUtils.fetchJson)('/feedItems', {
+	        method: 'POST',
+	        body: (0, _stringify2.default)({ content: content })
+	      });
+	    },
+	    update: function update(id, content) {
+	      return (0, _apiUtils.fetchJson)('/feedItems/' + id, {
+	        method: 'PUT',
+	        body: (0, _stringify2.default)({ content: content })
+	      });
+	    },
+	    delete: function _delete(id) {
+	      return fetch('/feedItems/' + id, {
+	        method: 'DELETE'
+	      }).then(_apiUtils.checkStatus).then(function (res) {
+	        return res.text();
+	      });
+	    }
+	  }
+	};
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(feedItems, 'feedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+
+	  __REACT_HOT_LOADER__.register(objConvert, 'objConvert', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+
+	  __REACT_HOT_LOADER__.register(normalizeFeedItems, 'normalizeFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+
+	  __REACT_HOT_LOADER__.register(returnFeedItemsAndIds, 'returnFeedItemsAndIds', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+	}();
+
+	;
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	module.exports = require("isomorphic-fetch");
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	module.exports = require("normalizr");
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchJson = exports.checkStatus = exports.toJson = undefined;
+
+	var _extends2 = __webpack_require__(24);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _promise = __webpack_require__(37);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Utility to convert response stream from fetch to JSON
+	var toJson = exports.toJson = function toJson(res) {
+	  return res.json();
 	};
 
 	// Utility for bad status code for fetch
@@ -1313,49 +1482,6 @@ module.exports =
 	    })
 	  })).then(checkStatus).then(toJson);
 	};
-
-	// Process data from fetch:
-	var normalizeFeedItems = exports.normalizeFeedItems = function normalizeFeedItems(data) {
-	  return (0, _normalizr.normalize)(data, (0, _normalizr.arrayOf)(feedItems));
-	};
-
-	// Process object returned from normalizeSongList into feedItems and feedItemIds
-	var returnFeedItemsAndIds = exports.returnFeedItemsAndIds = function returnFeedItemsAndIds(_ref) {
-	  var feedItems = _ref.entities.feedItems;
-	  var feedItemIds = _ref.result;
-	  return {
-	    feedItems: feedItems,
-	    feedItemIds: feedItemIds
-	  };
-	};
-
-	var _default = {
-	  feedItems: {
-	    fetch: function fetch() {
-	      return fetchJson('/feedItems').then(objConvert).then(normalizeFeedItems).then(returnFeedItemsAndIds);
-	    },
-	    add: function add(content) {
-	      return fetchJson('/feedItems', {
-	        method: 'POST',
-	        body: (0, _stringify2.default)({ content: content })
-	      });
-	    },
-	    update: function update(id, content) {
-	      return fetchJson('/feedItems/' + id, {
-	        method: 'PUT',
-	        body: (0, _stringify2.default)({ content: content })
-	      });
-	    },
-	    delete: function _delete(id) {
-	      return fetch('/feedItems/' + id, {
-	        method: 'DELETE'
-	      }).then(checkStatus).then(function (res) {
-	        return res.text();
-	      });
-	    }
-	  }
-	};
-	exports.default = _default;
 	;
 
 	var _temp = function () {
@@ -1363,45 +1489,23 @@ module.exports =
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(feedItems, 'feedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+	  __REACT_HOT_LOADER__.register(toJson, 'toJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
 
-	  __REACT_HOT_LOADER__.register(toJson, 'toJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+	  __REACT_HOT_LOADER__.register(checkStatus, 'checkStatus', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
 
-	  __REACT_HOT_LOADER__.register(objConvert, 'objConvert', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(checkStatus, 'checkStatus', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(fetchJson, 'fetchJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(normalizeFeedItems, 'normalizeFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(returnFeedItemsAndIds, 'returnFeedItemsAndIds', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
+	  __REACT_HOT_LOADER__.register(fetchJson, 'fetchJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
 	}();
 
 	;
 
 /***/ },
-/* 34 */
+/* 37 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/core-js/promise");
 
 /***/ },
-/* 35 */
-/***/ function(module, exports) {
-
-	module.exports = require("isomorphic-fetch");
-
-/***/ },
-/* 36 */
-/***/ function(module, exports) {
-
-	module.exports = require("normalizr");
-
-/***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1514,13 +1618,19 @@ module.exports =
 	;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = require("uuid");
 
 /***/ },
-/* 39 */
+/* 40 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-dom/server");
+
+/***/ },
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1529,29 +1639,29 @@ module.exports =
 		value: true
 	});
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(11);
 
-	var _Home = __webpack_require__(40);
+	var _Home = __webpack_require__(42);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _about = __webpack_require__(53);
+	var _about = __webpack_require__(55);
 
 	var _about2 = _interopRequireDefault(_about);
 
-	var _stream = __webpack_require__(55);
+	var _stream = __webpack_require__(57);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
-	var _Page = __webpack_require__(61);
+	var _Page = __webpack_require__(63);
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _App = __webpack_require__(63);
+	var _App = __webpack_require__(65);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -1581,7 +1691,7 @@ module.exports =
 	;
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1590,23 +1700,23 @@ module.exports =
 	  value: true
 	});
 
-	var _getPrototypeOf = __webpack_require__(41);
+	var _getPrototypeOf = __webpack_require__(43);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-	var _classCallCheck2 = __webpack_require__(42);
+	var _classCallCheck2 = __webpack_require__(44);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(43);
+	var _createClass2 = __webpack_require__(45);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _possibleConstructorReturn2 = __webpack_require__(44);
+	var _possibleConstructorReturn2 = __webpack_require__(46);
 
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-	var _inherits2 = __webpack_require__(45);
+	var _inherits2 = __webpack_require__(47);
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -1614,37 +1724,37 @@ module.exports =
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _promise = __webpack_require__(34);
+	var _promise = __webpack_require__(37);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(46);
+	var _classnames = __webpack_require__(48);
 
-	var _HomeForms = __webpack_require__(47);
+	var _HomeForms = __webpack_require__(49);
 
 	var _HomeForms2 = _interopRequireDefault(_HomeForms);
 
 	var _redux = __webpack_require__(15);
 
-	var _LaunchPageActions = __webpack_require__(48);
+	var _LaunchPageActions = __webpack_require__(50);
 
 	var LaunchPageActions = _interopRequireWildcard(_LaunchPageActions);
 
-	var _reactRedux = __webpack_require__(16);
+	var _reactRedux = __webpack_require__(10);
 
-	var _RegisterForm = __webpack_require__(49);
+	var _RegisterForm = __webpack_require__(51);
 
 	var _RegisterForm2 = _interopRequireDefault(_RegisterForm);
 
-	var _Home = __webpack_require__(51);
+	var _Home = __webpack_require__(53);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _materialUi = __webpack_require__(52);
+	var _materialUi = __webpack_require__(54);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1722,43 +1832,43 @@ module.exports =
 	;
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/core-js/object/get-prototype-of");
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/helpers/classCallCheck");
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/helpers/createClass");
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/helpers/inherits");
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = require("classnames");
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1776,7 +1886,7 @@ module.exports =
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -1935,7 +2045,7 @@ module.exports =
 	;
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1972,7 +2082,7 @@ module.exports =
 	;
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1989,11 +2099,11 @@ module.exports =
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _promise = __webpack_require__(34);
+	var _promise = __webpack_require__(37);
 
 	var _promise2 = _interopRequireDefault(_promise);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -2003,7 +2113,7 @@ module.exports =
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _qs = __webpack_require__(50);
+	var _qs = __webpack_require__(52);
 
 	var _qs2 = _interopRequireDefault(_qs);
 
@@ -2156,13 +2266,13 @@ module.exports =
 	;
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports) {
 
 	module.exports = require("qs");
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2174,13 +2284,13 @@ module.exports =
 	};
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui");
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2189,35 +2299,35 @@ module.exports =
 		value: true
 	});
 
-	var _getPrototypeOf = __webpack_require__(41);
+	var _getPrototypeOf = __webpack_require__(43);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-	var _classCallCheck2 = __webpack_require__(42);
+	var _classCallCheck2 = __webpack_require__(44);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(43);
+	var _createClass2 = __webpack_require__(45);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _possibleConstructorReturn2 = __webpack_require__(44);
+	var _possibleConstructorReturn2 = __webpack_require__(46);
 
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-	var _inherits2 = __webpack_require__(45);
+	var _inherits2 = __webpack_require__(47);
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	var _redux = __webpack_require__(15);
 
-	var _reactRedux = __webpack_require__(16);
+	var _reactRedux = __webpack_require__(10);
 
-	var _about = __webpack_require__(54);
+	var _about = __webpack_require__(56);
 
 	var _about2 = _interopRequireDefault(_about);
 
@@ -2272,7 +2382,7 @@ module.exports =
 	;
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2282,7 +2392,7 @@ module.exports =
 	};
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2295,49 +2405,49 @@ module.exports =
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
-	var _getPrototypeOf = __webpack_require__(41);
+	var _getPrototypeOf = __webpack_require__(43);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-	var _classCallCheck2 = __webpack_require__(42);
+	var _classCallCheck2 = __webpack_require__(44);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(43);
+	var _createClass2 = __webpack_require__(45);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _possibleConstructorReturn2 = __webpack_require__(44);
+	var _possibleConstructorReturn2 = __webpack_require__(46);
 
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-	var _inherits2 = __webpack_require__(45);
+	var _inherits2 = __webpack_require__(47);
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(16);
+	var _reactRedux = __webpack_require__(10);
 
-	var _asyncActions = __webpack_require__(32);
+	var _streamActions = __webpack_require__(32);
 
-	var actionCreators = _interopRequireWildcard(_asyncActions);
+	var actionCreators = _interopRequireWildcard(_streamActions);
 
-	var _selectors = __webpack_require__(56);
+	var _selectors = __webpack_require__(58);
 
 	var selectors = _interopRequireWildcard(_selectors);
 
-	var _sidebar = __webpack_require__(57);
+	var _sidebar = __webpack_require__(59);
 
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 
-	var _StreamItem = __webpack_require__(59);
+	var _StreamItem = __webpack_require__(61);
 
 	var _StreamItem2 = _interopRequireDefault(_StreamItem);
 
-	var _stream = __webpack_require__(60);
+	var _stream = __webpack_require__(62);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
@@ -2498,7 +2608,7 @@ module.exports =
 	;
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2553,7 +2663,7 @@ module.exports =
 	;
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2562,11 +2672,11 @@ module.exports =
 		value: true
 	});
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _sidebar = __webpack_require__(58);
+	var _sidebar = __webpack_require__(60);
 
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 
@@ -2664,7 +2774,7 @@ module.exports =
 	;
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2675,7 +2785,7 @@ module.exports =
 	};
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2684,11 +2794,11 @@ module.exports =
 		value: true
 	});
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _stream = __webpack_require__(60);
+	var _stream = __webpack_require__(62);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
@@ -2728,7 +2838,7 @@ module.exports =
 	;
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2743,7 +2853,7 @@ module.exports =
 	};
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2752,35 +2862,35 @@ module.exports =
 		value: true
 	});
 
-	var _getPrototypeOf = __webpack_require__(41);
+	var _getPrototypeOf = __webpack_require__(43);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-	var _classCallCheck2 = __webpack_require__(42);
+	var _classCallCheck2 = __webpack_require__(44);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(43);
+	var _createClass2 = __webpack_require__(45);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _possibleConstructorReturn2 = __webpack_require__(44);
+	var _possibleConstructorReturn2 = __webpack_require__(46);
 
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-	var _inherits2 = __webpack_require__(45);
+	var _inherits2 = __webpack_require__(47);
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	var _redux = __webpack_require__(15);
 
-	var _reactRedux = __webpack_require__(16);
+	var _reactRedux = __webpack_require__(10);
 
-	var _Page = __webpack_require__(62);
+	var _Page = __webpack_require__(64);
 
 	var _Page2 = _interopRequireDefault(_Page);
 
@@ -2833,7 +2943,7 @@ module.exports =
 	;
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2841,7 +2951,7 @@ module.exports =
 	};
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2850,35 +2960,35 @@ module.exports =
 	  value: true
 	});
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(64);
+	var _NavBar = __webpack_require__(66);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _App = __webpack_require__(65);
+	var _App = __webpack_require__(67);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _MuiThemeProvider = __webpack_require__(9);
+	var _MuiThemeProvider = __webpack_require__(13);
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-	var _lightBaseTheme = __webpack_require__(10);
+	var _lightBaseTheme = __webpack_require__(68);
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
-	var _getMuiTheme = __webpack_require__(8);
+	var _getMuiTheme = __webpack_require__(12);
 
 	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
 
-	var _AppBar = __webpack_require__(66);
+	var _AppBar = __webpack_require__(69);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 
-	var _reactTapEventPlugin = __webpack_require__(67);
+	var _reactTapEventPlugin = __webpack_require__(70);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
@@ -2936,7 +3046,7 @@ module.exports =
 	;
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2945,15 +3055,15 @@ module.exports =
 	  value: true
 	});
 
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(7);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(11);
 
-	var _reactRedux = __webpack_require__(16);
+	var _reactRedux = __webpack_require__(10);
 
-	var _materialUi = __webpack_require__(52);
+	var _materialUi = __webpack_require__(54);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2988,7 +3098,7 @@ module.exports =
 	;
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -3002,104 +3112,25 @@ module.exports =
 	};
 
 /***/ },
-/* 66 */
-/***/ function(module, exports) {
-
-	module.exports = require("material-ui/AppBar");
-
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
-
-	module.exports = require("react-tap-event-plugin");
-
-/***/ },
 /* 68 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends2 = __webpack_require__(24);
-
-	var _extends3 = _interopRequireDefault(_extends2);
-
-	var _objectWithoutProperties2 = __webpack_require__(69);
-
-	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/*
-	  Helper for asynchronous actions( dispatcher middleware to transform actions ):
-	    Keeps actions simple
-	    Keeps action creators synchronous
-	    uses promises
-	 */
-
-	/*
-	 we just define a promise key on our actions and have them automatically resolved and rejected.
-	 We can also optionally listen in the reducers for auto-generated <TYPE>_REQUEST and <TYPE>_FAILURE
-	 if we care about mutating state along the way.
-	 */
-	function promiseMiddleware() {
-	  return function (next) {
-	    return function (action) {
-	      var promise = action.promise;
-	      var type = action.type;
-	      var rest = (0, _objectWithoutProperties3.default)(action, ["promise", "type"]);
-
-
-	      if (!promise) return next(action);
-
-	      var SUCCESS = type;
-	      var REQUEST = type + "_REQUEST";
-	      var FAILURE = type + "_FAILURE";
-
-	      next((0, _extends3.default)({}, rest, { type: REQUEST }));
-
-	      return promise.then(function (res) {
-	        next((0, _extends3.default)({}, rest, { res: res, type: SUCCESS }));
-
-	        return true;
-	      }).catch(function (error) {
-	        next((0, _extends3.default)({}, rest, { error: error, type: FAILURE }));
-
-	        // Another benefit is being able to log all failures here
-	        console.log(error);
-	        return false;
-	      });
-	    };
-	  };
-	}
-
-	var _default = promiseMiddleware;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(promiseMiddleware, "promiseMiddleware", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/promiseMiddleware.js");
-
-	  __REACT_HOT_LOADER__.register(_default, "default", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/promiseMiddleware.js");
-	}();
-
-	;
+	module.exports = require("material-ui/styles/baseThemes/lightBaseTheme");
 
 /***/ },
 /* 69 */
 /***/ function(module, exports) {
 
-	module.exports = require("babel-runtime/helpers/objectWithoutProperties");
+	module.exports = require("material-ui/AppBar");
 
 /***/ },
 /* 70 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-tap-event-plugin");
+
+/***/ },
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3107,39 +3138,97 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.deleteFeedItem = exports.updateFeedItem = exports.postFeedItem = exports.getFeed = undefined;
 
-	var _redux = __webpack_require__(15);
+	var _isomorphicFetch = __webpack_require__(34);
 
-	var _reduxThunk = __webpack_require__(71);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _rootReducer = __webpack_require__(17);
-
-	var _rootReducer2 = _interopRequireDefault(_rootReducer);
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default
-	// loggerMiddleware
-	)(_redux.createStore);
-
-	var configureStore = function configureStore(initialState) {
-	  var store = (0, _redux.createStore)(_rootReducer2.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-
-	  /*if (module.hot) {
-	    // Enable Webpack hot module replacement for reducers
-	    module.hot.accept('./reducers', () => {
-	      const nextRootReducer = require('./reducers');
-	       store.replaceReducer(nextRootReducer);
+	var getFeed = exports.getFeed = function getFeed(req, res) {
+	  (0, _isomorphicFetch2.default)('http://0.0.0.0:5000/social/feed', {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json'
+	  }).then(function (pres) {
+	    return pres.json();
+	  }).then(function (data) {
+	    var body = data.map(function (json) {
+	      var rObj = {};
+	      var obj = JSON.parse(json);
+	      rObj['id'] = obj.id_str;
+	      rObj['content'] = obj.text;
+	      return rObj;
 	    });
-	  }*/
-
-	  return store;
+	    res.send(body);
+	  }).catch(function (err) {
+	    console.log(err);
+	    res.end(err);
+	  });
 	};
 
-	var _default = configureStore;
-	exports.default = _default;
+	var postFeedItem = exports.postFeedItem = function postFeedItem(req, res) {
+	  console.log(req.body);
+	  (0, _isomorphicFetch2.default)('http://0.0.0.0:5000/social/feed', {
+	    'method': 'POST',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: req.body
+	  }).then(function (pres) {
+	    return res.send(pres.json());
+	  }).catch(function (err) {
+	    console.log(err);
+	    res.end(err);
+	  });
+	};
+
+	var updateFeedItem = exports.updateFeedItem = function updateFeedItem(req, res) {
+	  (0, _isomorphicFetch2.default)('http://0.0.0.0:5000/social/feed/:id', {
+	    'method': 'PUT',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: req.body
+	  }).then(function (pres) {
+	    return res.send(pres.json());
+	  }).catch(function (err) {
+	    console.log(err);
+	    res.end(err);
+	  });
+	};
+
+	var deleteFeedItem = exports.deleteFeedItem = function deleteFeedItem(req, res) {
+	  (0, _isomorphicFetch2.default)('http://0.0.0.0:5000/social/feed/:id', {
+	    'method': 'DELETE',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: req.params.id
+	  }).then(function () {
+	    return res.status(200).send();
+	  }).catch(function (err) {
+	    console.log(err);
+	    res.end(err);
+	  });
+	};
+
+	// Using http-proxy. Manually implementing proxy using fetch
+	// was faster: 1.16 ms with fetch vs 2.34 with proxy
+	/*
+	 var target = proxyRules.match(req);
+	 if (target) {
+	 proxy.web(req, res, {target: target});
+	 } else {
+	 res.writeHead(500, { 'Content-Type': 'text/plain' });
+	 res.status(returnStatus).end('The request url and path did not match any resources');
+	 console.log('DDB Error: ' + req.err);
+	 }
+	 */
+
 	;
 
 	var _temp = function () {
@@ -3147,20 +3236,16 @@ module.exports =
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(createStoreWithMiddleware, 'createStoreWithMiddleware', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+	  __REACT_HOT_LOADER__.register(getFeed, 'getFeed', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
 
-	  __REACT_HOT_LOADER__.register(configureStore, 'configureStore', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+	  __REACT_HOT_LOADER__.register(postFeedItem, 'postFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
 
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
+	  __REACT_HOT_LOADER__.register(updateFeedItem, 'updateFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
+
+	  __REACT_HOT_LOADER__.register(deleteFeedItem, 'deleteFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
 	}();
 
 	;
-
-/***/ },
-/* 71 */
-/***/ function(module, exports) {
-
-	module.exports = require("redux-thunk");
 
 /***/ }
 /******/ ]);

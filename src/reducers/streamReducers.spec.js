@@ -1,6 +1,6 @@
 import test from 'tape';
-import * as reducers from './asyncReducers';
-import * as actions from '../actions/asyncActions';
+import * as reducers from './streamReducers';
+import * as actions from '../actions/streamActions';
 import { getMockState, getActionPayload } from '../utils/testMockStateUtils';
 
 // byId reducer

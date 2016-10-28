@@ -18,18 +18,18 @@ Webpack-dev-server (localhost:8080) & node server (localhost:3000)
 ```npm i -g cross-env```
 ```npm i -g concurrently```
 ```npm i -g nodemon```
-- Run Dev Mode:  ```npm run dev```
-  - webpack-dev-server build & serve: ```npm run webpack-devserver```
-  - Rendering Server(:3000): ```npm run nodemon```
-  - API Server(:3001): ```npm run dev-api```
-    - only responds with text to request right now
-    - could integrate as HAPI
+- Run all dev: ```npm run dev:serve```
+    - builds and runs server on 3000, backend on 5000
+- Build dev: ```npm run build:dev```
+- API Backend Server(:5000): ```npm run dev-api```
+    - runs Hapi Backend: path from project is '../cs419-backend...' for it to work
+- Rendering Server(:3000): ```npm run start:dev```
+- Run Dev Frontend via webpack( hot-reload UI):  ```npm run dev```
 - Linting: ```npm run eslint```
 - DocGen: ```npm run esdoc```
 - Test: ```npm run test```
-- Build: ```npm run build```
-  - webpack production build. The dev & prod configs are combined for simplicity.
-- Run:      ```npm start```
+- Production Build: ```npm run build```
+- Production Start:      ```npm start```
   - TODO: need to test production build.
 
 Docker
@@ -67,25 +67,24 @@ Also in ./Assets is client-config.json It lets us plug things into the html we r
 ###Directory Structure
 ---
 ```
-├── bin     # Has: apiServer, renderingServer, some configs, & unused express webpack-dev-server
+├── bin     # Unused -> Has: server/server config files saved for reference
 ├── src                    # Application code + client.js( if client expands, it should get own Directory)
     ├── actions            # redux actions
     ├── components         # 'dumb' components -> stateless
     ├── containers         # 'smart' components -> hold/manage states/actions
     ├── lib                # middlewares, could add constants here
-    ├── store              # configure store
-    ├── rootReducer.js     # reducers reducers
-    ├── routes.js          # routing
-    ├── client.js          # client
+    ├── reducers           # reducers
+    ├── server             # rendering server directory
+    ├── utils              # utilities: mostly API/async related
 ```
 
 ---
 ### Documentation
 
-* [Exploring the App](./docs/ExploringTheApp.md)
+* [Adding Routes, Client Structure, Stream](./docs/ExploringTheApp.md)
 
-* Styling: ```require('!style!css![path-to-css-file].css');```
-    * ```<div className="styleFromStyleSheet"/>```
+* Styling: ```import s from './[file].css;```
+    * ```<div className={ s.[css-class or id] }/>```
 * Combining multiple style classes: ```import classnames from classnames```
     * usage: https://github.com/JedWatson/classnames
 

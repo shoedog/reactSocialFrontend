@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 
-import * as actions from './asyncActions';
+import * as actions from './streamActions';
 
 const middlewares = [ thunk ];
 const mockStore = configureStore(middlewares);

@@ -1,12 +1,9 @@
 import {
   REGISTER_FAILURE,
-
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-
   LOGOUT,
-
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_ERROR,
 } from '../actions/auth';

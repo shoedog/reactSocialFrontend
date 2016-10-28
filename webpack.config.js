@@ -91,7 +91,7 @@ const serverConfig = {
   target: 'node',
   externals: [nodeExternals()],
   entry: [
-    './src/renderingServer.js'
+    './src/server/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'public/static/dist/'),

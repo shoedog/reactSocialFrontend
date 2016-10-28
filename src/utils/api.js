@@ -1,13 +1,12 @@
 import 'isomorphic-fetch';
 import { normalize, Schema, arrayOf } from 'normalizr';
+import { checkStatus, fetchJson } from './apiUtils';
 
 // Create  schema for normalizr
 const feedItems = new Schema('feedItems');
 
-// Utility to convert response stream from fetch to JSON
-export const toJson = (res) => res.json();
-
 // Modify response for props
+// We can do it here or on server
 export const objConvert = (data) => {
   return data.map((json) => {
     var rObj = {};
@@ -17,32 +16,6 @@ export const objConvert = (data) => {
     return rObj;
   });
 };
-
-// Utility for bad status code for fetch
-// ( fetch promises by default are only rejected if connection fails )
-export const checkStatus = (res) => {
-  const { status } = res;
-  if (status >= 200 && status < 300) {
-    return res;
-  }
-
-  return Promise.reject(new Error(res.statusText || res.status));
-};
-
-// Wrapper for fetch to call checkStatus() and toJson()
-export const fetchJson = (url, options = {}) => (
-  fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(checkStatus)
-    .then(toJson)
-
-);
 
 // Process data from fetch:
 export const normalizeFeedItems = (data) => normalize(data, arrayOf(feedItems));
@@ -57,7 +30,7 @@ export default {
   feedItems: {
     fetch() {
       return fetchJson('/feedItems')
-        .then(objConvert)
+        //.then(objConvert)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);
     },

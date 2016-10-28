@@ -9,7 +9,8 @@
   "verbose": true,
   "watch": [
     "bin",
-    "public"
+    "public",
+    "../cs419-backend"
   ],
   "env": {
     "NODE_ENV": "development"

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/asyncActions';
+import * as actionCreators from '../../actions/streamActions';
 import * as selectors from '../../lib/selectors';
 
 import Sidebar from '../Sidebar/sidebar';
