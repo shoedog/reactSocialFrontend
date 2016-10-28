@@ -1,11 +1,4 @@
-cs419-frontend
-
-
-###Setup
-```npm install```
-Global installs needed:
-```npm i -g cross-env concurrently nodemon```
-
+#cs419-frontend
 
 ##Scripts
 [Scripts](./docs/scripts.md)
