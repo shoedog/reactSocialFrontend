@@ -53,7 +53,6 @@ const registerValidate = values => {
 //Makes a Label & Input Field
 const renderField = ({ input, value, label, type, name, onChange, meta: { dirty, error } }) => (
   <div>
-    <label htmlFor={name}>{label}</label>
     <div>
       <input {...input} type={type} placeholder={label} value={value} onChange={ e => e.target.value }/>
       {dirty && error && <span>{error}</span>}
@@ -67,7 +66,7 @@ const RegisterForm = (props) => {
   return(
     <div className="registration">
       <h1 style={{"textAlign":"center"}}>Register New User</h1>
-      <div style={{"align":"center", "backgroundColor":"#d8d8d8", "textAlign":"center", "marginLeft":"200px", "marginRight":"200px", "border":"solid black"}}>
+      <div style={{"align":"center","textAlign":"center"}}>
       <form onSubmit={handleSubmit(submit)}>
         <Field name="email" component="input" type="email" component={renderField} label="Email" />
         <Field name="username" component="input" type="text" component={renderField} label="User Name" />

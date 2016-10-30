@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import axios from 'axios';
-import qs from 'qs';
-import TextField from 'material-ui';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 /*  Validate Form input   */
-const registerValidate = values => {
-  const errors = {}
+const validate = values => {
+  const errors = {};
 
   // Check Required Fields have been submitted
-  const requiredFields = ['username', 'email', 'password1', 'password2']
+  const requiredFields = ['username', 'email', 'password1', 'password2'];
   requiredFields.forEach(field => {
     if(!values[field]){
       errors[field] = 'Required'
@@ -17,21 +16,22 @@ const registerValidate = values => {
   })
   // Validate Email
   if(values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
-    errors.email = 'Invalid email address'
+    errors.email = 'Invalid email address';
   }
   // Validate Passwords Match
   if (values.password1 !== values.password2) {
-    errors.password2 = 'Passwords Must Match!'
+    errors.password2 = 'Passwords Must Match!';
   }
-  return errors
+  return errors;
 }
 
 /*  Material UI Form  */
 const RegisterForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pristine, reset, submitting } = props;
+  
   return (
+    <div style={{"align":"center","textAlign":"center"}}>
     <form onSubmit={handleSubmit}>
-      
       <div>
         <Field name="username" component= { (username) => 
           <TextField hintText = "Username" 
@@ -41,7 +41,6 @@ const RegisterForm = (props) => {
           />
         }/>
       </div>
-
       <div>
         <Field name="email" component={ (email) =>
               <TextField 
@@ -52,7 +51,6 @@ const RegisterForm = (props) => {
               />
             }/>
       </div>
-
       <div>
         <Field name="password1" component={ (password1) =>
               <TextField 
@@ -63,7 +61,6 @@ const RegisterForm = (props) => {
               />
             }/>
       </div>
-
       <div>
         <Field name="password2" component={ (password2) =>
               <TextField 
@@ -74,38 +71,15 @@ const RegisterForm = (props) => {
               />
             }/>
       </div>
-
       <div>
-        <button type="submit" disabled={pristine || submitting}>Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+          <RaisedButton label="Submit" primary={true} type="submit" disabled={submitting}/>
       </div>
     </form>
-  )
-}
-
-var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-
-const submit = (values, dispatch) => {
-  return new Promise((resolve, reject) => {
-    if( values.email && values.password1 && values.username ) {
-      axios.post(`http://0.0.0.0:5000/user`, qs.stringify({
-        username: values.username,
-        password: values.password1
-      }), headers)
-     .then (response => {
-       console.log(response)
-     })
-     .catch(response => {
-       if(response.status !== 200) {
-         console.log(response);
-         reject({ username: 'Invalid username or password', _error: 'Login failed!' })
-       }
-     })
-   } console.log(values);
-  })
+    </div>
+  );
 }
 
 export default reduxForm({
   form: 'registerForm', // a unique name for this form
-  registerValidate,
+  validate,
 })(RegisterForm);

@@ -82,7 +82,7 @@ module.exports =
 
 	var _handleRender2 = _interopRequireDefault(_handleRender);
 
-	var _feedItemsApi = __webpack_require__(71);
+	var _feedItemsApi = __webpack_require__(76);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -142,25 +142,6 @@ module.exports =
 	  }
 	  console.log('Server listening on: ' + PORT);
 	});
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(app, 'app', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
-
-	  __REACT_HOT_LOADER__.register(server, 'server', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
-
-	  __REACT_HOT_LOADER__.register(proxyRules, 'proxyRules', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
-
-	  __REACT_HOT_LOADER__.register(proxy, 'proxy', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
-
-	  __REACT_HOT_LOADER__.register(PORT, 'PORT', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/index.js');
-	}();
-
-	;
 
 /***/ },
 /* 2 */
@@ -295,23 +276,7 @@ module.exports =
 	  });
 	}
 
-	var _default = render;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(render, 'render', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
-
-	  __REACT_HOT_LOADER__.register(handleRender, 'handleRender', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/handleRender.js');
-	}();
-
-	;
+	exports.default = render;
 
 /***/ },
 /* 9 */
@@ -376,30 +341,14 @@ module.exports =
 	    // Enable Webpack hot module replacement for reducers
 	    module.hot.accept('./reducers', () => {
 	      const nextRootReducer = require('./reducers');
-	       store.replaceReducer(nextRootReducer);
+	        store.replaceReducer(nextRootReducer);
 	    });
 	  }*/
 
 	  return store;
 	};
 
-	var _default = configureStore;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(createStoreWithMiddleware, 'createStoreWithMiddleware', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
-
-	  __REACT_HOT_LOADER__.register(configureStore, 'configureStore', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/configureStore.js');
-	}();
-
-	;
+	exports.default = configureStore;
 
 /***/ },
 /* 15 */
@@ -455,23 +404,7 @@ module.exports =
 
 	var rootReducer = (0, _redux.combineReducers)(reducers);
 
-	var _default = rootReducer;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(reducers, 'reducers', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/rootReducer.js');
-
-	  __REACT_HOT_LOADER__.register(rootReducer, 'rootReducer', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/rootReducer.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/rootReducer.js');
-	}();
-
-	;
+	exports.default = rootReducer;
 
 /***/ },
 /* 18 */
@@ -512,19 +445,6 @@ module.exports =
 	      return state;
 	  }
 	}
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(defaultState, 'defaultState', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/LaunchPageReducer.js');
-
-	  __REACT_HOT_LOADER__.register(LaunchPageReducer, 'LaunchPageReducer', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/LaunchPageReducer.js');
-	}();
-
-	;
 
 /***/ },
 /* 20 */
@@ -544,7 +464,7 @@ module.exports =
 
 	var _router = __webpack_require__(22);
 
-	var _default = function _default() {
+	exports.default = function () {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 	  var action = arguments[1];
 
@@ -556,19 +476,6 @@ module.exports =
 	      return state;
 	  }
 	};
-
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/RouterReducer.js');
-	}();
-
-	;
 
 /***/ },
 /* 22 */
@@ -588,19 +495,6 @@ module.exports =
 	    state: state
 	  };
 	}
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(ROUTER_STATE_CHANGE, 'ROUTER_STATE_CHANGE', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/router.js');
-
-	  __REACT_HOT_LOADER__.register(routerStateChange, 'routerStateChange', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/router.js');
-	}();
-
-	;
 
 /***/ },
 /* 23 */
@@ -628,7 +522,7 @@ module.exports =
 	  profile: null
 	};
 
-	var _default = function _default() {
+	exports.default = function () {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	  var action = arguments[1];
 
@@ -665,21 +559,6 @@ module.exports =
 	      return state;
 	  }
 	};
-
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(initialState, 'initialState', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/AuthReducer.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/AuthReducer.js');
-	}();
-
-	;
 
 /***/ },
 /* 24 */
@@ -876,61 +755,6 @@ module.exports =
 	    });
 	  };
 	}
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(REGISTER_REQUEST, 'REGISTER_REQUEST', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(REGISTER_SUCCESS, 'REGISTER_SUCCESS', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(REGISTER_FAILURE, 'REGISTER_FAILURE', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(LOGIN_REQUEST, 'LOGIN_REQUEST', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(LOGIN_SUCCESS, 'LOGIN_SUCCESS', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(LOGIN_FAILURE, 'LOGIN_FAILURE', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(SAVE_AUTH_TOKEN, 'SAVE_AUTH_TOKEN', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(LOGOUT, 'LOGOUT', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(FETCH_PROFILE_SUCCESS, 'FETCH_PROFILE_SUCCESS', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(FETCH_PROFILE_ERROR, 'FETCH_PROFILE_ERROR', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(registerRequest, 'registerRequest', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(registerSuccess, 'registerSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(registerFailure, 'registerFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(loginRequest, 'loginRequest', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(loginSuccess, 'loginSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(loginFailure, 'loginFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(fetchProfileSuccess, 'fetchProfileSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(fetchProfileError, 'fetchProfileError', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(logout, 'logout', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(saveAuthToken, 'saveAuthToken', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(requestUserRegister, 'requestUserRegister', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(login, 'login', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-
-	  __REACT_HOT_LOADER__.register(fetchProfile, 'fetchProfile', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/auth.js');
-	}();
-
-	;
 
 /***/ },
 /* 26 */
@@ -962,17 +786,6 @@ module.exports =
 
 	  return '' + location.pathname + (query && '?' + query);
 	}
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(stringifyLocation, 'stringifyLocation', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/stringifyLocation.js');
-	}();
-
-	;
 
 /***/ },
 /* 29 */
@@ -1096,29 +909,11 @@ module.exports =
 	  }
 	};
 
-	var _default = {
+	exports.default = {
 	  byId: byId,
 	  ids: ids,
 	  openFeedItemId: openFeedItemId
 	};
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(byId, 'byId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
-
-	  __REACT_HOT_LOADER__.register(ids, 'ids', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
-
-	  __REACT_HOT_LOADER__.register(openFeedItemId, 'openFeedItemId', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/reducers/streamReducers.js');
-	}();
-
-	;
 
 /***/ },
 /* 30 */
@@ -1258,67 +1053,6 @@ module.exports =
 	  success: removeFeedItemSuccess,
 	  failure: removeFeedItemFailure
 	});
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(OPEN_FEED_ITEM, 'OPEN_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(CLOSE_FEED_ITEM, 'CLOSE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(UPDATE_FEED_ITEM, 'UPDATE_FEED_ITEM', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(openFeedItem, 'openFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(closeFeedItem, 'closeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItem, 'updateFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsType, 'fetchFeedItemsType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsStart, 'fetchFeedItemsStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsSuccess, 'fetchFeedItemsSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(fetchFeedItemsFailure, 'fetchFeedItemsFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(fetchFeedItems, 'fetchFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(addFeedItemType, 'addFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(addFeedItemStart, 'addFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(addFeedItemSuccess, 'addFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(addFeedItemFailure, 'addFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(addFeedItem, 'addFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerType, 'updateFeedItemServerType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerStart, 'updateFeedItemServerStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerSuccess, 'updateFeedItemServerSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItemServerFailure, 'updateFeedItemServerFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItemServer, 'updateFeedItemServer', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(removeFeedItemType, 'removeFeedItemType', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(removeFeedItemStart, 'removeFeedItemStart', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(removeFeedItemSuccess, 'removeFeedItemSuccess', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(removeFeedItemFailure, 'removeFeedItemFailure', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-
-	  __REACT_HOT_LOADER__.register(removeFeedItem, 'removeFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/streamActions.js');
-	}();
-
-	;
 
 /***/ },
 /* 33 */
@@ -1373,7 +1107,7 @@ module.exports =
 	  };
 	};
 
-	var _default = {
+	exports.default = {
 	  feedItems: {
 	    fetch: function fetch() {
 	      return (0, _apiUtils.fetchJson)('/feedItems')
@@ -1401,26 +1135,6 @@ module.exports =
 	    }
 	  }
 	};
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(feedItems, 'feedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(objConvert, 'objConvert', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(normalizeFeedItems, 'normalizeFeedItems', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(returnFeedItemsAndIds, 'returnFeedItemsAndIds', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/api.js');
-	}();
-
-	;
 
 /***/ },
 /* 34 */
@@ -1482,21 +1196,6 @@ module.exports =
 	    })
 	  })).then(checkStatus).then(toJson);
 	};
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(toJson, 'toJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
-
-	  __REACT_HOT_LOADER__.register(checkStatus, 'checkStatus', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
-
-	  __REACT_HOT_LOADER__.register(fetchJson, 'fetchJson', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/utils/apiUtils.js');
-	}();
-
-	;
 
 /***/ },
 /* 37 */
@@ -1599,23 +1298,6 @@ module.exports =
 	    };
 	  };
 	};
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(startAction, "startAction", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActionUtils.js");
-
-	  __REACT_HOT_LOADER__.register(successAction, "successAction", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActionUtils.js");
-
-	  __REACT_HOT_LOADER__.register(failureAction, "failureAction", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActionUtils.js");
-
-	  __REACT_HOT_LOADER__.register(asyncAction, "asyncAction", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/asyncActionUtils.js");
-	}();
-
-	;
 
 /***/ },
 /* 39 */
@@ -1649,25 +1331,25 @@ module.exports =
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _about = __webpack_require__(55);
+	var _about = __webpack_require__(60);
 
 	var _about2 = _interopRequireDefault(_about);
 
-	var _stream = __webpack_require__(57);
+	var _stream = __webpack_require__(62);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
-	var _Page = __webpack_require__(63);
+	var _Page = __webpack_require__(68);
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _App = __webpack_require__(65);
+	var _App = __webpack_require__(70);
 
 	var _App2 = _interopRequireDefault(_App);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _default = _react2.default.createElement(
+	exports.default = _react2.default.createElement(
 		_reactRouter.Route,
 		{ name: 'app', path: '/', component: _App2.default },
 		_react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
@@ -1676,19 +1358,6 @@ module.exports =
 		_react2.default.createElement(_reactRouter.Route, { name: 'stream', path: 'stream', component: _stream2.default }),
 		_react2.default.createElement(_reactRouter.Route, { name: '404', path: '*', component: _Page2.default })
 	);
-
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/routes.js');
-	}();
-
-	;
 
 /***/ },
 /* 42 */
@@ -1734,27 +1403,39 @@ module.exports =
 
 	var _classnames = __webpack_require__(48);
 
-	var _HomeForms = __webpack_require__(49);
+	var _LoginForm = __webpack_require__(49);
 
-	var _HomeForms2 = _interopRequireDefault(_HomeForms);
+	var _LoginForm2 = _interopRequireDefault(_LoginForm);
+
+	var _MaterialUiLogin = __webpack_require__(50);
+
+	var _MaterialUiLogin2 = _interopRequireDefault(_MaterialUiLogin);
+
+	var _MaterialUiRegister = __webpack_require__(53);
+
+	var _MaterialUiRegister2 = _interopRequireDefault(_MaterialUiRegister);
 
 	var _redux = __webpack_require__(15);
 
-	var _LaunchPageActions = __webpack_require__(50);
+	var _LaunchPageActions = __webpack_require__(54);
 
 	var LaunchPageActions = _interopRequireWildcard(_LaunchPageActions);
 
 	var _reactRedux = __webpack_require__(10);
 
-	var _RegisterForm = __webpack_require__(51);
+	var _RegisterForm = __webpack_require__(55);
 
 	var _RegisterForm2 = _interopRequireDefault(_RegisterForm);
 
-	var _Home = __webpack_require__(53);
+	var _Paper = __webpack_require__(57);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _Home = __webpack_require__(58);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _materialUi = __webpack_require__(54);
+	var _materialUi = __webpack_require__(59);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1794,17 +1475,21 @@ module.exports =
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          _materialUi.Tabs,
-	          { value: this.state.value, onChange: this.handleToggle },
+	          _Paper2.default,
+	          { style: { "align": "center", "textAlign": "center", "padding": "20px", "margin": "100px" } },
 	          _react2.default.createElement(
-	            _materialUi.Tab,
-	            { label: 'Sign In', value: '1' },
-	            _react2.default.createElement(_HomeForms2.default, { onSubmit: showResults })
-	          ),
-	          _react2.default.createElement(
-	            _materialUi.Tab,
-	            { label: 'Register', value: '2' },
-	            _react2.default.createElement(_RegisterForm2.default, { className: _Home2.default.registerForm, onSubmit: showResults })
+	            _materialUi.Tabs,
+	            { value: this.state.value, onChange: this.handleToggle },
+	            _react2.default.createElement(
+	              _materialUi.Tab,
+	              { label: 'Sign In', value: '1' },
+	              _react2.default.createElement(_MaterialUiLogin2.default, { onSubmit: showResults })
+	            ),
+	            _react2.default.createElement(
+	              _materialUi.Tab,
+	              { label: 'Register', value: '2' },
+	              _react2.default.createElement(_MaterialUiRegister2.default, { onSubmit: showResults })
+	            )
 	          )
 	        )
 	      );
@@ -1813,23 +1498,7 @@ module.exports =
 	  return Home;
 	}(_react.Component);
 
-	var _default = Home;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(showResults, 'showResults', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Home/Home.js');
-
-	  __REACT_HOT_LOADER__.register(Home, 'Home', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Home/Home.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Home/Home.js');
-	}();
-
-	;
+	exports.default = Home;
 
 /***/ },
 /* 43 */
@@ -1946,11 +1615,6 @@ module.exports =
 	    'div',
 	    null,
 	    _react2.default.createElement(
-	      'label',
-	      null,
-	      label
-	    ),
-	    _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement('input', (0, _extends3.default)({}, input, { type: type, value: value, placeholder: label })),
@@ -1986,7 +1650,7 @@ module.exports =
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { style: { "align": "center", "backgroundColor": "#d8d8d8", "textAlign": "center", "marginLeft": "200px", "marginRight": "200px", "border": "solid black" } },
+	      { style: { "align": "center", "textAlign": "center" } },
 	      _react2.default.createElement(
 	        'form',
 	        { onSubmit: handleSubmit },
@@ -2015,37 +1679,245 @@ module.exports =
 	  );
 	};
 
-	var _default = (0, _reduxForm.reduxForm)({
+	exports.default = (0, _reduxForm.reduxForm)({
 	  form: 'loginForm', // a unique name for this form
 	  loginValidate: loginValidate,
 	  fields: fields
 	})(LoginForm);
 
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(fields, 'fields', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-
-	  __REACT_HOT_LOADER__.register(submit, 'submit', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-
-	  __REACT_HOT_LOADER__.register(loginValidate, 'loginValidate', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-
-	  __REACT_HOT_LOADER__.register(renderField, 'renderField', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-
-	  __REACT_HOT_LOADER__.register(LoginForm, 'LoginForm', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/HomeForms.js');
-	}();
-
-	;
-
 /***/ },
 /* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends2 = __webpack_require__(24);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reduxForm = __webpack_require__(18);
+
+	var _RaisedButton = __webpack_require__(51);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _TextField = __webpack_require__(52);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*  Validate Form input   */
+	var validate = function validate(values) {
+	  var errors = {};
+
+	  // Check Required Fields have been submitted
+	  var requiredFields = ['username', 'password'];
+	  requiredFields.forEach(function (field) {
+	    if (!values[field]) {
+	      errors[field] = 'Required';
+	    }
+	  });
+
+	  return errors;
+	};
+
+	var LoginForm = function LoginForm(props) {
+	  var handleSubmit = props.handleSubmit;
+	  var pristine = props.pristine;
+	  var reset = props.reset;
+	  var submitting = props.submitting;
+
+
+	  return _react2.default.createElement(
+	    'div',
+	    { style: { "align": "center", "textAlign": "center" } },
+	    _react2.default.createElement(
+	      'form',
+	      { onSubmit: handleSubmit },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'username', component: function component(username) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
+	              type: 'text',
+	              hintText: 'Username',
+	              floatingLabelText: 'Username',
+	              errorText: username.touched && username.error
+	            }, username));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'password', component: function component(password) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
+	              type: 'password',
+	              hintText: 'Password',
+	              floatingLabelText: 'Password',
+	              errorText: password.touched && password.error
+	            }, password));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_RaisedButton2.default, { label: 'Submit', primary: true, type: 'submit', disabled: submitting })
+	      )
+	    )
+	  );
+	};
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'loginForm', // a unique name for this form
+	  validate: validate
+	})(LoginForm);
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	module.exports = require("material-ui/RaisedButton");
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	module.exports = require("material-ui/TextField");
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends2 = __webpack_require__(24);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reduxForm = __webpack_require__(18);
+
+	var _RaisedButton = __webpack_require__(51);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _TextField = __webpack_require__(52);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*  Validate Form input   */
+	var validate = function validate(values) {
+	  var errors = {};
+
+	  // Check Required Fields have been submitted
+	  var requiredFields = ['username', 'email', 'password1', 'password2'];
+	  requiredFields.forEach(function (field) {
+	    if (!values[field]) {
+	      errors[field] = 'Required';
+	    }
+	  });
+	  // Validate Email
+	  if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+	    errors.email = 'Invalid email address';
+	  }
+	  // Validate Passwords Match
+	  if (values.password1 !== values.password2) {
+	    errors.password2 = 'Passwords Must Match!';
+	  }
+	  return errors;
+	};
+
+	/*  Material UI Form  */
+	var RegisterForm = function RegisterForm(props) {
+	  var handleSubmit = props.handleSubmit;
+	  var pristine = props.pristine;
+	  var reset = props.reset;
+	  var submitting = props.submitting;
+
+
+	  return _react2.default.createElement(
+	    'div',
+	    { style: { "align": "center", "textAlign": "center" } },
+	    _react2.default.createElement(
+	      'form',
+	      { onSubmit: handleSubmit },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'username', component: function component(username) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({ hintText: 'Username',
+	              floatingLabelText: 'Username',
+	              errorText: username.touched && username.error
+	            }, username));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'email', component: function component(email) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
+	              hintText: 'Email',
+	              floatingLabelText: 'Email',
+	              errorText: email.touched && email.error
+	            }, email));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'password1', component: function component(password1) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
+	              hintText: 'Password',
+	              floatingLabelText: 'Password',
+	              errorText: password1.touched && password1.error
+	            }, password1));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reduxForm.Field, { name: 'password2', component: function component(password2) {
+	            return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
+	              hintText: 'Confirm Password',
+	              floatingLabelText: 'Confirm Password',
+	              errorText: password2.touched && password2.error
+	            }, password2));
+	          } })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_RaisedButton2.default, { label: 'Submit', primary: true, type: 'submit', disabled: submitting })
+	      )
+	    )
+	  );
+	};
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'registerForm', // a unique name for this form
+	  validate: validate
+	})(RegisterForm);
+
+/***/ },
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2069,20 +1941,9 @@ module.exports =
 	    date: Date.now()
 	  };
 	}
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(userLogin, 'userLogin', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/actions/LaunchPageActions.js');
-	}();
-
-	;
 
 /***/ },
-/* 51 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2113,7 +1974,7 @@ module.exports =
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _qs = __webpack_require__(52);
+	var _qs = __webpack_require__(56);
 
 	var _qs2 = _interopRequireDefault(_qs);
 
@@ -2177,11 +2038,6 @@ module.exports =
 	    'div',
 	    null,
 	    _react2.default.createElement(
-	      'label',
-	      { htmlFor: name },
-	      label
-	    ),
-	    _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement('input', (0, _extends3.default)({}, input, { type: type, placeholder: label, value: value, onChange: function onChange(e) {
@@ -2215,7 +2071,7 @@ module.exports =
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { style: { "align": "center", "backgroundColor": "#d8d8d8", "textAlign": "center", "marginLeft": "200px", "marginRight": "200px", "border": "solid black" } },
+	      { style: { "align": "center", "textAlign": "center" } },
 	      _react2.default.createElement(
 	        'form',
 	        { onSubmit: handleSubmit(submit) },
@@ -2237,60 +2093,43 @@ module.exports =
 	  );
 	};
 
-	var _default = (0, _reduxForm.reduxForm)({
+	exports.default = (0, _reduxForm.reduxForm)({
 	  form: 'registerForm', // a unique name for this form
 	  registerValidate: registerValidate
 	})(RegisterForm);
 
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(headers, 'headers', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-
-	  __REACT_HOT_LOADER__.register(submit, 'submit', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-
-	  __REACT_HOT_LOADER__.register(registerValidate, 'registerValidate', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-
-	  __REACT_HOT_LOADER__.register(renderField, 'renderField', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-
-	  __REACT_HOT_LOADER__.register(RegisterForm, 'RegisterForm', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/HomeForms/RegisterForm.js');
-	}();
-
-	;
-
 /***/ },
-/* 52 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = require("qs");
 
 /***/ },
-/* 53 */
+/* 57 */
+/***/ function(module, exports) {
+
+	module.exports = require("material-ui/Paper");
+
+/***/ },
+/* 58 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"Home": "Home__Home___1exmz",
-		"loginOptions": "Home__loginOptions___33jyt",
-		"signInBox": "Home__signInBox___13Iej",
-		"signUpBox": "Home__signUpBox___3nrs-",
-		"registerForm": "Home__registerForm___2JhfZ"
+		"Home": "Home__Home___3IxIo",
+		"loginOptions": "Home__loginOptions___28EEs",
+		"signInBox": "Home__signInBox___1XyMH",
+		"signUpBox": "Home__signUpBox___2fhXS",
+		"registerForm": "Home__registerForm___1OUb0"
 	};
 
 /***/ },
-/* 54 */
+/* 59 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui");
 
 /***/ },
-/* 55 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2327,7 +2166,11 @@ module.exports =
 
 	var _reactRedux = __webpack_require__(10);
 
-	var _about = __webpack_require__(56);
+	var _Paper = __webpack_require__(57);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _about = __webpack_require__(61);
 
 	var _about2 = _interopRequireDefault(_about);
 
@@ -2348,14 +2191,18 @@ module.exports =
 					'div',
 					{ className: _about2.default.about },
 					_react2.default.createElement(
-						'h1',
-						{ className: _about2.default.title },
-						'About Our Project'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: _about2.default.content },
-						'Moonwalk is a web based platform which integrates major social media networks. It allows users to seamlessly read, post, and share content across social media profiles. Moonwalk is capable of organizing content in a meaningful way by providing custom filter controls empowering users to curate their social media content. Our platform aggregates the user\u2019s social media feeds and displays relevant content in one unified user stream. Additionally, it allows users to post and share across social media networks with just a click. Moonwalk empowers users to manage their online presence like never before.'
+						_Paper2.default,
+						{ style: { "align": "center", "textAlign": "center", "margin": "50px", "padding": "20px" } },
+						_react2.default.createElement(
+							'h1',
+							{ className: _about2.default.title },
+							'About Our Project'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: _about2.default.content },
+							'Moonwalk is a web based platform which integrates major social media networks. It allows users to seamlessly read, post, and share content across social media profiles. Moonwalk is capable of organizing content in a meaningful way by providing custom filter controls empowering users to curate their social media content. Our platform aggregates the user\u2019s social media feeds and displays relevant content in one unified user stream. Additionally, it allows users to post and share across social media networks with just a click. Moonwalk empowers users to manage their online presence like never before.'
+						)
 					)
 				);
 			}
@@ -2365,34 +2212,20 @@ module.exports =
 	//require("!style!css!./about.css");
 
 
-	var _default = About;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(About, 'About', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/About/about.js');
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/About/about.js');
-	}();
-
-	;
+	exports.default = About;
 
 /***/ },
-/* 56 */
+/* 61 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"about": "about__about___shtn1",
-		"title": "about__title___23BOT",
-		"context": "about__context___3B0bk"
+		"about": "about__about___21__E",
+		"title": "about__title___35tnn",
+		"context": "about__context___3BroH"
 	};
 
 /***/ },
-/* 57 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2435,19 +2268,19 @@ module.exports =
 
 	var actionCreators = _interopRequireWildcard(_streamActions);
 
-	var _selectors = __webpack_require__(58);
+	var _selectors = __webpack_require__(63);
 
 	var selectors = _interopRequireWildcard(_selectors);
 
-	var _sidebar = __webpack_require__(59);
+	var _sidebar = __webpack_require__(64);
 
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 
-	var _StreamItem = __webpack_require__(61);
+	var _StreamItem = __webpack_require__(66);
 
 	var _StreamItem2 = _interopRequireDefault(_StreamItem);
 
-	var _stream = __webpack_require__(62);
+	var _stream = __webpack_require__(67);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
@@ -2588,27 +2421,10 @@ module.exports =
 		};
 	};
 
-	var _default = (0, _reactRedux.connect)(selector, actionCreators)(StreamList);
-
-	exports.default = _default;
-	;
-
-	var _temp2 = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(StreamList, 'StreamList', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/StreamList/stream.js');
-
-		__REACT_HOT_LOADER__.register(selector, 'selector', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/StreamList/stream.js');
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/StreamList/stream.js');
-	}();
-
-	;
+	exports.default = (0, _reactRedux.connect)(selector, actionCreators)(StreamList);
 
 /***/ },
-/* 58 */
+/* 63 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2646,24 +2462,9 @@ module.exports =
 	var getFeedItem = exports.getFeedItem = function getFeedItem(state, id) {
 	  return state.byId[id] || null;
 	};
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(getFeedItems, "getFeedItems", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/selectors.js");
-
-	  __REACT_HOT_LOADER__.register(getOpenFeedItemId, "getOpenFeedItemId", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/selectors.js");
-
-	  __REACT_HOT_LOADER__.register(getFeedItem, "getFeedItem", "/Users/wesleyjinks/ReactApps/cs419-frontend/src/lib/selectors.js");
-	}();
-
-	;
 
 /***/ },
-/* 59 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2676,7 +2477,7 @@ module.exports =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _sidebar = __webpack_require__(60);
+	var _sidebar = __webpack_require__(65);
 
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 
@@ -2757,35 +2558,21 @@ module.exports =
 		);
 	};
 
-	var _default = Sidebar;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(Sidebar, 'Sidebar', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Sidebar/sidebar.js');
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Sidebar/sidebar.js');
-	}();
-
-	;
+	exports.default = Sidebar;
 
 /***/ },
-/* 60 */
+/* 65 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"avatar": "sidebar__avatar___vhij6",
-		"Sidebar": "sidebar__Sidebar___3ul8-",
-		"userInfo": "sidebar__userInfo___3TCGY",
-		"userInfo-name": "sidebar__userInfo-name___AL9kq"
+		"avatar": "sidebar__avatar___37rxv",
+		"Sidebar": "sidebar__Sidebar___3Zkd5",
+		"userInfo": "sidebar__userInfo___ClIWx",
+		"userInfo-name": "sidebar__userInfo-name___3reDc"
 	};
 
 /***/ },
-/* 61 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2798,7 +2585,7 @@ module.exports =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _stream = __webpack_require__(62);
+	var _stream = __webpack_require__(67);
 
 	var _stream2 = _interopRequireDefault(_stream);
 
@@ -2821,39 +2608,25 @@ module.exports =
 		);
 	};
 
-	var _default = StreamContent;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(StreamContent, 'StreamContent', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/StreamItem/StreamItem.js');
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/StreamItem/StreamItem.js');
-	}();
-
-	;
+	exports.default = StreamContent;
 
 /***/ },
-/* 62 */
+/* 67 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"Stream": "stream__Stream___1gihR",
-		"SideBarToggle": "stream__SideBarToggle___1e7Tv",
-		"StreamContent": "stream__StreamContent___1JP8V",
-		"empty": "stream__empty___1cUZH",
-		"addFeedItemButton": "stream__addFeedItemButton___2Gdbs",
-		"selected": "stream__selected___2SQ78",
-		"feedItem": "stream__feedItem___2SXqe",
-		"newFeedItem": "stream__newFeedItem___3zxN3"
+		"Stream": "stream__Stream___2_gM-",
+		"SideBarToggle": "stream__SideBarToggle___2lR_F",
+		"StreamContent": "stream__StreamContent___F_2DQ",
+		"empty": "stream__empty___1gfD5",
+		"addFeedItemButton": "stream__addFeedItemButton___2no1I",
+		"selected": "stream__selected___1W9sT",
+		"feedItem": "stream__feedItem___1cHIo",
+		"newFeedItem": "stream__newFeedItem___1-nz6"
 	};
 
 /***/ },
-/* 63 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2890,7 +2663,7 @@ module.exports =
 
 	var _reactRedux = __webpack_require__(10);
 
-	var _Page = __webpack_require__(64);
+	var _Page = __webpack_require__(69);
 
 	var _Page2 = _interopRequireDefault(_Page);
 
@@ -2926,32 +2699,18 @@ module.exports =
 	//require("!style!css!./Page404.css");
 
 
-	var _default = Page404;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(Page404, 'Page404', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Page404/Page404.js');
-
-		__REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/components/Page404/Page404.js');
-	}();
-
-	;
+	exports.default = Page404;
 
 /***/ },
-/* 64 */
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"page404": "Page404__page404___3zE9M"
+		"page404": "Page404__page404___pyeXE"
 	};
 
 /***/ },
-/* 65 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2964,11 +2723,11 @@ module.exports =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(66);
+	var _NavBar = __webpack_require__(71);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _App = __webpack_require__(67);
+	var _App = __webpack_require__(72);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -2976,7 +2735,7 @@ module.exports =
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-	var _lightBaseTheme = __webpack_require__(68);
+	var _lightBaseTheme = __webpack_require__(73);
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
@@ -2984,11 +2743,11 @@ module.exports =
 
 	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
 
-	var _AppBar = __webpack_require__(69);
+	var _AppBar = __webpack_require__(74);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 
-	var _reactTapEventPlugin = __webpack_require__(70);
+	var _reactTapEventPlugin = __webpack_require__(75);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
@@ -3029,24 +2788,10 @@ module.exports =
 	  );
 	};
 
-	var _default = App;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(App, 'App', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/Containers/App.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/Containers/App.js');
-	}();
-
-	;
+	exports.default = App;
 
 /***/ },
-/* 66 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3063,7 +2808,7 @@ module.exports =
 
 	var _reactRedux = __webpack_require__(10);
 
-	var _materialUi = __webpack_require__(54);
+	var _materialUi = __webpack_require__(59);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3081,56 +2826,42 @@ module.exports =
 	  });
 	};
 
-	var _default = NavBar;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(NavBar, 'NavBar', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/Containers/NavBar.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/Containers/NavBar.js');
-	}();
-
-	;
+	exports.default = NavBar;
 
 /***/ },
-/* 67 */
+/* 72 */
 /***/ function(module, exports) {
 
 	module.exports = {
-		"mtest": "App__mtest___9w9M8",
-		"rootstyle": "App__rootstyle____HH7o",
-		"pageHeader": "App__pageHeader___bIBCs",
-		"headerImage": "App__headerImage___3lUYh",
-		"title": "App__title___IuW1T",
-		"footer": "App__footer___IqPZA",
-		"footerLink": "App__footerLink___2M90K"
+		"mtest": "App__mtest___2TPtV",
+		"rootstyle": "App__rootstyle___2zkyK",
+		"pageHeader": "App__pageHeader___cavN4",
+		"headerImage": "App__headerImage___VN31y",
+		"title": "App__title___2GU-r",
+		"footer": "App__footer___2i78A",
+		"footerLink": "App__footerLink___2AIh4"
 	};
 
 /***/ },
-/* 68 */
+/* 73 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/styles/baseThemes/lightBaseTheme");
 
 /***/ },
-/* 69 */
+/* 74 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/AppBar");
 
 /***/ },
-/* 70 */
+/* 75 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-tap-event-plugin");
 
 /***/ },
-/* 71 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3228,24 +2959,6 @@ module.exports =
 	 console.log('DDB Error: ' + req.err);
 	 }
 	 */
-
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(getFeed, 'getFeed', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
-
-	  __REACT_HOT_LOADER__.register(postFeedItem, 'postFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
-
-	  __REACT_HOT_LOADER__.register(updateFeedItem, 'updateFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
-
-	  __REACT_HOT_LOADER__.register(deleteFeedItem, 'deleteFeedItem', '/Users/wesleyjinks/ReactApps/cs419-frontend/src/server/routes/feedItemsApi.js');
-	}();
-
-	;
 
 /***/ }
 /******/ ]);

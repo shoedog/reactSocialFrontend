@@ -1,13 +1,8 @@
 .about .title {
 	text-align: center;
-	background-color: #c0c0c0;
 }
 .about .context {
 	font-size: 15pt;
     text-align: center;
-    margin-left: 200px;
-    margin-right: 200px;
-    border: solid black;
-    background-color: #d8d8d8;
     padding: 15px;
 }
