@@ -60,8 +60,8 @@ var clientConfig = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'BROWSER': JSON.stringify(true),
-        'NODE_ENV': JSON.stringify( process.env.NODE_ENV || 'production' ),
+        //'BROWSER': JSON.stringify(true),
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -86,6 +86,7 @@ var clientConfig = {
   }*/
 };
 
+/*
 const serverConfig = {
   name: 'server',
   target: 'node',
@@ -117,5 +118,6 @@ const serverConfig = {
     ]
   },
 };
-
-module.exports = [clientConfig, serverConfig];
+*/
+//module.exports = [clientConfig, serverConfig];
+module.exports = clientConfig;

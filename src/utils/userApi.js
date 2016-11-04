@@ -18,49 +18,49 @@ export const objConvert = (data) => {
 };
 
 // Process data from fetch:
-export const normalizeUserData = (data) => normalize(data, arrayOf(userProfileData));
+export const normalizeUserData = (data) => normalize(data, arrayOf(userData));
 
-// Process object returned from normalizeSongList into feedItems and feedItemIds
-export const returnUserData = ({ entities: {userProfileData}, result: userProfileItems }) => ({
-  userProfileData,
-  userProfileItems,
+// Process object returned from normalizeUserData into userData and userDataIds
+export const returnUserData = ({ entities: {userData}, result: userDataIds }) => ({
+  userData,
+  userDataIds,
 });
 
 export default {
-  user: {
-    register(userData) {
+  USER: {
+    register(email, password) {
       return fetchJson(
         '/user/register',
         {
           method: 'POST',
-          body: JSON.stringify({ userData }),
+          body: JSON.stringify({ email, password }),
         }
       );
     },
 
-    login(user, password) {
+    login(email, password) {
       return fetchJson(
         `/user/login`,
         {
           method: 'POST',
-          body: JSON.stringify({ user, password }),
+          body: JSON.stringify({ email, password }),
         }
       );
     },
 
-    fetch() {
-      return fetchJson('/user')
+    fetch(id) {
+      return fetchJson(`/user/${id}`)
       //.then(objConvert)
         .then(normalizeUserData)
         .then(returnUserData);
     },
 
-    updateProfile(id, profile) {
+    updateUser(id, userData) {
       return fetchJson(
         `/user/${id}`,
         {
           method: 'PUT',
-          body: JSON.stringify({ user, profile }),
+          body: JSON.stringify({ userData }),
         }
       );
     },

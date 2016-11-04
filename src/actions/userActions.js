@@ -4,8 +4,11 @@ import { startAction, successAction,
 
 export const OPEN_PROFILE = 'OPEN_PROFILE';
 export const CLOSE_PROFILE = 'CLOSE_PROFILE';
-export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const UPDATE_USER = 'UPDATE_PROFILE';
+export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT = 'LOGOUT';
+export const SET_TOKEN = 'SET_TOKEN';
+export const DISCARD_TOKEN = 'DISCARD_TOKEN';
 
 // Synchronous local action: opens a specific item
 export const openProfile = (id: '') => ({
@@ -19,21 +22,36 @@ export const closeProfile = () => ({
 });
 
 // Synchronous local action: updates an item locally
-export const updateProfile = (profile, id) => ({
-  type: UPDATE_PROFILE,
+export const updateUser = (profile, id) => ({
+  type: UPDATE_USER,
   payload: {
     id,
     profile,
   },
 });
 
-export const logout = (router, token) => {
+// Synchronous local action: updates an item locally
+export const registerUser = (email, password) => ({
+  type: REGISTER_USER,
+  payload: {
+    email,
+    password,
+  },
+});
+
+export const logout = (router) => {
   return (dispatch) => {
-    token = null;
     dispatch({ type: LOGOUT });
     router.transitionTo(['/login', { redirectTo: stringifyLocation(router.state.location)}]);
   }
-}
+};
+
+export const setToken = (token) => {
+  return {
+    type: SET_TOKEN,
+    token
+  }
+};
 
 /**
  * Fetch Feed Items from server: GET
@@ -45,7 +63,7 @@ export const fetchUserProfileStart = startAction(fetchUserProfileType);
 export const fetchUserProfileSuccess = successAction(fetchUserProfileType);
 export const fetchUserProfileFailure = failureAction(fetchUserProfileType);
 export const fetchUserProfile = asyncAction({
-  func: () => userApi.user.fetch(),
+  func: (id) => userApi.user.fetch(id),
   start: fetchUserProfileStart,
   success: fetchUserProfileSuccess,
   failure: fetchUserProfileFailure,
@@ -56,15 +74,15 @@ export const fetchUserProfile = asyncAction({
  * Action Type, start, success, failure, and async actions
  * using helpers from asyncActionUtils.js
  */
-const registerUserType = 'registerUser';
-export const registerUserStart = startAction(registerUserType);
-export const registerUserSuccess = successAction(registerUserType);
-export const registerUserFailure = failureAction(registerUserType);
-export const registerUser = asyncAction({
-  func: (userData) => userApi.user.register(),
-  start: registerUserStart,
-  success: registerUserSuccess,
-  failure: registerUserFailure,
+const registerUserServerType = 'registerUserServer';
+export const registerUserServerStart = startAction(registerUserServerType);
+export const registerUserServerSuccess = successAction(registerUserServerType);
+export const registerUserServerFailure = failureAction(registerUserServerType);
+export const registerUserServer = asyncAction({
+  func: (email, password) => userApi.USER.register(email, password),
+  start: registerUserServerStart,
+  success: registerUserServerSuccess,
+  failure: registerUserServerFailure,
 });
 
 /**
@@ -77,7 +95,7 @@ export const loginUserStart = startAction(loginUserType);
 export const loginUserSuccess = successAction(loginUserType);
 export const loginUserFailure = failureAction(loginUserType);
 export const loginUser = asyncAction({
-  func: (user, password) => userApi.user.login(),
+  func: (user, password) => userApi.USER.login(email, password),
   start: loginUserStart,
   success: loginUserSuccess,
   failure: loginUserFailure,
@@ -88,15 +106,15 @@ export const loginUser = asyncAction({
  * Action Type, start, success, failure, and async actions
  * using helpers from asyncActionUtils.js
  */
-const updateUserProfileType = 'updateUserProfile';
-export const updateUserProfileServerStart = startAction(updateUserProfileType);
-export const updateUserProfileServerSuccess = successAction(updateUserProfileType);
-export const updateUserProfileServerFailure = failureAction(updateUserProfileType);
-export const updateUserProfileServer = asyncAction({
-  func: (id, profile) => userApi.user.updateProfile(id, profile),
-  start: updateUserProfileServerStart,
-  success: updateUserProfileServerSuccess,
-  failure: updateUserProfileServerFailure,
+const updateUserServerType = 'updateUserServer';
+export const updateUserServerStart = startAction(updateUserServerType);
+export const updateUserServerSuccess = successAction(updateUserServerType);
+export const updateUserServerFailure = failureAction(updateUserServerType);
+export const updateUserServer = asyncAction({
+  func: (id, userData) => userApi.USER.updateUser(id, userData),
+  start: updateUserServerStart,
+  success: updateUserServerSuccess,
+  failure: updateUserServerFailure,
 });
 
 /**
@@ -109,7 +127,7 @@ export const deleteUserStart = startAction(deleteUserType);
 export const deleteUserSuccess = successAction(deleteUserType);
 export const deleteUserFailure = failureAction(deleteUserType);
 export const deleteUser = asyncAction({
-  func: (id) => userApi.user.delete(),
+  func: (id) => userApi.USER.delete(),
   start: deleteUserStart,
   success: deleteUserSuccess,
   failure: deleteUserFailure,

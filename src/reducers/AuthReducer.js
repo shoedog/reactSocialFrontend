@@ -11,7 +11,7 @@ import {
 import { ROUTER_STATE_CHANGE } from '../actions/router';
 
 const initialState = {
-  error: null, // last occured error
+  error: null, // last occurred error
   token: null,
   profile: null,
 };

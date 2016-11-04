@@ -4,7 +4,7 @@ import Home from './components/Home/Home';
 import About from './components/About/about';
 import StreamList from './components/StreamList/stream';
 import Page404 from './components/Page404/Page404';
-import App from './Containers/App';
+import App from './Containers/App/App';
 
 
 export default (

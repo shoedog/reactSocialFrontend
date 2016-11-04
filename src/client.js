@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
+import { Provider } from 'react-redux'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import routes from './routes'
+import { Router } from 'react-router'
 import configureStore from './configureStore';
-
-import Root from './Containers/Root';
 
 const history = browserHistory;
 
@@ -22,6 +26,10 @@ const store = configureStore(initialState);
  * @param {Object} history - this applies the history
  */
 ReactDOM.render(
-  <Root store={store} history={history} />,
+  <MuiThemeProvider muiTheme={ getMuiTheme({lightBaseTheme, userAgent: navigator.userAgent}) }>
+    <Provider store={store}>
+      <Router history={history} routes={routes} />
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 );

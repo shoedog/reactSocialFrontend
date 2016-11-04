@@ -132,18 +132,21 @@
     }
   },
   "scripts": {
-    "prod": "cross-env npm run build & npm start",
-    "dev:serve": "cross-env NODE_ENV=development npm run build:dev && concurrently --kill-others \"npm run start:dev\" \"npm run dev:api\"",
+    "prod:start": "cross-env npm run build:prod & npm start",
+    "dev:serve": "cross-env NODE_ENV=development & concurrently --kill-others \"npm run watch:dev\" \"npm run start:dev\" \"npm run dev:api\"",
     "dev": "cross-env node dev-server.js",
     "esdoc": "esdoc -c ./tools/esdoc.json && open ./docs/esdoc/index.html",
     "eslint": "eslint -c .eslintrc src",
     "test": "npm run tape:test",
     "mocha:test": "mocha --require ./tools/testSetup.js --compilers js:babel-register src/**/**.test.js",
     "tape:test": "tape --require babel-register src/**/**.spec.js",
-    "build": "cross-env NODE_ENV='production' webpack",
+    "build:client": "cross-env NODE_ENV='production' webpack -p --config webpack.config.js",
+    "build:server": "cross-env NODE_ENV='production' webpack -p --config webpack.serverConfig.js",
+    "build:prod": "cross-env NODE_ENV='production' npm run build:client & npm run build:server",
     "start": "cross-env NODE_ENV='production'  node ./public/static/dist/server.js --name moonwalk",
-    "build:dev": "cross-env NODE_ENV=development webpack",
-    "start:dev": "cross-env NODE_ENV=development nodemon ./public/static/dist/server.js",
+    "watch:dev": "cross-env NODE_ENV=development webpack-dev-server -d --config webpack.config.js --content-base public/static/dist/ --inline --hot --port 8000",
+    "build:devServer": "cross-env NODE_ENV=development webpack -d --config webpack.serverConfig.js",
+    "start:dev": "cross-env NODE_ENV=development npm run build:devServer & nodemon ./public/static/dist/server.js",
     "dev:api": "cross-env NODE_ENV=development nodemon --exec babel-node ../cs419-backend/index.js",
     "printJson": "cross-env node parse.js"
   }

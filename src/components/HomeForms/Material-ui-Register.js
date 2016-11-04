@@ -1,10 +1,9 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 /*  Validate Form input   */
-const validate = values => {
+const validate = (values) => {
   const errors = {};
 
   // Check Required Fields have been submitted
@@ -23,63 +22,93 @@ const validate = values => {
     errors.password2 = 'Passwords Must Match!';
   }
   return errors;
-}
+};
 
 /*  Material UI Form  */
-const RegisterForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
-  
-  return (
-    <div style={{"align":"center","textAlign":"center"}}>
-    <form onSubmit={handleSubmit}>
-      <div>
-        <Field name="username" component= { (username) => 
-          <TextField hintText = "Username" 
-            floatingLabelText="Username"
-            errorText = {username.touched && username.error}
-            {...username} 
-          />
-        }/>
+class RegisterForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      email: '',
+      password1: '',
+      password2: '',
+      errors: {},
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+  }
+
+  handleChange(e) {
+    this.setState({[e.target.id]: e.target.value});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let form = {
+      username: this.state.username,
+      email: this.state.email,
+      password1: this.state.password1,
+      password2: this.state.password2,
+    };
+    let errors = validate(form);
+    this.setState({
+      errors: errors
+    });
+    console.log(this.state.errors);
+    console.log(errors);
+    if ( Object.keys(errors).length === 0 ) {
+      alert(`Username: ${this.state.username} \nEmail: ${this.state.username} \nPassword: ${this.state.password}`);
+    }
+  }
+
+  render() {
+    return (
+      <div style={{"align":"center","textAlign":"center"}}>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <TextField
+              id="username" type="text"
+              hintText="Username"
+              floatingLabelText="Username"
+              value={this.state.username}
+              onChange={this.handleChange}
+              errorText={this.state.errors.username}
+            />
+            <TextField
+              id="email" type="email"
+              hintText="Email"
+              floatingLabelText="Email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              errorText={this.state.errors.email}
+            />
+            <TextField
+              id="password1" type="password"
+              hintText="Password"
+              floatingLabelText="Password"
+              value={this.state.password1}
+              onChange={this.handleChange}
+              errorText={this.state.errors.password1}
+            />
+            <TextField
+              id="password2" type="password"
+              hintText="Password"
+              floatingLabelText="Password"
+              value={this.state.password2}
+              onChange={this.handleChange}
+              errorText={this.state.errors.password2}
+            />
+            <div>
+              <RaisedButton label="Submit" primary={true} type="submit" disabled={this.props.submitting}/>
+            </div>
+          </div>
+        </form>
       </div>
-      <div>
-        <Field name="email" component={ (email) =>
-              <TextField 
-                hintText="Email"
-                floatingLabelText="Email"
-                errorText = {email.touched && email.error}
-                {...email}
-              />
-            }/>
-      </div>
-      <div>
-        <Field name="password1" component={ (password1) =>
-              <TextField 
-                hintText="Password"
-                floatingLabelText="Password"
-                errorText = {password1.touched && password1.error}
-                {...password1}
-              />
-            }/>
-      </div>
-      <div>
-        <Field name="password2" component={ (password2) =>
-              <TextField 
-                hintText="Confirm Password"
-                floatingLabelText="Confirm Password"
-                errorText = {password2.touched && password2.error}
-                {...password2}
-              />
-            }/>
-      </div>
-      <div>
-          <RaisedButton label="Submit" primary={true} type="submit" disabled={submitting}/>
-      </div>
-    </form>
-    </div>
-  );
+    );
+  };
 }
 
-export default reduxForm({
-  form: 'registerForm', // a unique name for this form
-  validate,
-})(RegisterForm);
+export default RegisterForm;
+

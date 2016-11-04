@@ -4,6 +4,7 @@ import LaunchPageReducer from './LaunchPageReducer';
 import RouterReducer from './RouterReducer';
 import AuthReducer from './AuthReducer';
 import { byId, ids, openFeedItemId } from './streamReducers';
+import User from './userReducer';
 
 const reducers = {
   launchPage: LaunchPageReducer,

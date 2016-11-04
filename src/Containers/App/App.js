@@ -1,11 +1,6 @@
 import React, { PropTypes } from 'react';
-import NavBar from './NavBar';
-//require('!style!css!./App.css');
+import NavBar from '../NavBar/NavBar';
 import s from './App.css';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AppBar from 'material-ui/AppBar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -20,21 +15,17 @@ injectTapEventPlugin();
  */
 const App = ({children}) => (
 
-  <MuiThemeProvider muiTheme={ getMuiTheme(lightBaseTheme) }>
+
     <div>
-
-
       <NavBar />
-      
       {children}
-
       <footer className={s.footer}>
         <p className={s.footerLink} target='_blank'>Copyright © 2016 Team Moonwalk</p>
       </footer>
 
     </div>
 
-  </MuiThemeProvider>
+
 
 );
 

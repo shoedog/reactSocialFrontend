@@ -42,6 +42,7 @@ app.route('/feedItems')
   next();
 });
 
+
 app.get(['/', '/login', '/about', '/stream', '/404'], function (req, res) {
   res.status(200).send(`
     <html>
@@ -50,13 +51,12 @@ app.get(['/', '/login', '/about', '/stream', '/404'], function (req, res) {
         <link rel="stylesheet" href="/styles.css">
       </head>
       <body>
-        <div id="root">Hello World</div>
+        <div id="root"></div>
       </body>
       <script type="application/javascript" src="/client.js" async defer></script>
     </html>
   `);
 });
-
 
 
 app.listen(port, (error) => {
