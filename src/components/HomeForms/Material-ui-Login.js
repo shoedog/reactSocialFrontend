@@ -2,8 +2,18 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-//(props) => {
-//  const { handleSubmit, pristine, reset, submitting } = props;
+function validate(values) {
+  const errors = {};
+
+  // Check Required Fields have been submitted
+  const requiredFields = ['username', 'password'];
+  requiredFields.forEach(field => {
+    if(!values[field]){
+      errors[field] = 'Required'
+    }
+  });
+  return errors;
+}
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -11,7 +21,7 @@ class LoginForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-      errorText: '',
+      errors: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,33 +30,22 @@ class LoginForm extends React.Component {
 
   handleChange(e) {
     this.setState({[e.target.id]: e.target.value});
-    /* if we want to use emails and do validation
-    if(e.target.id === 'username') {
-      validateEmail(e.target.value);
-    }
-    */
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
-  }
-
-
-
-
-  /*  Validate Form input   */
-  validate(values) {
-    const errors = {};
-
-    // Check Required Fields have been submitted
-    const requiredFields = ['username', 'password'];
-    requiredFields.forEach(field => {
-      if(!values[field]){
-        errors[field] = 'Required'
-      }
+    let form = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    let errors = validate(form);
+    this.setState({
+      errors: errors
     });
-  return errors;
+    console.log(errors);
+    if ( Object.keys(errors).length === 0 ) {
+      alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
+    }
   }
 
   render() {
@@ -60,6 +59,7 @@ class LoginForm extends React.Component {
               floatingLabelText="Username"
               value={this.state.username}
               onChange={this.handleChange}
+              errorText={this.state.errors.username}
             />
             <TextField
               id="password" type="password"
@@ -67,6 +67,7 @@ class LoginForm extends React.Component {
               floatingLabelText="Password"
               value={this.state.password}
               onChange={this.handleChange}
+              errorText={this.state.errors.password}
             />
             <div>
               <RaisedButton label="Submit" primary={true} type="submit" disabled={this.props.submitting}/>
@@ -86,32 +87,3 @@ function validateEmail(email) {
   console.log(re.test(email));
   //console.log(this.state.errorText);
 };
-
-  /*
-export default reduxForm({
-  form: 'loginForm', // a unique name for this form
-  validate,
-})(LoginForm);
-
-
-  <Field name="username" component= { (username) =>
-    <TextField
-      type="text"
-      hintText = "Username"
-      floatingLabelText="Username"
-      errorText = {username.touched && username.error}
-      {...username}
-    />
-  }/>
-  </div>
-  <div>
-  <Field name="password" component={ (password) =>
-  <TextField
-    type="password"
-    hintText="Password"
-    floatingLabelText="Password"
-    errorText = {password.touched && password.error}
-    {...password}
-  />
-}/>
-  </div>*/

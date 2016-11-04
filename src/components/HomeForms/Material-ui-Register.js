@@ -56,7 +56,6 @@ class RegisterForm extends React.Component {
     this.setState({
       errors: errors
     });
-    console.log(this.state.errors);
     console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
       alert(`Username: ${this.state.username} \nEmail: ${this.state.username} \nPassword: ${this.state.password}`);
