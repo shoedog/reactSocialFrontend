@@ -45,6 +45,7 @@ class LoginForm extends React.Component {
     console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
       alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
+      this.props.loginUser(form.username, form.password);
     }
   }
 

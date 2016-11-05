@@ -58,7 +58,8 @@ class RegisterForm extends React.Component {
     });
     console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
-      alert(`Username: ${this.state.username} \nEmail: ${this.state.username} \nPassword: ${this.state.password}`);
+      alert(`Username: ${this.state.username} \nEmail: ${this.state.email} \nPassword: ${this.state.password1}`);
+      this.props.registerUserServer(form.username, form.email, form.password1);
     }
   }
 

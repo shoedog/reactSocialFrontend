@@ -9,6 +9,7 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT = 'LOGOUT';
 export const SET_TOKEN = 'SET_TOKEN';
 export const DISCARD_TOKEN = 'DISCARD_TOKEN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 // Synchronous local action: opens a specific item
 export const openProfile = (id: '') => ({
@@ -46,6 +47,13 @@ export const logout = (router) => {
   }
 };
 
+export const loginSuccess = (router) => {
+  return (dispatch) => {
+    dispatch({ type: LOGIN_SUCCESS });
+    router.transitionTo(['/stream', { redirectTo: stringifyLocation(router.state.location)}]);
+  }
+};
+
 export const setToken = (token) => {
   return {
     type: SET_TOKEN,
@@ -63,7 +71,7 @@ export const fetchUserProfileStart = startAction(fetchUserProfileType);
 export const fetchUserProfileSuccess = successAction(fetchUserProfileType);
 export const fetchUserProfileFailure = failureAction(fetchUserProfileType);
 export const fetchUserProfile = asyncAction({
-  func: (id) => userApi.user.fetch(id),
+  func: (id) => userApi.USER.fetch(id),
   start: fetchUserProfileStart,
   success: fetchUserProfileSuccess,
   failure: fetchUserProfileFailure,
@@ -79,7 +87,7 @@ export const registerUserServerStart = startAction(registerUserServerType);
 export const registerUserServerSuccess = successAction(registerUserServerType);
 export const registerUserServerFailure = failureAction(registerUserServerType);
 export const registerUserServer = asyncAction({
-  func: (email, password) => userApi.USER.register(email, password),
+  func: (username, email, password) => userApi.USER.register(username, email, password),
   start: registerUserServerStart,
   success: registerUserServerSuccess,
   failure: registerUserServerFailure,
@@ -95,7 +103,7 @@ export const loginUserStart = startAction(loginUserType);
 export const loginUserSuccess = successAction(loginUserType);
 export const loginUserFailure = failureAction(loginUserType);
 export const loginUser = asyncAction({
-  func: (user, password) => userApi.USER.login(email, password),
+  func: (username, password) => userApi.USER.login(username, password),
   start: loginUserStart,
   success: loginUserSuccess,
   failure: loginUserFailure,

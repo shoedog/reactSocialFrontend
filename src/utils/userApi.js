@@ -28,36 +28,36 @@ export const returnUserData = ({ entities: {userData}, result: userDataIds }) =>
 
 export default {
   USER: {
-    register(email, password) {
+    register(username, email, password) {
       return fetchJson(
-        '/user/register',
+        'http://0.0.0.0:5000/user',
         {
           method: 'POST',
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ username, email, password }),
         }
       );
     },
 
-    login(email, password) {
+    login(username, password) {
       return fetchJson(
-        `/user/login`,
+        `http://0.0.0.0:5000/user/login`,
         {
           method: 'POST',
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ username, password }),
         }
       );
     },
 
-    fetch(id) {
-      return fetchJson(`/user/${id}`)
+    fetch(username) {
+      return fetchJson(`http://0.0.0.0:5000/user/${username}`)
       //.then(objConvert)
         .then(normalizeUserData)
         .then(returnUserData);
     },
 
-    updateUser(id, userData) {
+    updateUser(username, userData) {
       return fetchJson(
-        `/user/${id}`,
+        `http://0.0.0.0:5000/user/${username}`,
         {
           method: 'PUT',
           body: JSON.stringify({ userData }),
@@ -65,8 +65,8 @@ export default {
       );
     },
 
-    delete(id) {
-      return fetch(`/user/${id}`,
+    delete(username) {
+      return fetch(`http://0.0.0.0:5000/user/${username}`,
         {
           method: 'DELETE'
         })

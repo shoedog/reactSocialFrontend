@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper';
 //require("!style!css!./Home.css");
 import s from './Home.css';
 import {Tabs, Tab, TextField, RaisedButton} from 'material-ui';
-
+import { registerUserServer, loginUser, LOGIN_SUCCESS } from '../../actions/userActions';
 
 const showResults = (values) => {
   return new Promise( (resolve, reject) => {
@@ -46,11 +46,11 @@ class Home extends Component {
         <Tabs >
 
           <Tab label="Sign In" value="a">
-            <MaterialuiLogin handleSubmit={simAsync}/>
+            <MaterialuiLogin loginUser={loginUser}/>
           </Tab>
 
           <Tab label="Register" value="b">
-            <MaterialuiRegister onSubmit={showResults}/>
+            <MaterialuiRegister registerUser={registerUserServer}/>
           </Tab>
             
         </Tabs>

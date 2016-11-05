@@ -7,8 +7,11 @@ import render from './routes/handleRender';
 //import fetch from 'isomorphic-fetch';
 import { getFeed, postFeedItem,
   updateFeedItem, deleteFeedItem } from './routes/feedItemsApi';
+import { getUsers, getUser, registerUser,
+  loginUser, updateUser, deleteUser } from './routes/userRoutes';
 
 const app = express();
+let router = express.Router();
 const server = new http.Server(app);
 app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
@@ -50,6 +53,35 @@ app.route('/feedItems')
   .delete( (req, res) => {
     deleteFeedItem(req, res);
   });
+
+
+
+app.route('/user/:username')
+  .get( (req, res) => {
+    let username = req.params.username;
+    getUser(req, res, username);
+  })
+  .put( (req, res) => {
+    let username = req.params.username;
+    updateUser(req, res, username);
+  })
+  .delete( (req, res) => {
+    let username = req.params.username;
+    deleteUser(req, res, username);
+  });
+
+app.route('/user')
+  .get( (req, res) => {
+    getUsers(req, res);
+  })
+  .post( (req, res) => {
+    registerUser(req, res);
+  });
+
+app.post('/user/login', loginUser);
+
+
+app.use('/feedItems', router);
 
 // Append view routes here i.e. routes from routes.js
 app.get(['/', '/login', '/about', '/stream'], render);
