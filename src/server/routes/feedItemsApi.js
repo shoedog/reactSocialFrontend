@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
+const IP = process.env.NODE_ENV === 'production' ? 'http://54.212.196.159:5000' : 'http://0.0.0.0:5000';
+
 export const getFeed = (req, res) => {
-  fetch('http://54.212.196.159:5000/social/feed', {
+  fetch('http://localhost/social/feed', {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   })

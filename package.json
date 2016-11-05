@@ -142,7 +142,7 @@
     "tape:test": "tape --require babel-register src/**/**.spec.js",
     "build:client": "cross-env NODE_ENV='production' webpack -p --config webpack.config.js",
     "build:server": "cross-env NODE_ENV='production' webpack -p --config webpack.serverConfig.js",
-    "build:prod": "cross-env NODE_ENV='production' npm run build:client & npm run build:server",
+    "build:prod": "cross-env NODE_ENV='production' npm run build:client && npm run build:server",
     "start": "cross-env NODE_ENV='production'  node ./public/static/dist/server.js --name moonwalk",
     "watch:dev": "cross-env NODE_ENV=development webpack-dev-server -d --config webpack.config.js --content-base public/static/dist/ --inline --hot --port 8000",
     "build:devServer": "cross-env NODE_ENV=development webpack -d --config webpack.serverConfig.js",
