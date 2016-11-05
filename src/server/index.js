@@ -17,11 +17,11 @@ app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
 
 // Transform routes to target routes for proxy service
-const proxyRules = new HttpProxyRules({
-  rules: {
-   // '.*/feedItems': `http://0.0.0.0:5000/social/feed`
-  },
-  default: `http://0.0.0.0:5000`
+//const proxyRules = new HttpProxyRules({
+//  rules: {
+//    '.*/feedItems': `http://localhost:5000/social/feed`
+/*  },
+  default: `http://localhost:5000`
 });
 const proxy = httpProxy.createProxy();
 
@@ -37,7 +37,7 @@ proxy.on('error', (error, req, res) => {
 
   json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
-});
+});*/
 
 // Api Proxy Requests
 app.route('/feedItems')
