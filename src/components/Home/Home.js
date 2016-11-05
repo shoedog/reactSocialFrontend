@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper';
 //require("!style!css!./Home.css");
 import s from './Home.css';
 import {Tabs, Tab, TextField, RaisedButton} from 'material-ui';
-import { registerUserServer, loginUser, LOGIN_SUCCESS } from '../../actions/userActions';
+import * as actionCreators from '../../actions/userActions';
 
 const showResults = (values) => {
   return new Promise( (resolve, reject) => {
@@ -26,6 +26,13 @@ const simAsync = (values) => {
   })
 };
 
+function mapStateToProps(state) {
+  return {
+    userData: state.userData,
+    userDataIds: state.userDataIds
+  }
+}
+
 class Home extends Component {
 
   constructor(props) {
@@ -37,9 +44,11 @@ class Home extends Component {
 
   handleToggle = (e) => {
     this.setState({value: this.state.value});
-  }
+  };
 
   render() {
+    const { loginUser, registerUserServer } = this.props;
+
     return (
       <div>
       <Paper style={{"align":"center", "textAlign":"center", "padding":"20px", "margin":"100px"}}>
@@ -60,4 +69,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect(mapStateToProps, actionCreators)(Home);

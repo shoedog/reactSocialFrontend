@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 // Utility to convert response stream from fetch to JSON
 export const toJson = (res) => res.json();
 

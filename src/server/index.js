@@ -19,7 +19,7 @@ app.use('/static', express.static('/public/static'));
 // Transform routes to target routes for proxy service
 const proxyRules = new HttpProxyRules({
   rules: {
-    '.*/feedItems': `http://0.0.0.0:5000/social/feed`
+   // '.*/feedItems': `http://0.0.0.0:5000/social/feed`
   },
   default: `http://0.0.0.0:5000`
 });

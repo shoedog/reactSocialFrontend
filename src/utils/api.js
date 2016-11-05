@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+
 import { normalize, Schema, arrayOf } from 'normalizr';
 import { checkStatus, fetchJson } from './apiUtils';
 
@@ -28,7 +28,8 @@ export const returnFeedItemsAndIds = ({ entities: {feedItems}, result: feedItemI
 
 export default {
   feedItems: {
-    fetch() {
+    fetchFeed() {
+      console.log('fetch');
       return fetchJson('/feedItems')
         //.then(objConvert)
         .then(normalizeFeedItems)

@@ -88,9 +88,9 @@ module.exports =
 	
 	var _handleRender2 = _interopRequireDefault(_handleRender);
 	
-	var _feedItemsApi = __webpack_require__(/*! ./routes/feedItemsApi */ 81);
+	var _feedItemsApi = __webpack_require__(/*! ./routes/feedItemsApi */ 76);
 	
-	var _userRoutes = __webpack_require__(/*! ./routes/userRoutes */ 83);
+	var _userRoutes = __webpack_require__(/*! ./routes/userRoutes */ 77);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -104,7 +104,7 @@ module.exports =
 	// Transform routes to target routes for proxy service
 	var proxyRules = new _httpProxyRules2.default({
 	  rules: {
-	    '.*/feedItems': 'http://0.0.0.0:5000/social/feed'
+	    // '.*/feedItems': `http://0.0.0.0:5000/social/feed`
 	  },
 	  default: 'http://0.0.0.0:5000'
 	});
@@ -292,7 +292,7 @@ module.exports =
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _setMuiTheme = __webpack_require__(/*! ../setMuiTheme */ 80);
+	var _setMuiTheme = __webpack_require__(/*! ../setMuiTheme */ 74);
 	
 	var _setMuiTheme2 = _interopRequireDefault(_setMuiTheme);
 	
@@ -1321,7 +1321,7 @@ module.exports =
 	var fetchFeedItemsFailure = exports.fetchFeedItemsFailure = (0, _asyncActionUtils.failureAction)(fetchFeedItemsType);
 	var fetchFeedItems = exports.fetchFeedItems = (0, _asyncActionUtils.asyncAction)({
 	  func: function func() {
-	    return _api2.default.feedItems.fetch();
+	    return _api2.default.feedItems.fetchFeed();
 	  },
 	  start: fetchFeedItemsStart,
 	  success: fetchFeedItemsSuccess,
@@ -1463,11 +1463,9 @@ module.exports =
 	
 	var _stringify2 = _interopRequireDefault(_stringify);
 	
-	__webpack_require__(/*! isomorphic-fetch */ 33);
+	var _normalizr = __webpack_require__(/*! normalizr */ 33);
 	
-	var _normalizr = __webpack_require__(/*! normalizr */ 34);
-	
-	var _apiUtils = __webpack_require__(/*! ./apiUtils */ 35);
+	var _apiUtils = __webpack_require__(/*! ./apiUtils */ 34);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1503,7 +1501,8 @@ module.exports =
 	
 	var _default = {
 	  feedItems: {
-	    fetch: function fetch() {
+	    fetchFeed: function fetchFeed() {
+	      console.log('fetch');
 	      return (0, _apiUtils.fetchJson)('/feedItems')
 	      //.then(objConvert)
 	      .then(normalizeFeedItems).then(returnFeedItemsAndIds);
@@ -1552,15 +1551,6 @@ module.exports =
 
 /***/ },
 /* 33 */
-/*!***********************************!*\
-  !*** external "isomorphic-fetch" ***!
-  \***********************************/
-/***/ function(module, exports) {
-
-	module.exports = require("isomorphic-fetch");
-
-/***/ },
-/* 34 */
 /*!****************************!*\
   !*** external "normalizr" ***!
   \****************************/
@@ -1569,7 +1559,7 @@ module.exports =
 	module.exports = require("normalizr");
 
 /***/ },
-/* 35 */
+/* 34 */
 /*!*******************************!*\
   !*** ./src/utils/apiUtils.js ***!
   \*******************************/
@@ -1586,9 +1576,11 @@ module.exports =
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 36);
+	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 35);
 	
 	var _promise2 = _interopRequireDefault(_promise);
+	
+	__webpack_require__(/*! isomorphic-fetch */ 36);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1636,13 +1628,22 @@ module.exports =
 	;
 
 /***/ },
-/* 36 */
+/* 35 */
 /*!************************************************!*\
   !*** external "babel-runtime/core-js/promise" ***!
   \************************************************/
 /***/ function(module, exports) {
 
 	module.exports = require("babel-runtime/core-js/promise");
+
+/***/ },
+/* 36 */
+/*!***********************************!*\
+  !*** external "isomorphic-fetch" ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	module.exports = require("isomorphic-fetch");
 
 /***/ },
 /* 37 */
@@ -2143,11 +2144,11 @@ module.exports =
 	
 	var _stringify2 = _interopRequireDefault(_stringify);
 	
-	__webpack_require__(/*! isomorphic-fetch */ 33);
+	__webpack_require__(/*! isomorphic-fetch */ 36);
 	
-	var _normalizr = __webpack_require__(/*! normalizr */ 34);
+	var _normalizr = __webpack_require__(/*! normalizr */ 33);
 	
-	var _apiUtils = __webpack_require__(/*! ./apiUtils */ 35);
+	var _apiUtils = __webpack_require__(/*! ./apiUtils */ 34);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2184,6 +2185,7 @@ module.exports =
 	var _default = {
 	  USER: {
 	    register: function register(username, email, password) {
+	      console.log("req sent");
 	      return (0, _apiUtils.fetchJson)('http://0.0.0.0:5000/user', {
 	        method: 'POST',
 	        body: (0, _stringify2.default)({ username: username, email: email, password: password })
@@ -2268,19 +2270,19 @@ module.exports =
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _about = __webpack_require__(/*! ./components/About/about */ 63);
+	var _about = __webpack_require__(/*! ./components/About/about */ 60);
 	
 	var _about2 = _interopRequireDefault(_about);
 	
-	var _stream = __webpack_require__(/*! ./components/StreamList/stream */ 65);
+	var _stream = __webpack_require__(/*! ./components/StreamList/stream */ 62);
 	
 	var _stream2 = _interopRequireDefault(_stream);
 	
-	var _Page = __webpack_require__(/*! ./components/Page404/Page404 */ 71);
+	var _Page = __webpack_require__(/*! ./components/Page404/Page404 */ 68);
 	
 	var _Page2 = _interopRequireDefault(_Page);
 	
-	var _App = __webpack_require__(/*! ./Containers/App/App */ 73);
+	var _App = __webpack_require__(/*! ./Containers/App/App */ 70);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -2346,7 +2348,7 @@ module.exports =
 	
 	var _stringify2 = _interopRequireDefault(_stringify);
 	
-	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 36);
+	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 35);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -2356,33 +2358,35 @@ module.exports =
 	
 	var _classnames = __webpack_require__(/*! classnames */ 50);
 	
-	var _MaterialUiLogin = __webpack_require__(/*! ../HomeForms/Material-ui-Login */ 54);
+	var _MaterialUiLogin = __webpack_require__(/*! ../HomeForms/Material-ui-Login */ 51);
 	
 	var _MaterialUiLogin2 = _interopRequireDefault(_MaterialUiLogin);
 	
-	var _MaterialUiRegister = __webpack_require__(/*! ../HomeForms/Material-ui-Register */ 58);
+	var _MaterialUiRegister = __webpack_require__(/*! ../HomeForms/Material-ui-Register */ 55);
 	
 	var _MaterialUiRegister2 = _interopRequireDefault(_MaterialUiRegister);
 	
 	var _redux = __webpack_require__(/*! redux */ 14);
 	
-	var _LaunchPageActions = __webpack_require__(/*! ../../actions/LaunchPageActions */ 59);
+	var _LaunchPageActions = __webpack_require__(/*! ../../actions/LaunchPageActions */ 56);
 	
 	var LaunchPageActions = _interopRequireWildcard(_LaunchPageActions);
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 10);
 	
-	var _Paper = __webpack_require__(/*! material-ui/Paper */ 60);
+	var _Paper = __webpack_require__(/*! material-ui/Paper */ 57);
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
 	
-	var _Home = __webpack_require__(/*! ./Home.css */ 61);
+	var _Home = __webpack_require__(/*! ./Home.css */ 58);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _materialUi = __webpack_require__(/*! material-ui */ 62);
+	var _materialUi = __webpack_require__(/*! material-ui */ 59);
 	
 	var _userActions = __webpack_require__(/*! ../../actions/userActions */ 40);
+	
+	var actionCreators = _interopRequireWildcard(_userActions);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -2406,6 +2410,13 @@ module.exports =
 	  });
 	};
 	
+	function mapStateToProps(state) {
+	  return {
+	    userData: state.userData,
+	    userDataIds: state.userDataIds
+	  };
+	}
+	
 	var Home = function (_Component) {
 	  (0, _inherits3.default)(Home, _Component);
 	
@@ -2427,6 +2438,11 @@ module.exports =
 	  (0, _createClass3.default)(Home, [{
 	    key: 'render',
 	    value: function render() {
+	      var _props = this.props;
+	      var loginUser = _props.loginUser;
+	      var registerUserServer = _props.registerUserServer;
+	
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -2439,12 +2455,12 @@ module.exports =
 	            _react2.default.createElement(
 	              _materialUi.Tab,
 	              { label: 'Sign In', value: 'a' },
-	              _react2.default.createElement(_MaterialUiLogin2.default, { loginUser: _userActions.loginUser })
+	              _react2.default.createElement(_MaterialUiLogin2.default, { loginUser: loginUser })
 	            ),
 	            _react2.default.createElement(
 	              _materialUi.Tab,
 	              { label: 'Register', value: 'b' },
-	              _react2.default.createElement(_MaterialUiRegister2.default, { registerUser: _userActions.registerUserServer })
+	              _react2.default.createElement(_MaterialUiRegister2.default, { registerUser: registerUserServer })
 	            )
 	          )
 	        )
@@ -2454,7 +2470,8 @@ module.exports =
 	  return Home;
 	}(_react.Component);
 	
-	var _default = Home;
+	var _default = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Home);
+	
 	exports.default = _default;
 	;
 	
@@ -2466,6 +2483,8 @@ module.exports =
 	  __REACT_HOT_LOADER__.register(showResults, 'showResults', '/Users/wesleyjinks/Projects/ReactApps/cs419-frontend/src/components/Home/Home.js');
 	
 	  __REACT_HOT_LOADER__.register(simAsync, 'simAsync', '/Users/wesleyjinks/Projects/ReactApps/cs419-frontend/src/components/Home/Home.js');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/wesleyjinks/Projects/ReactApps/cs419-frontend/src/components/Home/Home.js');
 	
 	  __REACT_HOT_LOADER__.register(Home, 'Home', '/Users/wesleyjinks/Projects/ReactApps/cs419-frontend/src/components/Home/Home.js');
 	
@@ -2529,10 +2548,7 @@ module.exports =
 	module.exports = require("classnames");
 
 /***/ },
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */
+/* 51 */
 /*!*******************************************************!*\
   !*** ./src/components/HomeForms/Material-ui-Login.js ***!
   \*******************************************************/
@@ -2544,7 +2560,7 @@ module.exports =
 	  value: true
 	});
 	
-	var _keys = __webpack_require__(/*! babel-runtime/core-js/object/keys */ 82);
+	var _keys = __webpack_require__(/*! babel-runtime/core-js/object/keys */ 52);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
@@ -2576,11 +2592,11 @@ module.exports =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 55);
+	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 53);
 	
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 	
-	var _TextField = __webpack_require__(/*! material-ui/TextField */ 56);
+	var _TextField = __webpack_require__(/*! material-ui/TextField */ 54);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
@@ -2711,7 +2727,16 @@ module.exports =
 	;
 
 /***/ },
-/* 55 */
+/* 52 */
+/*!****************************************************!*\
+  !*** external "babel-runtime/core-js/object/keys" ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	module.exports = require("babel-runtime/core-js/object/keys");
+
+/***/ },
+/* 53 */
 /*!*******************************************!*\
   !*** external "material-ui/RaisedButton" ***!
   \*******************************************/
@@ -2720,7 +2745,7 @@ module.exports =
 	module.exports = require("material-ui/RaisedButton");
 
 /***/ },
-/* 56 */
+/* 54 */
 /*!****************************************!*\
   !*** external "material-ui/TextField" ***!
   \****************************************/
@@ -2729,8 +2754,7 @@ module.exports =
 	module.exports = require("material-ui/TextField");
 
 /***/ },
-/* 57 */,
-/* 58 */
+/* 55 */
 /*!**********************************************************!*\
   !*** ./src/components/HomeForms/Material-ui-Register.js ***!
   \**********************************************************/
@@ -2742,7 +2766,7 @@ module.exports =
 	  value: true
 	});
 	
-	var _keys = __webpack_require__(/*! babel-runtime/core-js/object/keys */ 82);
+	var _keys = __webpack_require__(/*! babel-runtime/core-js/object/keys */ 52);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
@@ -2774,11 +2798,11 @@ module.exports =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 55);
+	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 53);
 	
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 	
-	var _TextField = __webpack_require__(/*! material-ui/TextField */ 56);
+	var _TextField = __webpack_require__(/*! material-ui/TextField */ 54);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
@@ -2848,10 +2872,10 @@ module.exports =
 	      this.setState({
 	        errors: errors
 	      });
-	      console.log(errors);
+	      //console.log(errors);
 	      if ((0, _keys2.default)(errors).length === 0) {
 	        alert('Username: ' + this.state.username + ' \nEmail: ' + this.state.email + ' \nPassword: ' + this.state.password1);
-	        this.props.registerUserServer(form.username, form.email, form.password1);
+	        this.props.registerUser(form.username, form.email, form.password1);
 	      }
 	    }
 	  }, {
@@ -2930,7 +2954,7 @@ module.exports =
 	;
 
 /***/ },
-/* 59 */
+/* 56 */
 /*!******************************************!*\
   !*** ./src/actions/LaunchPageActions.js ***!
   \******************************************/
@@ -2970,7 +2994,7 @@ module.exports =
 	;
 
 /***/ },
-/* 60 */
+/* 57 */
 /*!************************************!*\
   !*** external "material-ui/Paper" ***!
   \************************************/
@@ -2979,7 +3003,7 @@ module.exports =
 	module.exports = require("material-ui/Paper");
 
 /***/ },
-/* 61 */
+/* 58 */
 /*!**************************************!*\
   !*** ./src/components/Home/Home.css ***!
   \**************************************/
@@ -2994,7 +3018,7 @@ module.exports =
 	};
 
 /***/ },
-/* 62 */
+/* 59 */
 /*!******************************!*\
   !*** external "material-ui" ***!
   \******************************/
@@ -3003,7 +3027,7 @@ module.exports =
 	module.exports = require("material-ui");
 
 /***/ },
-/* 63 */
+/* 60 */
 /*!***************************************!*\
   !*** ./src/components/About/about.js ***!
   \***************************************/
@@ -3043,11 +3067,11 @@ module.exports =
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 10);
 	
-	var _Paper = __webpack_require__(/*! material-ui/Paper */ 60);
+	var _Paper = __webpack_require__(/*! material-ui/Paper */ 57);
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
 	
-	var _about = __webpack_require__(/*! ./about.css */ 64);
+	var _about = __webpack_require__(/*! ./about.css */ 61);
 	
 	var _about2 = _interopRequireDefault(_about);
 	
@@ -3106,7 +3130,7 @@ module.exports =
 	;
 
 /***/ },
-/* 64 */
+/* 61 */
 /*!****************************************!*\
   !*** ./src/components/About/about.css ***!
   \****************************************/
@@ -3119,7 +3143,7 @@ module.exports =
 	};
 
 /***/ },
-/* 65 */
+/* 62 */
 /*!*********************************************!*\
   !*** ./src/components/StreamList/stream.js ***!
   \*********************************************/
@@ -3165,19 +3189,19 @@ module.exports =
 	
 	var actionCreators = _interopRequireWildcard(_streamActions);
 	
-	var _selectors = __webpack_require__(/*! ../../lib/selectors */ 66);
+	var _selectors = __webpack_require__(/*! ../../lib/selectors */ 63);
 	
 	var selectors = _interopRequireWildcard(_selectors);
 	
-	var _sidebar = __webpack_require__(/*! ../Sidebar/sidebar */ 67);
+	var _sidebar = __webpack_require__(/*! ../Sidebar/sidebar */ 64);
 	
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 	
-	var _StreamItem = __webpack_require__(/*! ../StreamItem/StreamItem */ 69);
+	var _StreamItem = __webpack_require__(/*! ../StreamItem/StreamItem */ 66);
 	
 	var _StreamItem2 = _interopRequireDefault(_StreamItem);
 	
-	var _stream = __webpack_require__(/*! ./stream.css */ 70);
+	var _stream = __webpack_require__(/*! ./stream.css */ 67);
 	
 	var _stream2 = _interopRequireDefault(_stream);
 	
@@ -3218,11 +3242,11 @@ module.exports =
 				});
 			}
 		}, {
-			key: 'componentWillMount',
-			value: function componentWillMount() {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
 				this.props.fetchFeedItems();
 				// For easy console fun
-				console.log(this.props.fetchFeedItems());
+				// console.log(this.props.fetchFeedItems());
 			}
 		}, {
 			key: 'render',
@@ -3338,7 +3362,7 @@ module.exports =
 	;
 
 /***/ },
-/* 66 */
+/* 63 */
 /*!******************************!*\
   !*** ./src/lib/selectors.js ***!
   \******************************/
@@ -3396,7 +3420,7 @@ module.exports =
 	;
 
 /***/ },
-/* 67 */
+/* 64 */
 /*!*******************************************!*\
   !*** ./src/components/Sidebar/sidebar.js ***!
   \*******************************************/
@@ -3412,7 +3436,7 @@ module.exports =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _sidebar = __webpack_require__(/*! ./sidebar.css */ 68);
+	var _sidebar = __webpack_require__(/*! ./sidebar.css */ 65);
 	
 	var _sidebar2 = _interopRequireDefault(_sidebar);
 	
@@ -3510,7 +3534,7 @@ module.exports =
 	;
 
 /***/ },
-/* 68 */
+/* 65 */
 /*!********************************************!*\
   !*** ./src/components/Sidebar/sidebar.css ***!
   \********************************************/
@@ -3524,7 +3548,7 @@ module.exports =
 	};
 
 /***/ },
-/* 69 */
+/* 66 */
 /*!*************************************************!*\
   !*** ./src/components/StreamItem/StreamItem.js ***!
   \*************************************************/
@@ -3540,7 +3564,7 @@ module.exports =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _stream = __webpack_require__(/*! ../StreamList/stream.css */ 70);
+	var _stream = __webpack_require__(/*! ../StreamList/stream.css */ 67);
 	
 	var _stream2 = _interopRequireDefault(_stream);
 	
@@ -3580,7 +3604,7 @@ module.exports =
 	;
 
 /***/ },
-/* 70 */
+/* 67 */
 /*!**********************************************!*\
   !*** ./src/components/StreamList/stream.css ***!
   \**********************************************/
@@ -3598,7 +3622,7 @@ module.exports =
 	};
 
 /***/ },
-/* 71 */
+/* 68 */
 /*!*******************************************!*\
   !*** ./src/components/Page404/Page404.js ***!
   \*******************************************/
@@ -3638,7 +3662,7 @@ module.exports =
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 10);
 	
-	var _Page = __webpack_require__(/*! ./Page404.css */ 72);
+	var _Page = __webpack_require__(/*! ./Page404.css */ 69);
 	
 	var _Page2 = _interopRequireDefault(_Page);
 	
@@ -3691,7 +3715,7 @@ module.exports =
 	;
 
 /***/ },
-/* 72 */
+/* 69 */
 /*!********************************************!*\
   !*** ./src/components/Page404/Page404.css ***!
   \********************************************/
@@ -3702,7 +3726,7 @@ module.exports =
 	};
 
 /***/ },
-/* 73 */
+/* 70 */
 /*!***********************************!*\
   !*** ./src/Containers/App/App.js ***!
   \***********************************/
@@ -3718,15 +3742,15 @@ module.exports =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _NavBar = __webpack_require__(/*! ../NavBar/NavBar */ 74);
+	var _NavBar = __webpack_require__(/*! ../NavBar/NavBar */ 71);
 	
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 	
-	var _App = __webpack_require__(/*! ./App.css */ 75);
+	var _App = __webpack_require__(/*! ./App.css */ 72);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reactTapEventPlugin = __webpack_require__(/*! react-tap-event-plugin */ 79);
+	var _reactTapEventPlugin = __webpack_require__(/*! react-tap-event-plugin */ 73);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -3779,7 +3803,7 @@ module.exports =
 	;
 
 /***/ },
-/* 74 */
+/* 71 */
 /*!*****************************************!*\
   !*** ./src/Containers/NavBar/NavBar.js ***!
   \*****************************************/
@@ -3799,7 +3823,7 @@ module.exports =
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 10);
 	
-	var _materialUi = __webpack_require__(/*! material-ui */ 62);
+	var _materialUi = __webpack_require__(/*! material-ui */ 59);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3834,7 +3858,7 @@ module.exports =
 	;
 
 /***/ },
-/* 75 */
+/* 72 */
 /*!************************************!*\
   !*** ./src/Containers/App/App.css ***!
   \************************************/
@@ -3851,18 +3875,7 @@ module.exports =
 	};
 
 /***/ },
-/* 76 */,
-/* 77 */
-/*!*************************************************!*\
-  !*** external "material-ui/styles/getMuiTheme" ***!
-  \*************************************************/
-/***/ function(module, exports) {
-
-	module.exports = require("material-ui/styles/getMuiTheme");
-
-/***/ },
-/* 78 */,
-/* 79 */
+/* 73 */
 /*!*****************************************!*\
   !*** external "react-tap-event-plugin" ***!
   \*****************************************/
@@ -3871,7 +3884,7 @@ module.exports =
 	module.exports = require("react-tap-event-plugin");
 
 /***/ },
-/* 80 */
+/* 74 */
 /*!***********************************!*\
   !*** ./src/server/setMuiTheme.js ***!
   \***********************************/
@@ -3884,11 +3897,11 @@ module.exports =
 	});
 	exports.default = setMuiTheme;
 	
-	var _getMuiTheme = __webpack_require__(/*! material-ui/styles/getMuiTheme */ 77);
+	var _getMuiTheme = __webpack_require__(/*! material-ui/styles/getMuiTheme */ 75);
 	
 	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
 	
-	var _Paper = __webpack_require__(/*! material-ui/Paper */ 60);
+	var _Paper = __webpack_require__(/*! material-ui/Paper */ 57);
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
 	
@@ -3919,7 +3932,16 @@ module.exports =
 	;
 
 /***/ },
-/* 81 */
+/* 75 */
+/*!*************************************************!*\
+  !*** external "material-ui/styles/getMuiTheme" ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	module.exports = require("material-ui/styles/getMuiTheme");
+
+/***/ },
+/* 76 */
 /*!*******************************************!*\
   !*** ./src/server/routes/feedItemsApi.js ***!
   \*******************************************/
@@ -3932,7 +3954,7 @@ module.exports =
 	});
 	exports.deleteFeedItem = exports.updateFeedItem = exports.postFeedItem = exports.getFeed = undefined;
 	
-	var _isomorphicFetch = __webpack_require__(/*! isomorphic-fetch */ 33);
+	var _isomorphicFetch = __webpack_require__(/*! isomorphic-fetch */ 36);
 	
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 	
@@ -4040,16 +4062,7 @@ module.exports =
 	;
 
 /***/ },
-/* 82 */
-/*!****************************************************!*\
-  !*** external "babel-runtime/core-js/object/keys" ***!
-  \****************************************************/
-/***/ function(module, exports) {
-
-	module.exports = require("babel-runtime/core-js/object/keys");
-
-/***/ },
-/* 83 */
+/* 77 */
 /*!*****************************************!*\
   !*** ./src/server/routes/userRoutes.js ***!
   \*****************************************/
@@ -4062,7 +4075,7 @@ module.exports =
 	});
 	exports.deleteUser = exports.updateUser = exports.loginUser = exports.registerUser = exports.getUser = exports.getUsers = undefined;
 	
-	var _isomorphicFetch = __webpack_require__(/*! isomorphic-fetch */ 33);
+	var _isomorphicFetch = __webpack_require__(/*! isomorphic-fetch */ 36);
 	
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 	

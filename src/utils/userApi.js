@@ -29,6 +29,7 @@ export const returnUserData = ({ entities: {userData}, result: userDataIds }) =>
 export default {
   USER: {
     register(username, email, password) {
+      console.log("req sent");
       return fetchJson(
         'http://0.0.0.0:5000/user',
         {

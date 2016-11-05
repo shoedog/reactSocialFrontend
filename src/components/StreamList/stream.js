@@ -20,10 +20,10 @@ class StreamList extends Component {
 		}));
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchFeedItems();
 		// For easy console fun
-		console.log(this.props.fetchFeedItems());
+		// console.log(this.props.fetchFeedItems());
 	}
 
 	render() {

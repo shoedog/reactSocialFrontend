@@ -37,7 +37,7 @@ export const fetchFeedItemsStart = startAction(fetchFeedItemsType);
 export const fetchFeedItemsSuccess = successAction(fetchFeedItemsType);
 export const fetchFeedItemsFailure = failureAction(fetchFeedItemsType);
 export const fetchFeedItems = asyncAction({
-  func: () => api.feedItems.fetch(),
+  func: () => api.feedItems.fetchFeed(),
   start: fetchFeedItemsStart,
   success: fetchFeedItemsSuccess,
   failure: fetchFeedItemsFailure,
