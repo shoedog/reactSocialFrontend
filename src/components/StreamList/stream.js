@@ -43,7 +43,7 @@ class StreamList extends Component {
 						<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
 					</div><br/>
 
-					<GridList cellHeight={180} className={s.gridList} padding={10}>
+					<GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
 						{
 							( feedItems.length === 0) ? 
 									<div>No Content...</div>

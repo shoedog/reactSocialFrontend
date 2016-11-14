@@ -3294,9 +3294,10 @@ module.exports =
 								'Create Post'
 							)
 						),
+						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							_materialUi.GridList,
-							{ cellHeight: 180, className: _stream2.default.gridList },
+							{ cellHeight: 180, className: _stream2.default.gridList, padding: 10 },
 							feedItems.length === 0 ? _react2.default.createElement(
 								'div',
 								null,
