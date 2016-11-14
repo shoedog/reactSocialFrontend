@@ -75,7 +75,7 @@ class RegisterForm extends React.Component {
               value={this.state.username}
               onChange={this.handleChange}
               errorText={this.state.errors.username}
-            />
+            /><br />
             <TextField
               id="email" type="email"
               hintText="Email"
@@ -83,7 +83,7 @@ class RegisterForm extends React.Component {
               value={this.state.email}
               onChange={this.handleChange}
               errorText={this.state.errors.email}
-            />
+            /><br />
             <TextField
               id="password1" type="password"
               hintText="Password"
@@ -91,7 +91,7 @@ class RegisterForm extends React.Component {
               value={this.state.password1}
               onChange={this.handleChange}
               errorText={this.state.errors.password1}
-            />
+            /><br />
             <TextField
               id="password2" type="password"
               hintText="Password"
@@ -99,7 +99,7 @@ class RegisterForm extends React.Component {
               value={this.state.password2}
               onChange={this.handleChange}
               errorText={this.state.errors.password2}
-            />
+            /><br />
             <div>
               <RaisedButton label="Submit" primary={true} type="submit" disabled={this.props.submitting}/>
             </div>

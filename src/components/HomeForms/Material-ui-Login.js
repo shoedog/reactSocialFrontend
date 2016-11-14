@@ -62,6 +62,7 @@ class LoginForm extends React.Component {
               onChange={this.handleChange}
               errorText={this.state.errors.username}
             />
+            <br />
             <TextField
               id="password" type="password"
               hintText="Password"
@@ -69,7 +70,7 @@ class LoginForm extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
               errorText={this.state.errors.password}
-            />
+            /><br />
             <div>
               <RaisedButton label="Submit" primary={true} type="submit" disabled={this.props.submitting}/>
             </div>
