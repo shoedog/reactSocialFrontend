@@ -32,6 +32,8 @@
     "material-ui": "^0.16.1",
     "normalizr": "^2.2.1",
     "object-assign": "^4.1.0",
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4",
     "qs": "^6.3.0",
     "querystring": "^0.2.0",
     "ramda": "^0.22.1",

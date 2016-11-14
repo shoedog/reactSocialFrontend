@@ -3,18 +3,24 @@ import httpProxy from 'http-proxy';
 import HttpProxyRules from 'http-proxy-rules';
 import http from 'http';
 import React from 'react';
+import passport from 'passport';
 import render from './routes/handleRender';
 //import fetch from 'isomorphic-fetch';
 import { getFeed, postFeedItem,
   updateFeedItem, deleteFeedItem } from './routes/feedItemsApi';
 import { getUsers, getUser, registerUser,
   loginUser, updateUser, deleteUser } from './routes/userRoutes';
+import * as socialRoutes from './routes/socialRoutes';
 
 const app = express();
 let router = express.Router();
 const server = new http.Server(app);
 app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
+// required for passport
+app.use(session({ secret: 'moonwalkissweet' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 // Transform routes to target routes for proxy service
 //const proxyRules = new HttpProxyRules({
@@ -39,6 +45,9 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });*/
 
+// Social Routes
+socialRoutes(app, passport);
+
 // Api Proxy Requests
 app.route('/feedItems')
   .get( (req, res) => {
@@ -53,8 +62,6 @@ app.route('/feedItems')
   .delete( (req, res) => {
     deleteFeedItem(req, res);
   });
-
-
 
 app.route('/user/:username')
   .get( (req, res) => {
