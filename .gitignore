@@ -2,7 +2,7 @@ node_modules
 build/assets/
 /node_modules/
 .idea/
-public
+public/**
 
 # Logs
 logs
