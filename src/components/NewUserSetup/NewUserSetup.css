@@ -1,0 +1,22 @@
+.paperBlock {
+	align-self: center;
+	text-align: center;
+	padding: 20px;
+	margin: 100px;
+	background-color: red;
+}
+
+.paperBlock .title {
+	background-color: #00bcd4;
+	margin: 0px;
+	padding: 10px;
+}
+
+.paperBlock .icon {
+	width: 16px;
+	height: 16px;
+}
+
+.paperBlock .buttonContainer {
+	background-color: red;
+}

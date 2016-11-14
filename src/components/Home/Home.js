@@ -51,7 +51,7 @@ class Home extends Component {
 
     return (
       <div>
-      <Paper style={{"align":"center", "textAlign":"center", "padding":"20px", "margin":"100px"}}>
+      <Paper className={s.paperBlock}>
         <Tabs >
 
           <Tab label="Sign In" value="a">

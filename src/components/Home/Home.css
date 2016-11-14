@@ -1,18 +1,7 @@
-.Home {
-
+.paperBlock {
+	align-self: center;
+	text-align: center;
+	padding: 20px;
+	margin: 100px;
 }
 
-.loginOptions {
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 25px;
-}
-
-.signInBox, .signUpBox {
-	padding: 5px;
-	margin: 5px;
-}
-
-.registerForm {
-    text-align: center;
-}

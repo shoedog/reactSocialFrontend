@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {Navigation} from 'react-router';
 
 /*  Validate Form input   */
 const validate = (values) => {
@@ -26,6 +27,7 @@ const validate = (values) => {
 
 /*  Material UI Form  */
 class RegisterForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +39,7 @@ class RegisterForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.mixins= [Navigation];
   }
 
   handleChange(e) {
@@ -58,8 +60,9 @@ class RegisterForm extends React.Component {
     });
     //console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
-      alert(`Username: ${this.state.username} \nEmail: ${this.state.email} \nPassword: ${this.state.password1}`);
+      let res = confirm(`Username: ${this.state.username} \nEmail: ${this.state.email} \nPassword: ${this.state.password1}`);
       this.props.registerUser(form.username, form.email, form.password1);
+      if(res){window.location.href="/newusersetup"}
     }
   }
 
