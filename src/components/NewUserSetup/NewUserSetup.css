@@ -3,7 +3,6 @@
 	text-align: center;
 	padding: 20px;
 	margin: 100px;
-	background-color: red;
 }
 
 .paperBlock .title {
@@ -15,8 +14,4 @@
 .paperBlock .icon {
 	width: 16px;
 	height: 16px;
-}
-
-.paperBlock .buttonContainer {
-	background-color: red;
 }
