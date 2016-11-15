@@ -4,13 +4,14 @@ import HttpProxyRules from 'http-proxy-rules';
 import http from 'http';
 import React from 'react';
 import passport from 'passport';
+import session from 'express-session';
 import render from './routes/handleRender';
 //import fetch from 'isomorphic-fetch';
 import { getFeed, postFeedItem,
   updateFeedItem, deleteFeedItem } from './routes/feedItemsApi';
 import { getUsers, getUser, registerUser,
   loginUser, updateUser, deleteUser } from './routes/userRoutes';
-import * as socialRoutes from './routes/socialRoutes';
+import passportTwitter from './config/strategies/passportTwitter';
 
 const app = express();
 let router = express.Router();
@@ -19,7 +20,7 @@ app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
 // required for passport
 //app.use(session({ secret: 'moonwalkissweet' })); // session secret
-//app.use(passport.initialize());
+app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
 
 // Transform routes to target routes for proxy service
@@ -86,7 +87,13 @@ app.route('/user')
   });
 
 app.post('/user/login', loginUser);
-
+app.get('/auth/twitter', passport.authenticate('twitter'));
+// handle the callback after twitter has authenticated the user
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', {
+      successRedirect : '/feedItems',
+      failureRedirect : '/'
+    }));
 
 app.use('/feedItems', router);
 
