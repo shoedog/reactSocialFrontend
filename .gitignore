@@ -1,5 +1,5 @@
 node_modules
-build/assets/
+public/static/dist/
 /node_modules/
 .idea/
 public/**
