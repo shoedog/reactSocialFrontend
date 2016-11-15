@@ -1,5 +1,6 @@
 node_modules
 public/static/dist/
+public/static/dist/server.js.map
 /node_modules/
 .idea/
 public/**

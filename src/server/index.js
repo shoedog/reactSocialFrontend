@@ -18,9 +18,9 @@ const server = new http.Server(app);
 app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
 // required for passport
-app.use(session({ secret: 'moonwalkissweet' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+//app.use(session({ secret: 'moonwalkissweet' })); // session secret
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
 
 // Transform routes to target routes for proxy service
 //const proxyRules = new HttpProxyRules({
@@ -46,7 +46,7 @@ proxy.on('error', (error, req, res) => {
 });*/
 
 // Social Routes
-socialRoutes(app, passport);
+//socialRoutes(app, passport);
 
 // Api Proxy Requests
 app.route('/feedItems')
