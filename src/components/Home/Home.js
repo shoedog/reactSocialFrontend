@@ -61,7 +61,7 @@ class Home extends Component {
           <Tab label="Register" value="b">
             <MaterialuiRegister registerUser={registerUserServer}/>
           </Tab>
-            
+
         </Tabs>
       </Paper>
       </div>
