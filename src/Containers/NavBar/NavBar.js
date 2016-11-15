@@ -34,6 +34,7 @@ class NavBar extends React.Component {
   }
 
   // whether to show buttons or small menu
+  // TODO: change this to reference redux 
   getWindow () {
     if(this.state.windowWidth > 600 && !sessionStorage.getItem('username')) {
       return (

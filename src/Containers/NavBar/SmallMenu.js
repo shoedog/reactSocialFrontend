@@ -27,6 +27,7 @@ class SmallMenu extends React.Component {
    * Displays different menu according to whether user is logged in.
    */
 
+  // TODO: change to listen to redux
   getUser() {
     if (sessionStorage.getItem('username') && sessionStorage.getItem('token')) {
       return (
