@@ -34,8 +34,11 @@ export default {
         'http://0.0.0.0:5000/user',
         {
           method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, email, password }),
-        }
+        }.then( (res) => {
+          console.log(res);
+        })
       );
     },
 
