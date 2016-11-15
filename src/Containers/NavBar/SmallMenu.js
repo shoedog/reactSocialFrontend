@@ -18,7 +18,9 @@ class SmallMenu extends React.Component {
   }
 
   handleSignout() {
-    this.auth.signout();
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username');
+    window.removeEventListener('resize', this.handleResize);
   }
 
   /**
