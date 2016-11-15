@@ -1,6 +1,7 @@
-import userApi from '../utils/userApi';
+import userApi from '../utils/fetchHandlers/user';
 import { startAction, successAction,
-  failureAction, asyncAction } from './asyncActionUtils';
+  failureAction, asyncAction } from '../utils/lib/asyncActionUtils';
+import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
 export const OPEN_PROFILE = 'OPEN_PROFILE';
 export const CLOSE_PROFILE = 'CLOSE_PROFILE';
@@ -42,6 +43,7 @@ export const registerUser = (email, password) => ({
 
 export const logout = (router) => {
   return (dispatch) => {
+    eraseStorage();
     dispatch({ type: LOGOUT });
     router.transitionTo(['/login', { redirectTo: stringifyLocation(router.state.location)}]);
   }
@@ -77,6 +79,7 @@ export const fetchUserProfile = asyncAction({
   failure: fetchUserProfileFailure,
 });
 
+
 /**
  * Register User: POST
  * Action Type, start, success, failure, and async actions
@@ -108,6 +111,7 @@ export const loginUser = asyncAction({
   success: loginUserSuccess,
   failure: loginUserFailure,
 });
+
 
 /**
  * Update User Profile on server: PUT

@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import { checkStatus, fetchJson } from './apiUtils';
+import { checkStatus, fetchJson } from '../lib/fetchUtils';
 
 // Modify response for props
 // We can do it here or on server

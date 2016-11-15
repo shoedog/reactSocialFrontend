@@ -1,6 +1,4 @@
 import express from 'express';
-import httpProxy from 'http-proxy';
-import HttpProxyRules from 'http-proxy-rules';
 import http from 'http';
 import React from 'react';
 import passport from 'passport';
@@ -22,29 +20,6 @@ app.use('/static', express.static('/public/static'));
 //app.use(session({ secret: 'moonwalkissweet' })); // session secret
 app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
-
-// Transform routes to target routes for proxy service
-//const proxyRules = new HttpProxyRules({
-//  rules: {
-//    '.*/feedItems': `http://localhost:5000/social/feed`
-/*  },
-  default: `http://localhost:5000`
-});
-const proxy = httpProxy.createProxy();
-
-// Proxy error handling
-proxy.on('error', (error, req, res) => {
-  let json;
-  if (error.code !== 'ECONNRESET') {
-    console.error('proxy error', error);
-  }
-  if (!res.headersSent) {
-    res.writeHead(500, {'content-type': 'application/json'});
-  }
-
-  json = {error: 'proxy_error', reason: error.message};
-  res.end(JSON.stringify(json));
-});*/
 
 // Social Routes
 //socialRoutes(app, passport);

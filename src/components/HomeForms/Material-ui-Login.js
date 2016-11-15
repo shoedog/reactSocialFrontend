@@ -1,6 +1,8 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { loginUser } from '../../actions/user';
+import { connect } from 'react-redux';
 
 function validate(values) {
   const errors = {};
@@ -44,8 +46,8 @@ class LoginForm extends React.Component {
     });
     console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
-      alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
-      this.props.loginUser(form.username, form.password);
+      //alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
+      this.props.dispatch(loginUser(form.username, form.password));
     }
   }
 
@@ -81,7 +83,7 @@ class LoginForm extends React.Component {
   };
 }
 
-export default LoginForm;
+export default connect()(LoginForm);
 
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

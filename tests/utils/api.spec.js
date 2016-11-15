@@ -1,7 +1,7 @@
 import test from 'tape';
 import fetchMock from 'fetch-mock';
 
-import api from './api';
+import api from '../../src/utils/api';
 import { testErrorRejection } from './testUtils';
 
 test('api | feedItems.fetch ::', (t1) => {

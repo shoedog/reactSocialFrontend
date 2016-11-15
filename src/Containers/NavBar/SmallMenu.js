@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
+import { getSessionItem } from '../../utils/lib/sessionUtils';
 
 class SmallMenu extends React.Component {
   constructor(props) {
@@ -18,8 +19,6 @@ class SmallMenu extends React.Component {
   }
 
   handleSignout() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -29,10 +28,10 @@ class SmallMenu extends React.Component {
 
   // TODO: change to listen to redux
   getUser() {
-    if (sessionStorage.getItem('username') && sessionStorage.getItem('token')) {
+    if (getSessionItem('username') == true && getSessionItem('token') == true) {
       return (
         <div>
-        <Subheader> {sessionStorage.getItem('username')} </Subheader>
+        <Subheader> {getSessionItem('username')} </Subheader>
         <Divider />
         <MenuItem primaryText="Profile" />
         <MenuItem primaryText="Sign out" onClick={this.handleSignout}/>

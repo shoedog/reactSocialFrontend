@@ -1,5 +1,5 @@
 import { dissoc, without, merge, prepend } from 'ramda';
-import { OPEN_FEED_ITEM, CLOSE_FEED_ITEM, UPDATE_FEED_ITEM } from '../actions/streamActions';
+import { OPEN_FEED_ITEM, CLOSE_FEED_ITEM, UPDATE_FEED_ITEM } from '../actions/stream';
 
 /**
  * See lib/selectors.js for functions to sort/select items using byId, ids, openFeedItemId

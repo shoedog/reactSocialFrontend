@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/streamActions';
-import * as selectors from '../../lib/selectors';
+import * as actionCreators from '../../actions/stream';
+import * as selectors from '../../utils/lib/selectors';
 
 import { GridList, GridTile } from 'material-ui';
 import Subheader from 'material-ui/Subheader';

@@ -1,7 +1,6 @@
-import api from '../utils/api';
+import api from '../utils/fetchHandlers/feed';
 import { startAction, successAction,
-  failureAction, asyncAction } from './asyncActionUtils';
-import { v4 } from 'uuid'; //create a unique uuid
+  failureAction, asyncAction } from '../utils/lib/asyncActionUtils';
 
 export const OPEN_FEED_ITEM = 'OPEN_FEED_ITEM';
 export const CLOSE_FEED_ITEM = 'CLOSE_FEED_ITEM';

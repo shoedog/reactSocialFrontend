@@ -1,10 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
-//require("!style!css!./Page404.css");
 import s from './Page404.css';
-// import { Button } from 'react-toolbox/lib/button';
-// <Button label="React-ToolBox Button" />
 
 class Page404 extends Component {
 	render() {

@@ -15,10 +15,10 @@ const history = browserHistory;
 /**
  * We hydrate/initialize the store with the state passed from the server.
  */
-const initialState = window.__INITIAL_STATE__ || {};
+const preloadedState = window.__PRELOADED_STATE__;
 
 // Async and other middleware applied in store
-const store = configureStore(initialState);
+const store = configureStore(preloadedState);
 
 /**
  * Render

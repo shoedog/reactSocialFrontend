@@ -3,6 +3,7 @@ import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux';
 import {AppBar, FlatButton, IconButton} from 'material-ui';
 import SmallMenu from './SmallMenu';
+import { getSessionItem } from '../../utils/lib/sessionUtils';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class NavBar extends React.Component {
      windowWidth: 1000
     };
   }
-
 
   // add listeners
   componentDidMount () {
@@ -34,9 +34,11 @@ class NavBar extends React.Component {
   }
 
   // whether to show buttons or small menu
-  // TODO: change this to reference redux 
+  // TODO: change this to reference redux
+    //  && !sessionStorage.getItem('username')
+    // <SmallMenu />
   getWindow () {
-    if(this.state.windowWidth > 600 && !sessionStorage.getItem('username')) {
+    if(this.state.windowWidth > 600 && getSessionItem('username') == false) {
       return (
         <div>
           <FlatButton label="About" href="/about" />
@@ -46,7 +48,7 @@ class NavBar extends React.Component {
        </div>
     );} else {
       return(
-        <SmallMenu />
+          <SmallMenu/>
       );
     }
   }

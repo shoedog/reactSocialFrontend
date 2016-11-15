@@ -1,6 +1,6 @@
 import axios from 'axios';
 import querystring from 'querystring';
-import stringifyLocation from '../lib/stringifyLocation';
+import stringifyLocation from '../../src/utils/lib/stringifyLocation';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
@@ -104,26 +104,28 @@ export function login(email, password, router) {
         email: email,
         password: password
       }
-    }).then( (response) => {
-        console.log(response);
-        let token = response.data;
-        let profile = response.data.profile;
-        saveAuthToken(token);
-        dispatch(loginSuccess(token));
-        dispatch(fetchProfileSuccess(profile));
-        const { query } = router.state.location;
-        const redirectTo = (query && query.redirectTo) ? query.redirectTo : '/';
-        router.transitionTo(redirectTo);
-    }).catch( (err) => {
-        console.log("error login")
-        console.log(err);
-        let error = (err.status === 401)
-        ? Error('Incorrect email or password')
-        : Error('Unknown error occured. Please, try again later.');
-        dispatch(loginFailure(error));
     })
   }
 }
+/*
+.then( (response) => {
+    console.log(response);
+    let token = response.data;
+    let profile = response.data.profile;
+    saveAuthToken(token);
+    dispatch(loginSuccess(token));
+    dispatch(fetchProfileSuccess(profile));
+    const { query } = router.state.location;
+    const redirectTo = (query && query.redirectTo) ? query.redirectTo : '/';
+    router.transitionTo(redirectTo);
+}).catch( (err) => {
+    console.log("error login")
+    console.log(err);
+    let error = (err.status === 401)
+        ? Error('Incorrect email or password')
+        : Error('Unknown error occured. Please, try again later.');
+    dispatch(loginFailure(error));
+})*/
 
 export function fetchProfile() {
   return function (dispatch) {

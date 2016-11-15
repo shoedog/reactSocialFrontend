@@ -1,6 +1,5 @@
-
 import { normalize, Schema, arrayOf } from 'normalizr';
-import { checkStatus, fetchJson } from './apiUtils';
+import { checkStatus, fetchJson } from '../lib/fetchUtils';
 
 // Create  schema for normalizr
 const feedItems = new Schema('feedItems');

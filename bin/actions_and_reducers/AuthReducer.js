@@ -6,9 +6,9 @@ import {
   LOGOUT,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_ERROR,
-} from '../actions/auth';
+} from './auth';
 
-import { ROUTER_STATE_CHANGE } from '../actions/router';
+import { ROUTER_STATE_CHANGE } from '../../src/actions/router';
 
 const initialState = {
   error: null, // last occurred error

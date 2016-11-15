@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import { normalize, Schema, arrayOf } from 'normalizr';
-import { checkStatus, fetchJson } from './apiUtils';
+import { checkStatus, fetchJson } from '../lib/fetchUtils';
 
 // Create  schema for normalizr
 const userProfileData = new Schema('userProfileData');
@@ -36,16 +36,16 @@ export default {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, email, password }),
-        }.then( (res) => {
-          if (res.token) {
-            sessionStorage.setItem('token', res.token);
-            sessionStorage.setItem('username', res.user.displayName);
-            const token = sessionStorage.getItem('token');
-            const user = sessionStorage.getItem('username');
-            window.location.href="/stream";
-          }
-        })
-      );
+        }
+      ).then( (res) => {
+        if (res.token) {
+          sessionStorage.setItem('token', res.token);
+          sessionStorage.setItem('username', res.user.displayName);
+          const token = sessionStorage.getItem('token');
+          const user = sessionStorage.getItem('username');
+          window.location.href="/stream";
+        }
+      })
     },
 
     login(username, password) {
@@ -56,7 +56,7 @@ export default {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, password }),
         }
-      ).then( (res) => {
+      )/*.then( (res) => {
         if (res.token) {
           sessionStorage.setItem('token', res.token);
           sessionStorage.setItem('username', res.user.displayName);
@@ -64,10 +64,12 @@ export default {
           const user = sessionStorage.getItem('username');
 
           console.log(user);
-          window.location.href="/stream";
+          //window.location.href="/stream";
         }
-      })
+      })*/
     },
+
+
 
     fetch(username) {
       return fetchJson(`http://54.212.196.159:5000/user/${username}`)
