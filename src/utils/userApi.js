@@ -29,17 +29,17 @@ export const returnUserData = ({ entities: {userData}, result: userDataIds }) =>
 export default {
   USER: {
     register(username, email, password) {
-      console.log("req sent");
+      //console.log("req sent");
       return fetchJson(
         'http://0.0.0.0:5000/user',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, email, password }),
-        }.then( (res) => {
-          console.log(res);
-        })
-      );
+        }
+      ).then( (res) => {
+        console.log(res);
+      })
     },
 
     login(username, password) {

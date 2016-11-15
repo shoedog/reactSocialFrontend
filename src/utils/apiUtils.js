@@ -26,4 +26,5 @@ export const fetchJson = (url, options = {}) => (
   })
     .then(checkStatus)
     .then(toJson)
+    //.then( (data) => console.log(data))
 );
