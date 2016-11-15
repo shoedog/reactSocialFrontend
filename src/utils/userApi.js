@@ -37,7 +37,13 @@ export default {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, email, password }),
         }.then( (res) => {
-          console.log(res);
+          if (res.token) {
+            sessionStorage.setItem('token', res.token);
+            sessionStorage.setItem('username', res.user.displayName);
+            const token = sessionStorage.getItem('token');
+            const user = sessionStorage.getItem('username');
+            window.location.href="/stream";
+          }
         })
       );
     },
@@ -51,7 +57,15 @@ export default {
           body: JSON.stringify({ username, password }),
         }
       ).then( (res) => {
-        console.log(res);
+        if (res.token) {
+          sessionStorage.setItem('token', res.token);
+          sessionStorage.setItem('username', res.user.displayName);
+          const token = sessionStorage.getItem('token');
+          const user = sessionStorage.getItem('username');
+
+          console.log(user);
+          window.location.href="/stream";
+        }
       })
     },
 
