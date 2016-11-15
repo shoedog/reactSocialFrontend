@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/streamActions';
 import * as selectors from '../../lib/selectors';
 
-import Sidebar from '../Sidebar/sidebar';
+import { GridList, GridTile } from 'material-ui';
+import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 
@@ -29,37 +34,31 @@ class StreamList extends Component {
 	render() {
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
-		return (
-			<div className={s.Stream}>
-				<h1>User Stream</h1>
-				<div>
-					{ this.state.isToggleOn ? <Sidebar /> : "" }
-				</div>
+		return(
+			<div>
+				<Paper className={s.paperBlock}>
+					<h1 className={s.title}>User Stream</h1>
+		
+					<div className={s.StreamContent}>
+						<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
+					</div><br/>
 
-				<a href="" className={s.SideBarToggle} onClick={ () => this.handleToggle()}>
-					{this.state.isToggleOn ? 'v':'>'} Username
-				</a>
-				
-				<div className={s.StreamContent}>
-					<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>
-					{( feedItems.length === 0) ?
-						<div className={s.empty}>No Content...</div>
-						: feedItems.map((feedItem) => (
-							<button key={feedItem.id} className={(feedItem.id === openFeedItemId)
-								? {...s.feedItem, ...s.selected} : s.feedItem }
-											onClick={() => openFeedItem(feedItem.id)} >
-								{feedItem.content === ''
-									? <span className={s.newFeedItem}>Create Post</span>
-									: <div>
-									Content: {feedItem.content}
-									<br/>...might need to map content into heading, main, img, preview, etc
-								</div> }
-							</button>
-					))
-					}
-					<StreamItem />
-				</div>
-			</div>
+					<GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
+						{
+							( feedItems.length === 0) ? 
+									<div>No Content...</div>
+							: feedItems.map( (tile) =>(
+								<GridTile 
+									className={s.gridTile}
+									title={tile.id}
+									actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+								>
+									{tile.content}
+								</GridTile>
+						))}
+					</GridList>
+				</Paper>
+			</div>			
 		);
 	}
 }

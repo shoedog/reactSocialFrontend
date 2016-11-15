@@ -1,8 +1,32 @@
 div.Stream {
-
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
-div.Stream > h1 {
+.paperBlock {
+    align-self: center;
+    text-align: center;
+    padding: 20px;
+    margin: 100px;
+}
+
+.paperBlock .title {
+    background-color: #00bcd4;
+    margin: 0px;
+    padding: 10px;
+}
+
+.gridList {
+    width: 500;
+    height: 450;
+    overflow-y: auto;
+}
+
+.gridTile{
+    background-color: lightblue;
+}
+/*div.Stream > h1 {
     text-align: center;
 }
 
@@ -69,4 +93,4 @@ div.StreamContent {
 
 .newFeedItem {
     color: #c3c3c3;
-}
+}*/
