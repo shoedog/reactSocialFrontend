@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import routes from './routes'
-import { Router } from 'react-router'
+import routes from './routes';
+import { Router } from 'react-router';
 import configureStore from './configureStore';
 
 const history = browserHistory;

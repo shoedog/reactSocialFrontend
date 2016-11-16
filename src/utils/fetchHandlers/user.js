@@ -56,17 +56,12 @@ export default {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, password }),
         }
-      )/*.then( (res) => {
+      ).then((res) => {
         if (res.token) {
           sessionStorage.setItem('token', res.token);
           sessionStorage.setItem('username', res.user.displayName);
-          const token = sessionStorage.getItem('token');
-          const user = sessionStorage.getItem('username');
-
-          console.log(user);
-          //window.location.href="/stream";
         }
-      })*/
+      })
     },
 
 
