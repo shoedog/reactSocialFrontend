@@ -46,8 +46,8 @@ class LoginForm extends React.Component {
     });
     if ( Object.keys(errors).length === 0 ) {
       //alert(`Email: ${this.state.username} \nPassword: ${this.state.password}`);
-      this.props.dispatch(loginUser(form.username, form.password))
-        .then((res) => {
+      this.props.dispatch(loginUser(form.username, form.password));
+        /*.then((res) => {
           console.log(res);
           if (res.error == true) {
             this.setState({
@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
               }
             })
           }
-        })
+        })*/
     }
   }
 

@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 class SmallMenu extends React.Component {
   constructor(props) {
     super(props);
-    console.log("HEYYY")
     console.log(props);
     this.auth = this.props.AuthStore;
     this.profile = this.props.ProfileStore;
@@ -33,9 +32,10 @@ class SmallMenu extends React.Component {
   // TODO: change to listen to redux
   getUser() {
     if (getSessionItem('username') == true && getSessionItem('token') == true) {
+      let username = getSessionItem('username');
       return (
         <div>
-        <Subheader> {getSessionItem('username')} </Subheader>
+        <Subheader> username </Subheader>
         <Divider />
         <MenuItem primaryText="Profile" />
         <MenuItem primaryText="Sign out" onClick={this.handleSignout}/>

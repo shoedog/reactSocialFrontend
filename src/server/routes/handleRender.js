@@ -37,7 +37,7 @@ function handleRender(req, res, renderProps) {
   const store = configureStore();
 
   //const store = configureStore();
-  console.log(`\n\nRENDERTOSTRING \n\n`);
+  // console.log(`\n\nRENDERTOSTRING \n\n`);
   const html = ReactDOMServer.renderToString(
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>

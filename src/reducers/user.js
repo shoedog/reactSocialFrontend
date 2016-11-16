@@ -25,10 +25,20 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
     case 'registerUserServer':
     case 'loginUser':
       if ( meta.done && !error) {
+          if (payload.token) {
+            sessionStorage.setItem('token', payload.token);
+            sessionStorage.setItem('username', payload.user.displayName);
+          }
         return merge(state, {
           token: payload.token,
           user: payload.user,
         } );
+      } else if ( meta.done && error ){
+        return merge(state, {
+          error: payload.error
+        } );
+      } else {
+        return state;
       }
 
     // discards the current token & profile (logout)
