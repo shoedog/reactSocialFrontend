@@ -36,6 +36,8 @@ function handleRender(req, res, renderProps) {
   // Async middleware applied same as in client except without initial State
   const store = configureStore();
 
+  //const store = configureStore();
+  console.log(`\n\nRENDERTOSTRING \n\n`);
   const html = ReactDOMServer.renderToString(
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
