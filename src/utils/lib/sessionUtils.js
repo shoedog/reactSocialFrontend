@@ -15,7 +15,7 @@ function storageAvailable(type) {
 // If session storage is available get item
 export function getSessionItem(item) {
     if ( typeof(localStorage) != 'undefined') {
-        if( localStorage.getItem(item) != null ){
+        if( sessionStorage.getItem(item) != null ){
             return true;
         } else {
             return false;

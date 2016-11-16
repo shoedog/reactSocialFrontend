@@ -1,4 +1,3 @@
-// app/components/SmallMenu.js
 'use strict';
 import React from 'react';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -8,10 +7,15 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import { getSessionItem } from '../../utils/lib/sessionUtils';
+import { loginUser } from '../../actions/user';
+import { connect } from 'react-redux';
+
 
 class SmallMenu extends React.Component {
   constructor(props) {
     super(props);
+    console.log("HEYYY")
+    console.log(props);
     this.auth = this.props.AuthStore;
     this.profile = this.props.ProfileStore;
     this.handleSignout = this.handleSignout.bind(this);
@@ -63,4 +67,4 @@ class SmallMenu extends React.Component {
   }
 }
 
-export default SmallMenu;
+export default connect()(SmallMenu);

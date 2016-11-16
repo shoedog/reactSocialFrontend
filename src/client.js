@@ -1,11 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import App from './Containers/App/App';
 
 import routes from './routes'
 import configureStore from './configureStore';
@@ -18,7 +17,7 @@ const preloadedState = window.__PRELOADED_STATE__;
 // Async and other middleware applied in store
 const store = configureStore(preloadedState);
 
-/**<Route path="/(:filter)" component={App}/>
+/**
  * Render
  * @param {Object} store - this applies the store
  * @param {Object} history - this applies the history
@@ -26,8 +25,7 @@ const store = configureStore(preloadedState);
 render(
   <MuiThemeProvider muiTheme={ getMuiTheme({lightBaseTheme, userAgent: navigator.userAgent}) }>
     <Provider store={store}>
-      <Router history={browserHistory} routes={routes} >
-      </Router>
+      <Router history={browserHistory} routes={routes} />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
