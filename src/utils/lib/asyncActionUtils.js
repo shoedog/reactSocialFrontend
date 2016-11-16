@@ -22,7 +22,7 @@ export const startAction = (type) => () => ({
  * Returns a payload from the response that has any data
  * Returns meta: done = true : This notifies that the action completed
  */
-export const successAction = (type) => (payload) => ({
+export const successAction = (type, route) => (payload) => ({
   type,
   payload,
   meta: {
@@ -36,7 +36,7 @@ export const successAction = (type) => (payload) => ({
  * Returns a payload from the response that has the error
  * Returns meta: done = true : This notifies that the action completed
  */
-export const failureAction = (type) => (error) => ({
+export const failureAction = (type, route) => (error) => ({
   type,
   payload: error,
   error: true,

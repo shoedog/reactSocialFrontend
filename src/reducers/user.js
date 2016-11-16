@@ -1,6 +1,6 @@
 import {
-  OPEN_PROFILE, CLOSE_PROFILE, UPDATE_USER,
-  REGISTER_USER, LOGOUT, SET_TOKEN, DISCARD_TOKEN
+   UPDATE_USER, LOGOUT, AUTH_PENDING,
+    AUTH_SUCCESS, AUTH_FAILURE
 } from '../actions/user';
 import { dissoc, without, merge, prepend } from 'ramda';
 
@@ -21,9 +21,8 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
       };
 
 
-      // saves the token into the state
-    case 'registerUserServer':
-    case 'loginUser':
+      // saves the token into the redux store && session storage
+    case AUTH_SUCCESS:
       if ( meta.done && !error) {
           if (payload.token) {
             sessionStorage.setItem('token', payload.token);
@@ -32,14 +31,18 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
         return merge(state, {
           token: payload.token,
           user: payload.user,
-        } );
-      } else if ( meta.done && error ){
+        });
+      }
+      return state;
+
+    // Saves error in redux store to display to user
+    case AUTH_FAILURE:
+      if ( meta.done && error ){
         return merge(state, {
           error: payload.error
-        } );
-      } else {
-        return state;
+        });
       }
+      return state;
 
     // discards the current token & profile (logout)
     case LOGOUT:
@@ -62,3 +65,17 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
       return state;
   }
 };
+
+export const requests = ( state = {},  {type, payload, route }) => {
+  switch (type) {
+    case AUTH_PENDING:
+      return merge(state, { route: { status: 'pending', error: null}});
+    case AUTH_SUCCESS:
+      return merge(state, { route: { status: 'success', error: null}});
+    case AUTH_FAILURE:
+      return merge(state, { route: { status: 'failure', error: payload.error}});
+    default:
+      return state;
+  }
+};
+

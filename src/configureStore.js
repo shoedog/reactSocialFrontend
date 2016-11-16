@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import thunk from 'redux-thunk';
+import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from './rootReducer';
 
 // This lets us use Redux Dev Tools
@@ -18,7 +19,7 @@ const composeEnhancers = composeWithDevTools(
 
 // We just wrap applyMiddleware in the enhancer instead of putting applyMiddleware directly in the reducer
 const enhancer = composeEnhancers(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, promiseMiddleware()),
     // other store enhancers if any
 );
 

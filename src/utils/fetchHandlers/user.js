@@ -37,15 +37,7 @@ export default {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: JSON.stringify({ username, email, password }),
         }
-      ).then( (res) => {
-        if (res.token) {
-          sessionStorage.setItem('token', res.token);
-          sessionStorage.setItem('username', res.user.displayName);
-          const token = sessionStorage.getItem('token');
-          const user = sessionStorage.getItem('username');
-          window.location.href="/stream";
-        }
-      })
+      )
     },
 
     login(username, password) {
@@ -58,8 +50,6 @@ export default {
         }
       )
     },
-
-
 
     fetch(username) {
       return fetchJson(`http://54.212.196.159:5000/user/${username}`)

@@ -41,9 +41,15 @@ class NavBar extends React.Component {
     if(this.state.windowWidth > 600 && getSessionItem('username') == false) {
       return (
         <div>
-          <FlatButton label="About" href="/about" />
-          <FlatButton label="Contact" href="/contact"  />
-          <FlatButton label="Stream" href="/stream"  />
+            <Link to="/about">
+                <FlatButton label="About" />
+            </Link>
+            <Link to="/contact">
+                <FlatButton label="Contact" />
+            </Link>
+            <Link to="/stream">
+                <FlatButton label="Stream" />
+            </Link>
           <IconButton iconClassName="muidocs-icon-custom-github" href="https://github.com/andrew310/cs419-frontend" tooltip="Frontend" />
        </div>
     );} else {

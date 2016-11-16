@@ -1,45 +1,17 @@
+import { browserHistory } from 'react-router';
 import userApi from '../utils/fetchHandlers/user';
 import { startAction, successAction,
   failureAction, asyncAction } from '../utils/lib/asyncActionUtils';
 import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
-export const OPEN_PROFILE = 'OPEN_PROFILE';
-export const CLOSE_PROFILE = 'CLOSE_PROFILE';
 export const UPDATE_USER = 'UPDATE_PROFILE';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT = 'LOGOUT';
-export const SET_TOKEN = 'SET_TOKEN';
-export const DISCARD_TOKEN = 'DISCARD_TOKEN';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-
-// Synchronous local action: opens a specific item
-export const openProfile = (id: '') => ({
-  type: OPEN_PROFILE,
-  payload: { id },
-});
-
-// Synchronous local action: closes a specific item
-export const closeProfile = () => ({
-  type: CLOSE_PROFILE,
-});
-
-// Synchronous local action: updates an item locally
-export const updateUser = (profile, id) => ({
-  type: UPDATE_USER,
-  payload: {
-    id,
-    profile,
-  },
-});
-
-// Synchronous local action: updates an item locally
-export const registerUser = (email, password) => ({
-  type: REGISTER_USER,
-  payload: {
-    email,
-    password,
-  },
-});
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_PENDING = 'LOGIN_PENDING';
+export const AUTH_FAILURE = 'LOGIN_FAILURE';
+export const ROUTE_TO = 'ROUTE_TO';
+export const LOGIN = 'LOGIN';
 
 export const logout = (router) => {
   return (dispatch) => {
@@ -49,19 +21,62 @@ export const logout = (router) => {
   }
 };
 
-export const loginSuccess = (router) => {
-  return (dispatch) => {
-    dispatch({ type: LOGIN_SUCCESS });
-    router.transitionTo(['/stream', { redirectTo: stringifyLocation(router.state.location)}]);
+// Synchronous local action: updates an item locally
+export const registerUserServer = (username, email, password) => {
+  return dispatch => {
+    return dispatch({
+      type: 'REGISTER_USER',
+      payload: userApi.USER.register(username, email, password),
+    }).then( ({ value, action}) => {
+      console.log(value);
+      console.log(action.type);
+      if( action.type === 'REGISTER_USER_FULFILLED'){
+        dispatch(authSuccess(value));
+        browserHistory.push( '/newUserSetup');
+      } else if ( action.type === 'LOGIN_REJECTED'){
+        dispatch(authFailure(value));
+      }
+    });
   }
 };
 
-export const setToken = (token) => {
-  return {
-    type: SET_TOKEN,
-    token
+export const loginUser = (username, password) => {
+  return dispatch => {
+    return dispatch({
+      type: 'LOGIN',
+      payload: userApi.USER.login(username, password)
+    }).then( ({ value, action}) => {
+        console.log(value);
+        console.log(action.type);
+      if( action.type === 'LOGIN_FULFILLED'){
+        dispatch(authSuccess(value));
+        browserHistory.push('/stream');
+      } else if ( action.type === 'LOGIN_REJECTED'){
+        dispatch(authFailure(value));
+      }
+    });
   }
 };
+
+export const authSuccess = (payload) => ({
+  type: AUTH_SUCCESS,
+  payload,
+  meta: {
+    done: true,
+  },
+});
+
+
+export const authFailure = (payload) => ({
+  type: AUTH_FAILURE,
+  error: true,
+  payload,
+  meta: {
+    done: true,
+  }
+
+});
+
 
 /**
  * Fetch Feed Items from server: GET
@@ -85,9 +100,10 @@ export const fetchUserProfile = asyncAction({
  * Action Type, start, success, failure, and async actions
  * using helpers from asyncActionUtils.js
  */
+/*
 const registerUserServerType = 'registerUserServer';
 export const registerUserServerStart = startAction(registerUserServerType);
-export const registerUserServerSuccess = successAction(registerUserServerType);
+export const registerUserServerSuccess = successAction(registerUserServerType)
 export const registerUserServerFailure = failureAction(registerUserServerType);
 export const registerUserServer = asyncAction({
   func: (username, email, password) => userApi.USER.register(username, email, password),
@@ -95,12 +111,14 @@ export const registerUserServer = asyncAction({
   success: registerUserServerSuccess,
   failure: registerUserServerFailure,
 });
+ */
 
 /**
  * Login : POST
  * Action Type, start, success, failure, and async actions
  * using helpers from asyncActionUtils.js
  */
+/*
 const loginUserType = 'loginUser';
 export const loginUserStart = startAction(loginUserType);
 export const loginUserSuccess = successAction(loginUserType);
@@ -110,7 +128,7 @@ export const loginUser = asyncAction({
   start: loginUserStart,
   success: loginUserSuccess,
   failure: loginUserFailure,
-});
+});*/
 
 
 /**
