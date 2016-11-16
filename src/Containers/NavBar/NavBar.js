@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { IndexLink, Link } from 'react-router';
+import { IndexLink, Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import {AppBar, FlatButton, IconButton} from 'material-ui';
 import SmallMenu from './SmallMenu';
@@ -30,7 +30,7 @@ class NavBar extends React.Component {
 
   // logo takes user to home page
   handleLogoTouchTap () {
-    window.location.href="/";
+      browserHistory.push('/login');
   }
 
   // whether to show buttons or small menu
@@ -64,7 +64,7 @@ class NavBar extends React.Component {
 
     return (
       <AppBar
-        title = {<FlatButton label="Moonwalk" href="/" />}
+        title = {<Link to="/login"> <FlatButton label="Moonwalk"/> </Link>}
         iconElementRight= {
           <div>
           {getWindow}

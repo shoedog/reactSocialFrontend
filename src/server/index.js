@@ -73,7 +73,7 @@ app.get('/auth/twitter/callback',
 app.use('/feedItems', router);
 
 // Append view routes here i.e. routes from routes.js
-app.get(['/', '/login', '/about', '/stream'], render);
+app.get(['/'], render);
 
 // 404 Page
 app.get('*', render);
