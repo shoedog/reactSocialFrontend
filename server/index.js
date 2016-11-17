@@ -72,7 +72,7 @@ app.get('/auth/twitter/callback',
 
 app.use('/feedItems', router);
 
-// Append view routes here i.e. routes from routes.js
+// Mounting for SSR
 app.get(['/'], render);
 
 // 404 Page

@@ -11,7 +11,7 @@ const serverConfig = {
   target: 'node',
   externals: [nodeExternals()],
   entry: [
-    './src/server/index.js'
+    './server/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'public/static/dist/'),

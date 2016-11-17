@@ -15,7 +15,7 @@ export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
 
 export const registerRequest = () => ({
   type: REGISTER_REQUEST,
-  user
+  //user
 })
 
 export const registerSuccess = () => ({
@@ -29,7 +29,7 @@ export const registerFailure = (error) => ({
 
 export const loginRequest = () => ({
   type: LOGIN_REQUEST,
-  user
+  //user
 })
 
 export const loginSuccess = (token) => ({
@@ -60,10 +60,7 @@ export const logout = (router, token) => {
   }
 }
 
-const saveAuthToken = (token) => {
-  type: SAVE_AUTH_TOKEN
-  token: token //should we save in cookie or somewhere else?
-}
+
 
 export function requestUserRegister(user) {
   return function (dispatch) {
@@ -97,7 +94,7 @@ export function requestUserRegister(user) {
 
 export function login(email, password, router) {
   return function (dispatch) {
-    dispatch(loginRequest(user))
+    dispatch(loginRequest())
 
     return axios.post('/login', {
       auth: {

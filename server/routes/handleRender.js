@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 //import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import configureStore from '../../configureStore';
-import ReactDOMServer from 'react-dom/server';
-import routes from '../../routes';
+import configureStore from '../../src/configureStore';
+import { renderToString } from 'react-dom/server';
+import routes from '../../src/routes';
 import setMuiTheme from '../setMuiTheme';
 
 function render(req, res, next) {
@@ -38,7 +38,7 @@ function handleRender(req, res, renderProps) {
 
   //const store = configureStore();
   // console.log(`\n\nRENDERTOSTRING \n\n`);
-  const html = ReactDOMServer.renderToString(
+  const html = renderToString(
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <RouterContext {...renderProps} />
