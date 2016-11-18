@@ -3,24 +3,17 @@ import {
     AUTH_SUCCESS, AUTH_FAILURE
 } from '../actions/user';
 import { dissoc, without, merge, prepend } from 'ramda';
-
-import { ROUTER_STATE_CHANGE } from '../actions/router';
+import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
 const initialState = {
   error: null, // last occurred error
   token: null,
-  user: null,
+  userObj: null,
+  displayName: null,
 };
 
 export const user = (state = initialState, { type, payload, meta, error }) => {
   switch(type){
-    case ROUTER_STATE_CHANGE:
-      return {
-        ...state,
-        error: null
-      };
-
-
       // saves the token into the redux store && session storage
     case AUTH_SUCCESS:
       if ( meta.done && !error) {
@@ -30,7 +23,8 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
           }
         return merge(state, {
           token: payload.token,
-          user: payload.user,
+          userObj: payload.user,
+          displayName: payload.user.displayName,
         });
       }
       return state;
@@ -46,6 +40,7 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
 
     // discards the current token & profile (logout)
     case LOGOUT:
+      eraseStorage();
       return { ...initialState };
 
 

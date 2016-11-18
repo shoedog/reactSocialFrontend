@@ -1,16 +1,58 @@
 'use strict';
-import React from 'react';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import { getSessionItem } from '../../utils/lib/sessionUtils';
 import { loginUser } from '../../actions/user';
 import { connect } from 'react-redux';
 
+class SmallMenu extends Component {
+  render() {
+    const { user, onLogoutClick } = this.props;
+    console.log(user);
+    if( user != null)
+      return (
 
+          <IconMenu
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem children={<Subheader children={user}/>}/>
+            <Divider />
+            <MenuItem primaryText="Profile"/>
+            <MenuItem primaryText="Sign out" onClick={onLogoutClick}
+                      containerElement={<Link to="/login"/>}/>
+          </IconMenu>
+    );
+    else
+      return (
+          <IconMenu
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Sign In or Sign Up"
+                      containerElement={<Link to="/login"/>}/>
+            <MenuItem primaryText="About"
+                      containerElement={<Link to="/about"/>}/>
+            <MenuItem primaryText="Contact"
+                      containerElement={<Link to="/contact"/>}/>
+
+          </IconMenu>
+      );
+  }
+};
+
+export default SmallMenu;
+
+
+/*
 class SmallMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +67,9 @@ class SmallMenu extends React.Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  /**
-   * Displays different menu according to whether user is logged in.
-   */
+
+   // Displays different menu according to whether user is logged in.
+
 
   // TODO: change to listen to redux
   getUser() {
@@ -68,3 +110,4 @@ class SmallMenu extends React.Component {
 }
 
 export default connect()(SmallMenu);
+*/

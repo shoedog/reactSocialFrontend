@@ -27,7 +27,7 @@ export function getSessionItem(item) {
 
 // If session storage is available, delete item
 export function removeFromStorage(item) {
-    if (checkSession) {
+    if ( typeof(sessionStorage) != 'undefined') {
         sessionStorage.removeItem(item);
     } else {
         return false;
@@ -36,7 +36,7 @@ export function removeFromStorage(item) {
 
 // If session storage is available, erase all items in storage
 export function eraseStorage() {
-    if (checkSession) {
+    if ( typeof(localStorage) != 'undefined') {
         sessionStorage.clear();
     } else {
         return false;

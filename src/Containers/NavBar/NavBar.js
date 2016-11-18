@@ -1,10 +1,35 @@
 import React, { PropTypes } from 'react';
 import { IndexLink, Link, browserHistory } from 'react-router';
-import { connect } from 'react-redux';
 import {AppBar, FlatButton, IconButton} from 'material-ui';
 import SmallMenu from './SmallMenu';
-import { getSessionItem } from '../../utils/lib/sessionUtils';
 
+const NavBar = (props) => {
+    const { username, windowWidth, onLogoutClick } = props;
+    //console.log(username);
+    //console.log(windowWidth);
+
+    return (
+        <AppBar
+            title = {<Link to="/login"> <FlatButton label="Moonwalk"/> </Link>}
+            iconElementRight= {
+                ( windowWidth > 600 && username == null ) ?
+                    <div>
+                        <Link to="/about"><FlatButton label="About" /></Link>
+                        <Link to="/contact"><FlatButton label="Contact" /></Link>
+                        <Link to="/stream"><FlatButton label="Stream" /></Link>
+                    </div> :
+                    <div>
+                        <SmallMenu user={username} onLogoutClick={onLogoutClick}/>
+                    </div>
+            }
+        />
+    );
+};
+
+export default NavBar;
+
+/* refactored to handle window size in App component & pass username prop down from
+// redux store
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +85,8 @@ class NavBar extends React.Component {
   }
 
   render () {
-    const getWindow = this.getWindow();
+    //const getWindow = this.getWindow();
+    //const { user.token, user.user } = this.props;
 
     return (
       <AppBar
@@ -74,8 +100,6 @@ class NavBar extends React.Component {
     );
   } // end of render
 } // end of class
+*/
 
 
-
-
-export default NavBar;

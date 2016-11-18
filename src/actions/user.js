@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 import userApi from '../utils/fetchHandlers/user';
 import { startAction, successAction,
   failureAction, asyncAction } from '../utils/lib/asyncActionUtils';
-import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
+//import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
 export const UPDATE_USER = 'UPDATE_PROFILE';
 export const REGISTER_USER = 'REGISTER_USER';
@@ -13,13 +13,9 @@ export const AUTH_FAILURE = 'LOGIN_FAILURE';
 export const ROUTE_TO = 'ROUTE_TO';
 export const LOGIN = 'LOGIN';
 
-export const logout = (router) => {
-  return (dispatch) => {
-    eraseStorage();
-    dispatch({ type: LOGOUT });
-    router.transitionTo(['/login', { redirectTo: stringifyLocation(router.state.location)}]);
-  }
-};
+export const logout = () => ({
+  type: LOGOUT
+});
 
 // Synchronous local action: updates an item locally
 export const registerUserServer = (username, email, password) => {
