@@ -1,5 +1,5 @@
 import React from 'react';
-import style from '../StreamList/stream.css';
+import s from '../StreamList/stream.css';
 
 const StreamContent = (props) => {
 	return(
@@ -8,7 +8,7 @@ const StreamContent = (props) => {
 			<p>Fill with input from social feed</p>
 		</div>
 	);
-}
+};
 
 
 export default StreamContent;

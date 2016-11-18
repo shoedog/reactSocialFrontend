@@ -19,7 +19,7 @@ var clientConfig = {
   output: {
     path: path.resolve(__dirname, 'public/static/dist/'),
     filename: 'client.js',
-    publicPath: '/',
+    publicPath: 'http://localhost:8000/',
   },
 
   resolve: {

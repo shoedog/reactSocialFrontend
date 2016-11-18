@@ -129,7 +129,7 @@
     "build:devServer": "cross-env NODE_ENV=development webpack -d --config webpack.serverConfig.js",
     "dev:api": "cross-env NODE_ENV=development nodemon --exec babel-node ../cs419-backend/index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./public/static/dist/server.js",
-    "build:client": "cross-env NODE_ENV='production' webpack -p --config webpack.config.js",
+    "build:client": "cross-env NODE_ENV='production' webpack -p --config webpack.config.js --output-public-path /",
     "build:server": "cross-env NODE_ENV='production' webpack -p --config webpack.serverConfig.js",
     "esdoc": "esdoc -c ./tools/esdoc.json && open ./docs/esdoc/index.html",
     "eslint": "eslint -c .eslintrc src",
