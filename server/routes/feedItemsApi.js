@@ -11,14 +11,24 @@ export const getFeed = (req, res) => {
       return pres.json();
     })
     .then( (data) => {
-      var body = data.map((json) => {
+      /*var body = data.map((json) => {
+        return JSON.parse(json);
         var rObj = {};
-        var obj = JSON.parse(json);
+        rObj['id'] = obj.id_str;
+        rObj[obj] = obj;
+
         rObj['id'] = obj.id_str;
         rObj['content'] = obj.text;
+        rObj['tweeter'] = obj.user;
+        rObj['profileImage'] = obj.profile_image_url;
+        rObj['favCount'] = obj.favorite_count;
+        rObj['retweetCount'] = obj.retweet_count;
+        rObj['retweeted'] = obj.retweeted;
+        rObj['favorited'] = obj.favorited;
         return rObj;
-      });
-      res.send(body);
+       return obj;
+      });*/
+      res.send(data);
     })
     .catch( (err) => {
       console.log(err);

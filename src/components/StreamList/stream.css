@@ -6,7 +6,7 @@ div.Stream {
 
 .paperBlock {
     align-self: center;
-    text-align: center;
+    /*text-align: center;*/
     padding: 20px;
     margin: 100px;
 }
@@ -18,13 +18,24 @@ div.Stream {
 }
 
 .gridList {
-    width: 500;
-    height: 450;
+    width: 500px;
+    height: 450px;
     overflow-y: auto;
+
 }
 
 .gridTile{
     background-color: lightblue;
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+}
+
+
+.avatar {
+    text-align: left;
+    margin-left: -7px;
+
 }
 /*div.Stream > h1 {
     text-align: center;

@@ -2,7 +2,10 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/stream';
 import * as selectors from '../../utils/lib/selectors';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
+import Avatar from 'material-ui/Avatar';
 import { GridList, GridTile } from 'material-ui';
 import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
@@ -31,6 +34,24 @@ class StreamList extends Component {
 		// console.log(this.props.fetchFeedItems());
 	}
 
+	getText(tweet) {
+		if ( tweet.extended_tweet ){
+			return tweet.extended_tweet.full_text;
+		} else if ( tweet.retweeted_status ) {
+			if ( tweet.retweeted_status.extended_tweet ){
+				return tweet.retweeted_status.extended_tweet.full_text;
+			}
+			return tweet.retweeted_status.text;
+		}
+		return tweet.text;
+	}
+
+	getImgs(tweet) {
+		if (tweet.entities.media ) {
+			return tweet.entities.media[0].media_url;
+		}
+	}
+
 	render() {
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
@@ -43,25 +64,48 @@ class StreamList extends Component {
 						<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
 					</div><br/>
 
-					<GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
+
+
 						{
 							( feedItems.length === 0) ? 
 									<div>No Content...</div>
-							: feedItems.map( (tile) =>(
-								<GridTile 
-									className={s.gridTile}
-									title={tile.id}
-									actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-								>
-									{tile.content}
-								</GridTile>
-						))}
-					</GridList>
+							:
+
+								<GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
+									{feedItems.map((tile) => (
+										<GridTile
+											key={tile.id.toString()}
+											className={s.gridTile}
+											title={<span className={s.avatar}><Avatar src={tile.user.profile_image_url}/>{tile.user.screen_name}</span>}
+											actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+										>
+											{this.getText(tile)}
+											<img src={this.getImgs(tile)}/>
+										</GridTile>
+									))}
+								</GridList>
+
+						}
+
 				</Paper>
 			</div>			
 		);
 	}
 }
+
+/*
+ <GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
+ {feedItems.map((tile) => (
+ <GridTile
+ key={tile.id}
+ className={s.gridTile}
+ title={tile.screen_name}
+ actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+ >
+ {tile.text}
+ </GridTile>
+ ))}</GridList>
+ */
 
 StreamList.propTypes = {
 	feedItems: PropTypes.arrayOf(PropTypes.shape({

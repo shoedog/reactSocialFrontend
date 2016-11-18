@@ -8,11 +8,8 @@ const feedItems = new Schema('feedItems');
 // We can do it here or on server
 export const objConvert = (data) => {
   return data.map((json) => {
-    var rObj = {};
-    var obj = JSON.parse(json);
-    rObj['id'] = obj.id_str;
-    rObj['content'] = obj.text;
-    return rObj;
+    let obj = JSON.parse(json);
+    return obj;
   });
 };
 
@@ -30,7 +27,7 @@ export default {
     fetchFeed() {
       console.log('fetch');
       return fetchJson('/feedItems')
-        //.then(objConvert)
+        .then(objConvert)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);
     },
