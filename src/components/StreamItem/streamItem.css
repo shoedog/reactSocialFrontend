@@ -1,0 +1,7 @@
+.paper {
+    height: 100px !important;
+    width: 100px !important;
+    margin: 20px !important;
+    text-align: left !important;
+    display: inline-block !important;
+}

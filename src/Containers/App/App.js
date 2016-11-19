@@ -55,7 +55,6 @@ const propTypes = {
 };
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         user: state.user,
     }

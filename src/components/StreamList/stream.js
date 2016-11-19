@@ -20,7 +20,7 @@ class StreamList extends Component {
 		isToggleOn: false
 	};
 
-		//this.handleToggle = this.handleToggle.bind(this)
+	//this.handleToggle = this.handleToggle.bind(this)
 
 	handleToggle(){
 		this.setState(prevState => ({
@@ -47,41 +47,50 @@ class StreamList extends Component {
 	}
 
 	getImgs(tweet) {
-		if (tweet.entities.media ) {
-			return tweet.entities.media[0].media_url;
+		if (tweet.entities.media) {
+			var imgs = tweet.entities.media.filter((media) => {
+					return (media.media_url + ':medium');
+			});
+			return imgs;
 		}
 	}
 
 	render() {
+		const paper = {
+			marginTop: 15,
+			marginRight: 0,
+			minWidth: 643,
+		};
+
+		const streamItem = {
+			minHeight: 200,
+			minWidth: 300,
+			margin: 10,
+		};
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
 		return(
 			<div>
-				<Paper className={s.paperBlock}>
+				<Paper className={s.paperBlock} style={paper}>
 					<h1 className={s.title}>User Stream</h1>
 		
 					<div className={s.StreamContent}>
 						<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
 					</div><br/>
-
-
-
 						{
 							( feedItems.length === 0) ? 
 									<div>No Content...</div>
 							:
-
-								<GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
+								<GridList cellHeight='auto' className={s.gridList} padding={10} cols={2}>
 									{feedItems.map((tile) => (
-										<GridTile
-											key={tile.id.toString()}
-											className={s.gridTile}
-											title={<span className={s.avatar}><Avatar src={tile.user.profile_image_url}/>{tile.user.screen_name}</span>}
-											actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-										>
-											{this.getText(tile)}
-											<img src={this.getImgs(tile)}/>
-										</GridTile>
+
+										<StreamItem key={tile.id_str}
+											friend={tile.user.screen_name}
+											avatarImg={tile.user.profile_image_url}
+											textContent={this.getText(tile)}
+											imgs={this.getImgs(tile)}
+										/>
+
 									))}
 								</GridList>
 
@@ -94,18 +103,17 @@ class StreamList extends Component {
 }
 
 /*
- <GridList cellHeight={180} className={s.gridList} padding={10} cols={3}>
- {feedItems.map((tile) => (
  <GridTile
- key={tile.id}
+ key={tile.id.toString()}
  className={s.gridTile}
- title={tile.screen_name}
+ title={<span className={s.avatar}><Avatar src={tile.user.profile_image_url}/>{tile.user.screen_name}</span>}
  actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
  >
- {tile.text}
+ {this.getText(tile)}
+ <img src={this.getImgs(tile)}/>
  </GridTile>
- ))}</GridList>
  */
+
 
 StreamList.propTypes = {
 	feedItems: PropTypes.arrayOf(PropTypes.shape({

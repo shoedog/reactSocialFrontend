@@ -34,7 +34,6 @@ class Home extends Component {
     const { loginUser, registerUserServer } = this.props;
 
     return (
-      <div>
       <Paper className={s.paperBlock}>
         <Tabs >
 
@@ -48,7 +47,6 @@ class Home extends Component {
 
         </Tabs>
       </Paper>
-      </div>
     );
   }
 }

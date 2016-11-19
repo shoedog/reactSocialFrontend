@@ -21,6 +21,9 @@ app.use('/static', express.static('/public/static'));
 app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
 
+// Mounting for SSR
+app.get(['/'], render);
+
 // Social Routes
 //socialRoutes(app, passport);
 
@@ -71,9 +74,6 @@ app.get('/auth/twitter/callback',
     }));
 
 app.use('/feedItems', router);
-
-// Mounting for SSR
-app.get(['/'], render);
 
 // 404 Page
 app.get('*', render);

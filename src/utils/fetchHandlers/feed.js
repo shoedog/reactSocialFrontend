@@ -26,7 +26,7 @@ export default {
   feedItems: {
     fetchFeed() {
       console.log('fetch');
-      return fetchJson('/feedItems')
+      return fetchJson('http://0.0.0.0:5000/social/feed')
         .then(objConvert)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);

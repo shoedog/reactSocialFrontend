@@ -1,16 +1,21 @@
-import fs from 'fs';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryHistory, match, RouterContext } from 'react-router';
-//import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { match, RouterContext } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import configureStore from '../../src/configureStore';
 import { renderToString } from 'react-dom/server';
 import routes from '../../src/routes';
 import setMuiTheme from '../setMuiTheme';
 
+/**
+ * render()
+ *  Main render controller called from index.js
+ *  Calls match() from react-router then passes control to handleRender()
+ * @param req
+ * @param res
+ * @param next
+ */
 function render(req, res, next) {
-  // See react-router docs: match() for documentation
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
       return res.status(500).send(error.message);
@@ -24,20 +29,25 @@ function render(req, res, next) {
   });
 }
 
+/**
+ * handleRender(req, res, renderProps)
+ *  Initializes rendering of React-Redux, & Material-UI
+ *    - sets navigator and muiTheme for material-ui
+ *    - creates initial store
+ *    - creates initial html with renderToString
+ *    - fills any state with store.getState()
+ *    - calls renderFullPage(html, state) to send assets and rendered output to client
+ * @param req
+ * @param res
+ * @param renderProps
+ */
 function handleRender(req, res, renderProps) {
   global.navigator = {
     userAgent: req.headers['user-agent']
-    //console.log(`>>> navigator.userAgent: ${navigator.userAgent}`)
   };
-
-  // For SSR we need to set the CSS/Theming of Components here
   const muiTheme = setMuiTheme(req.headers['user-agent']);
 
-  // Async middleware applied same as in client except without initial State
   const store = configureStore();
-
-  //const store = configureStore();
-  // console.log(`\n\nRENDERTOSTRING \n\n`);
   const html = renderToString(
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
@@ -45,26 +55,21 @@ function handleRender(req, res, renderProps) {
       </Provider>
     </MuiThemeProvider>
   );
-
   const preloadedState = store.getState();
   res.send(renderFullPage(html, preloadedState));
-/*  const strState = JSON.stringify(initialState);
-
-  fs.readFile('./public/static/index.html', 'utf8', function (err, file) {
-    if (err) {
-      return console.log(err);
-    }
-    let document = file.replace(/<div id="root"><\/div>/, `<div id="root">${html}</div>`);
-    document = document.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${strState}</script>`);
-    if(process.env.NODE_ENV === 'development') {
-      document = document.replace(
-        /<script type="application\/javascript" src="\/client.js" async><\/script>/,
-        `<script type="application/javascript" src="http://localhost:8000/client.js" async></script>`);
-    }
-    res.send(document);
-  });*/
 }
 
+/**
+ * renderFullPage(html, preloadedState)
+ * HTML template string with:
+ *  - injected html -> <Material-UI><Provider><Router/></Provider></Material-UI>
+ *  - preloaded state
+ *  - client & css bundles
+ *  - other assets
+ * @param html
+ * @param preloadedState
+ * @returns {string}
+ */
 function renderFullPage(html, preloadedState) {
   return `
     <!doctype html>
