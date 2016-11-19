@@ -31,13 +31,13 @@ const header = {
 };
 
 const StreamItem = (props) => {
-    const { friend, avatarImg, textContent, imgs } = props;
-    console.log(imgs);
+    const { friend, avatarImg, textContent, imgs, gifs } = props;
+    console.log(friend);
 	return(
 			<Paper style={style} zDepth={1}>
                 <List style={list}>
                     <ListItem
-                        primaryText={friend}
+                        primaryText={<a target="_blank" href={"http://twitter.com/intent/user?screen_name=" + friend}>{'@' + friend}</a>}
                         leftAvatar={<Avatar style={avatar} src={avatarImg}></Avatar>}
                         style={header}
                     />
@@ -49,6 +49,14 @@ const StreamItem = (props) => {
                             :
                             imgs.map((image) => (
                                 <img className={{objectFit: 'contain'}} src={image.media_url + ':thumb'}/>
+
+                            ))
+                        }
+                        { typeof gifs === 'undefined' ?
+                            <span></span>
+                            :
+                            gifs.map((gif) => (
+                                <video autoPlay className={{objectFit: 'contain'}}><source src={gif.video_info.variants[0].url} type="video/mp4"/> </video>
 
                             ))
                         }

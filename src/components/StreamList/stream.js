@@ -47,11 +47,31 @@ class StreamList extends Component {
 	}
 
 	getImgs(tweet) {
-		if (tweet.entities.media) {
-			var imgs = tweet.entities.media.filter((media) => {
-					return (media.media_url + ':medium');
+		if ( tweet.extended_entities) {
+			let imgs = tweet.extended_entities.media.filter((media) => {
+				if ( media.type === 'photo'){
+					return media.media_url;
+				}
 			});
 			return imgs;
+		} else if (tweet.entitites) {
+			let imgs = tweet.entities.media.filter((media) => {
+				if ( media.type === 'photo') {
+					return media.media_url;
+				}
+			});
+			return imgs;
+		}
+	}
+
+	getGif(tweet) {
+		if (tweet.extended_entities) {
+			let gifs = tweet.extended_entities.media.filter((media) => {
+				if( media.type === 'animated_gif'){
+					return media.video_info.variants[0].url;
+				}
+			});
+			return gifs;
 		}
 	}
 
@@ -89,6 +109,7 @@ class StreamList extends Component {
 											avatarImg={tile.user.profile_image_url}
 											textContent={this.getText(tile)}
 											imgs={this.getImgs(tile)}
+											gifs={this.getGif(tile)}
 										/>
 
 									))}
