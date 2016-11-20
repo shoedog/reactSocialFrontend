@@ -12,7 +12,7 @@ const reducers = {
   requests: requests,
   byId: byId,
   ids: ids,
-  session: checkSession,
+  //session: checkSession,
   openFeedItemId: openFeedItemId
 };
 

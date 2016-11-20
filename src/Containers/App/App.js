@@ -21,11 +21,11 @@ class App extends Component {
         };
     }
     componentDidMount () {
+        let { checkSession } = this.props;
         window.addEventListener('resize', this.handleResize);
         const token = getSessionItem('token');
         const user = getSessionItem('username');
         if (token) {
-            console.log('checking');
           checkSession(token, user);
         }
 
@@ -69,12 +69,13 @@ function mapStateToProps(state) {
     }
 };
 
+/*
 const mapDispatchToProps = (dispatch) => {
   return {
       checkSession: bindActionCreators({checkSession}, dispatch),
       logout: bindActionCreators({logout}, dispatch)
   }
-};
+};*/
 
 // connect from react-redux attaches state & actions to props
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, {checkSession, logout})(App);

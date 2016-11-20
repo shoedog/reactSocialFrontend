@@ -16,7 +16,7 @@ function storageAvailable(type) {
 export function getSessionItem(item) {
     if ( typeof(localStorage) != 'undefined') {
         if( sessionStorage.getItem(item) != null ){
-            return true;
+            return sessionStorage.getItem(item)
         } else {
             return false;
         }
@@ -45,7 +45,7 @@ export function eraseStorage() {
 
 // If session storage is available, set item in storage
 export function populateStorage(item) {
-    if (checkSession) {
+    if ( typeof(sessionStorage) != 'undefined') {
         sessionStorage.setItem(item);
     } else {
         return false;

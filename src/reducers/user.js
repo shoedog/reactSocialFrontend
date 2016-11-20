@@ -13,22 +13,25 @@ const initialState = {
   displayName: null,
 };
 
+/*
 export const checkSession = (state = initialState, { type, user, token }) => {
   switch (type) {
-    case CHECK_SESSION:
-      return merge(state, {
-        displayName: user,
-        token: token
-      })
+
       break;
     default:
       return state;
   }
-};
+};*/
 
 export const user = (state = initialState, { type, payload, meta, error }) => {
   switch(type){
       // saves the token into the redux store && session storage
+    case CHECK_SESSION:
+      return merge(state, {
+        displayName: payload.user,
+        token: payload.token
+      })
+
     case AUTH_SUCCESS:
       if ( meta.done && !error) {
           if (payload.token) {
