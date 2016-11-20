@@ -37,11 +37,11 @@ export const registerUserServer = (username, email, password) => {
   }
 };
 
-export const checkSession = (token, user) => {
+export const checkSession = (token, user) => ({
   type: CHECK_SESSION,
   token,
   user
-};
+});
 
 export const loginUser = (username, password) => {
   return dispatch => {

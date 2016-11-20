@@ -15,12 +15,11 @@ const initialState = {
 
 export const checkSession = (state = initialState, { type, user, token }) => {
   switch (type) {
-    case GET_SESSION:
+    case CHECK_SESSION:
       return merge(state, {
         displayName: user,
         token: token
-      });
-      return state;
+      })
       break;
     default:
       return state;

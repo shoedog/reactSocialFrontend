@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import s from './App.css';
@@ -22,9 +23,10 @@ class App extends Component {
     componentDidMount () {
         window.addEventListener('resize', this.handleResize);
         const token = getSessionItem('token');
-        const user = getSessionItem('username')
+        const user = getSessionItem('username');
         if (token) {
-          this.props.dispatch(checkSession(user, token));
+            console.log('checking');
+          checkSession(token, user);
         }
 
     }
@@ -67,11 +69,12 @@ function mapStateToProps(state) {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch(checkSession(user, token))
-  };
+      checkSession: bindActionCreators({checkSession}, dispatch),
+      logout: bindActionCreators({logout}, dispatch)
+  }
 };
 
 // connect from react-redux attaches state & actions to props
-export default connect(mapStateToProps, mapDispatchToProps, {logout, checkSession})(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
