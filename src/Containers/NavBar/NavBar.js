@@ -15,7 +15,7 @@ const NavBar = (props) => {
                 ( windowWidth > 600 && username == null ) ?
                     <div>
                         <Link to="/about"><FlatButton label="About" /></Link>
-                        <Link to="/contact"><FlatButton label="Contact" /></Link>
+                        <Link to="/profile"><FlatButton label="Profile" /></Link>
                         <Link to="/stream"><FlatButton label="Stream" /></Link>
                     </div> :
                     <div>
@@ -101,5 +101,3 @@ class NavBar extends React.Component {
   } // end of render
 } // end of class
 */
-
-

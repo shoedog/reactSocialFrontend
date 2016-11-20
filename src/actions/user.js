@@ -12,6 +12,7 @@ export const AUTH_PENDING = 'LOGIN_PENDING';
 export const AUTH_FAILURE = 'LOGIN_FAILURE';
 export const ROUTE_TO = 'ROUTE_TO';
 export const LOGIN = 'LOGIN';
+export const CHECK_SESSION = 'CHECK_SESSION';
 
 export const logout = () => ({
   type: LOGOUT
@@ -34,6 +35,12 @@ export const registerUserServer = (username, email, password) => {
       }
     });
   }
+};
+
+export const checkSession = (token, user) => {
+  type: CHECK_SESSION,
+  token,
+  user
 };
 
 export const loginUser = (username, password) => {

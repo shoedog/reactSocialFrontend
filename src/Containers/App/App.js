@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import s from './App.css';
-import { logout } from '../../actions/user';
+import { logout, checkSession } from '../../actions/user';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { getSessionItem } from '../../utils/lib/sessionUtils';
 injectTapEventPlugin();
 
 /*
@@ -20,6 +21,12 @@ class App extends Component {
     }
     componentDidMount () {
         window.addEventListener('resize', this.handleResize);
+        const token = getSessionItem('token');
+        const user = getSessionItem('username')
+        if (token) {
+          this.props.dispatch(checkSession(user, token));
+        }
+
     }
 
     componentWillUnmount () {
@@ -60,5 +67,11 @@ function mapStateToProps(state) {
     }
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch(checkSession(user, token))
+  };
+};
+
 // connect from react-redux attaches state & actions to props
-export default connect(mapStateToProps, {logout})(App);
+export default connect(mapStateToProps, mapDispatchToProps, {logout, checkSession})(App);

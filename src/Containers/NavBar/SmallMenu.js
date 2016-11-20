@@ -25,7 +25,7 @@ class SmallMenu extends Component {
           >
             <MenuItem children={<Subheader children={user}/>}/>
             <Divider />
-            <MenuItem primaryText="Profile"/>
+            <MenuItem primaryText="Profile" containerElement={<Link to="/profile"/>}/>
             <MenuItem primaryText="Sign out" onClick={onLogoutClick}
                       containerElement={<Link to="/login"/>}/>
           </IconMenu>

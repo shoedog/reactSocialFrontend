@@ -1,6 +1,7 @@
 import {
    UPDATE_USER, LOGOUT, AUTH_PENDING,
-    AUTH_SUCCESS, AUTH_FAILURE
+    AUTH_SUCCESS, AUTH_FAILURE,
+    CHECK_SESSION
 } from '../actions/user';
 import { dissoc, without, merge, prepend } from 'ramda';
 import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
@@ -10,6 +11,20 @@ const initialState = {
   token: null,
   userObj: null,
   displayName: null,
+};
+
+export const checkSession = (state = initialState, { type, user, token }) => {
+  switch (type) {
+    case GET_SESSION:
+      return merge(state, {
+        displayName: user,
+        token: token
+      });
+      return state;
+      break;
+    default:
+      return state;
+  }
 };
 
 export const user = (state = initialState, { type, payload, meta, error }) => {
@@ -73,4 +88,3 @@ export const requests = ( state = {},  {type, payload, route }) => {
       return state;
   }
 };
-

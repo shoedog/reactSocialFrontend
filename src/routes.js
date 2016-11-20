@@ -6,6 +6,7 @@ import StreamList from './components/StreamList/stream';
 import Page404 from './components/Page404/Page404';
 import App from './Containers/App/App';
 import NewUserSetup from './components/NewUserSetup/NewUserSetup';
+import Profile from './components/profile';
 
 
 export default (
@@ -15,6 +16,7 @@ export default (
 		<Route name="about" path="about" component={About}/>
 		<Route name="stream" path="stream" component={StreamList}/>
 		<Route name="NewUserSetup" path="NewUserSetup" component={NewUserSetup}/>
+		<Route name="profile" path="profile" component ={Profile}/>
 		<Route name="404" path="*" component={Page404} />
 	</Route>
 );
@@ -29,4 +31,3 @@ export default (
 		<Route name="404" path="*" component={Page404} />
 	</Route>
 );*/
-
