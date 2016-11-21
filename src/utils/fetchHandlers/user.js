@@ -31,7 +31,7 @@ export default {
     register(username, email, password) {
       //console.log("req sent");
       return fetchJson(
-        'http://0.0.0.0:5000/user',
+        'http://localhost:5000/user',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -42,7 +42,7 @@ export default {
 
     login(username, password) {
       return fetchJson(
-        `http://0.0.0.0:5000/user/login`,
+        `http://localhost:5000/user/login`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -52,7 +52,7 @@ export default {
     },
 
     fetch(username) {
-      return fetchJson(`http://54.212.196.159:5000/user/${username}`)
+      return fetchJson(`http://localhost:5000/user/${username}`)
       //.then(objConvert)
         .then(normalizeUserData)
         .then(returnUserData);
@@ -60,7 +60,7 @@ export default {
 
     updateUser(username, userData) {
       return fetchJson(
-        `http://54.212.196.159:5000/user/${username}`,
+        `http://localhost:5000/user/${username}`,
         {
           method: 'PUT',
           body: JSON.stringify({ userData }),
@@ -69,7 +69,7 @@ export default {
     },
 
     delete(username) {
-      return fetch(`http://54.212.196.159:5000/user/${username}`,
+      return fetch(`http://localhost:5000/user/${username}`,
         {
           method: 'DELETE'
         })
