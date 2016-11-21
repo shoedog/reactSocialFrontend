@@ -37,11 +37,12 @@ export const registerUserServer = (username, email, password) => {
   }
 };
 
-export const checkSession = (token, user) => ({
+export const checkSession = (token, user, userId) => ({
   type: CHECK_SESSION,
   payload: {
     user: user,
-    token: token
+    token: token,
+    userId: userId
   }
 });
 

@@ -25,8 +25,9 @@ class App extends Component {
         window.addEventListener('resize', this.handleResize);
         const token = getSessionItem('token');
         const user = getSessionItem('username');
+        const userId = getSessionItem('userId');
         if (token) {
-          checkSession(token, user);
+          checkSession(token, user, userId);
         }
 
     }

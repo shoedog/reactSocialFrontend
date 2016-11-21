@@ -19,7 +19,8 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
     case CHECK_SESSION:
       return merge(state, {
         displayName: payload.user,
-        token: payload.token
+        token: payload.token,
+        userId: payload.userId
       })
 
     case AUTH_SUCCESS:
@@ -27,10 +28,11 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
           if (payload.token) {
             sessionStorage.setItem('token', payload.token);
             sessionStorage.setItem('username', payload.user.displayName);
+            sessionStorage.setItem('userId', payload.user._id);
           }
         return merge(state, {
           token: payload.token,
-          userObj: payload.user,
+          userId: payload.user._id,
           displayName: payload.user.displayName,
         });
       }

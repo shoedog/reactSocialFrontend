@@ -27,11 +27,16 @@ function mapStateToProps(state) {
 class CardExampleWithAvatar extends Component {
   constructor(props) {
     super(props);
+    this.connectTwitter = this.connectTwitter.bind(this);
+  }
+
+  connectTwitter() {
+    //console.log(this.props.user.userId)
+    window.location = `http://0.0.0.0:5000/social/connect/twitter?id=${this.props.user.userId}`
   }
 
   render() {
     const { user } = this.props;
-    console.log(user);
     return(
       <div style={style.container}>
         <Card style={style.card}>
@@ -43,7 +48,7 @@ class CardExampleWithAvatar extends Component {
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
           <CardActions>
-            <FlatButton label="Action1" />
+            <FlatButton label="Action1" onClick={this.connectTwitter}/>
             <FlatButton label="Action2" />
           </CardActions>
         </Card>
