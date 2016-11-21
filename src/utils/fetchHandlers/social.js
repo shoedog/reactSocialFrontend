@@ -19,7 +19,7 @@ export default {
         login(username, password) {
             var authToken = ``;
             return fetchJson(
-                `http://127.0.0.1:5000/user/twitter`,
+                `http://localhost:5000/user/twitter`,
                 {
                     method: 'POST',
                     body: JSON.stringify({ username, password }),
