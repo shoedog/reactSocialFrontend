@@ -25,8 +25,17 @@ export const returnFeedItemsAndIds = ({ entities: {feedItems}, result: feedItemI
 export default {
   feedItems: {
     fetchFeed() {
-      console.log('fetch');
-      return fetchJson('http://0.0.0.0:5000/social/feed')
+
+      let options = { method: 'GET'};
+      const loggedIn = sessionStorage.getItem('token');
+      const userId = sessionStorage.getItem('userId');
+      if (loggedIn) {
+        options.headers = {
+          Authorization: 'Bearer ' + loggedIn
+        }
+      }
+      console.log(userId);
+      return loggedIn ? fetchJson(`http://0.0.0.0:5000/social/feed/${userId}`, options) : fetchJson('http://0.0.0.0:5000/social/feed')
         .then(objConvert)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);

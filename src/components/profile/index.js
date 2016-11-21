@@ -28,6 +28,15 @@ class CardExampleWithAvatar extends Component {
   constructor(props) {
     super(props);
     this.connectTwitter = this.connectTwitter.bind(this);
+    this.removeTwitter = this.removeTwitter.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.location.query.twitter) {
+      console.log(this.props.location.query.twitter);
+      // TODO: set up endpoint to check if twitter handle exists
+      sessionStorage.setItem('twitter', this.props.location.query.twitter);
+    }
   }
 
   connectTwitter() {
@@ -35,12 +44,31 @@ class CardExampleWithAvatar extends Component {
     window.location = `http://0.0.0.0:5000/social/connect/twitter?id=${this.props.user.userId}`
   }
 
+  removeTwitter() {
+  fetch(`http://0.0.0.0:5000/social/remove/twitter?id=${this.props.user.userId}`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+      'Authorization': 'Bearer' + this.props.user.token
+    },
+    body: '' }
+  )
+  .then((response) => {
+    return response.json();
+  })
+  .then(
+    (result) => { window.location.href = 'http://0.0.0.0:3000/profile' },
+    (error) => { window.location.href = 'http://0.0.0.0:3000/profile' }
+  );
+  }
+
   render() {
     const { user } = this.props;
     return(
       <div style={style.container}>
         <Card style={style.card}>
-          <CardTitle title={user.displayName} subtitle="Card subtitle" />
+          <CardTitle title={user.displayName} />
           <CardText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
@@ -48,8 +76,8 @@ class CardExampleWithAvatar extends Component {
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
           <CardActions>
-            <FlatButton label="Action1" onClick={this.connectTwitter}/>
-            <FlatButton label="Action2" />
+            <FlatButton label="Connect Twitter" onClick={this.connectTwitter}/>
+            <FlatButton label="Remove Twitter" onClick={this.removeTwitter}/>
           </CardActions>
         </Card>
       </div>
