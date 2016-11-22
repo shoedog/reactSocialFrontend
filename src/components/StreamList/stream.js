@@ -87,38 +87,31 @@ class StreamList extends Component {
 			minWidth: 300,
 			margin: 10,
 		};
+
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
 		return(
-			<div>
 				<Paper className={s.paperBlock} style={paper}>
 					<h1 className={s.title}>User Stream</h1>
-		
-					<div className={s.StreamContent}>
-						<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
-					</div><br/>
-						{
-							( feedItems.length === 0) ? 
-									<div>No Content...</div>
-							:
-								<GridList cellHeight='auto' className={s.gridList} padding={10} cols={2}>
-									{feedItems.map((tile) => (
-
-										<StreamItem key={tile.id_str}
-											friend={tile.user.screen_name}
-											avatarImg={tile.user.profile_image_url}
-											textContent={this.getText(tile)}
-											imgs={this.getImgs(tile)}
-											gifs={this.getGif(tile)}
-										/>
-
-									))}
-								</GridList>
-
+					<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
+					<br/>
+					{
+						( feedItems.length === 0) ? 
+								<div>No Content...</div>
+						:
+							<GridList cellHeight='auto' style={{"width":"100%", "height":"100%"}} padding={10} cols={2}>
+								{feedItems.map((tile) => (
+									<StreamItem key={tile.id_str}
+										friend={tile.user.screen_name}
+										avatarImg={tile.user.profile_image_url}
+										textContent={this.getText(tile)}
+										imgs={this.getImgs(tile)}
+										gifs={this.getGif(tile)}
+									/>
+								))}
+							</GridList>
 						}
-
 				</Paper>
-			</div>			
 		);
 	}
 }
