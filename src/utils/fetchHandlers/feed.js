@@ -35,8 +35,9 @@ export default {
         }
       }
       console.log(userId);
-      return loggedIn ? fetchJson(`http://localhost:5000/social/feed/${userId}`, options) : fetchJson('http://localhost:5000/social/feed')
-        .then(objConvert)
+      // return loggedIn
+      // fetchJson('httplocalhost:5000/social/feed
+      return fetchJson(`http://localhost:5000/social/feed/${userId}`, options)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);
     },
