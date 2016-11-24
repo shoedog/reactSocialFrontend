@@ -6,7 +6,7 @@ import StreamList from './components/StreamList/stream';
 import Page404 from './components/Page404/Page404';
 import App from './Containers/App/App';
 import NewUserSetup from './components/NewUserSetup/NewUserSetup';
-import Profile from './components/profile';
+import Profile from './components/Profile/Profile';
 
 
 export default (

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { classNames } from 'classnames';
-import MaterialuiLogin        from '../HomeForms/Material-ui-Login';
-import MaterialuiRegister     from '../HomeForms/Material-ui-Register';
+import LoginForm        from '../HomeForms/LoginForm';
+import RegisterForm     from '../HomeForms/RegisterForm';
 import { bindActionCreators } from 'redux';
 import * as LaunchPageActions from '../../actions/LaunchPage';
 import { connect }            from 'react-redux';
@@ -38,11 +38,11 @@ class Home extends Component {
         <Tabs >
 
           <Tab label="Sign In" value="a">
-            <MaterialuiLogin loginUser={loginUser}/>
+            <LoginForm loginUser={loginUser}/>
           </Tab>
 
           <Tab label="Register" value="b">
-            <MaterialuiRegister registerUser={registerUserServer}/>
+            <RegisterForm registerUser={registerUserServer}/>
           </Tab>
 
         </Tabs>

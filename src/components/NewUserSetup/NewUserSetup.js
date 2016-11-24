@@ -12,6 +12,7 @@ class NewUserSetup extends Component {
       finished: false,
       stepIndex: 0
     };
+    this.onFinish = this.onFinish.bind(this);
   }
 
   handleNext = () => {
@@ -28,6 +29,11 @@ class NewUserSetup extends Component {
       this.setState({stepIndex: stepIndex - 1});
     }
   };
+
+  onFinish(e){
+    e.preventDefault();
+    this.context.router.push("/profile");
+  }
 
   getStepContent(stepIndex) {
     switch(stepIndex){
@@ -56,8 +62,12 @@ class NewUserSetup extends Component {
 
           </div>
           );
+      case 2:
+        return(
+          <div>"You're all done! Click Finish to begin connecting!"</div>
+          );
       default:
-        return "You're all done! Click Finish to begin connecting!";
+        return;
     }
   }
 
@@ -83,19 +93,8 @@ class NewUserSetup extends Component {
           </Stepper>
 
           <div>
-            {finished ? (
-              <p>
-                <a href="#"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      this.setState({stepIndex: 0, finished:false});
-                    }}
-                />
-                  COMPLETE!
-              </p>
-            ) : (
               <div>
-                <p>{this.getStepContent(stepIndex)}</p>
+                {this.getStepContent(stepIndex)}
                 <div>
                   <FlatButton
                     label="Back"
@@ -105,17 +104,19 @@ class NewUserSetup extends Component {
                   <RaisedButton
                     label={stepIndex === 2 ? 'Finish' : 'Next'}
                     primary = {true}
-                    onTouchTap={this.handleNext}
+                    onTouchTap={stepIndex === 2 ? this.onFinish : this.handleNext}
                   />
                 </div>
               </div>
-            )}
-
           </div>
         </Paper>
       </div>
     );
   }
+}
+
+NewUserSetup.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 
 export default NewUserSetup;

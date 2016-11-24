@@ -22,6 +22,15 @@ const validate = (values) => {
   if (values.password1 !== values.password2) {
     errors.password2 = 'Passwords Must Match!';
   }
+  // Validate Password Length
+  if (values.password1.length < 6){
+    errors.password1 = 'Password must be at least 6 characters long';
+  }
+  // Validate Password Length
+  if (values.password2.length < 6){
+    errors.password2 = 'Password must be at least 6 characters long';
+  }
+
   return errors;
 };
 
