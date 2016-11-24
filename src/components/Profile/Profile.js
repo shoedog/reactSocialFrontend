@@ -16,7 +16,17 @@ const style = {
     width: 'auto',
     margin: 'auto'
   },
+  card2: {
+    width: '40%',
+    margin: 'auto'
+  },
   container: {
+    display: 'block',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: "100%"
+  },
+  container2: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,12 +93,16 @@ class Profile extends Component {
       <h1>User Profile: {user.displayName}</h1>
       <div style={style.container}>
 
+
         <Card style={style.card}>
-          <CardTitle title="Link Social Media" />
-          <CardText>
+          <CardHeader title="Link Social Media"
+                      actAsExpander={true}
+                      showExpandableButton={true}
+                      titleColor="#00bcd4" />
+          <CardText expandable={true}>
             Select which Social Media platforms you'd like to link to your account:
           </CardText>
-          <CardActions>
+          <CardActions expandable={true}>
             <Table selectable={false}>
             <TableBody>
 
@@ -149,6 +163,40 @@ class Profile extends Component {
 
             </TableBody>           
             </Table>
+          </CardActions>
+        </Card>
+
+        <Card>
+          <CardHeader title="Account Settings"
+                      actAsExpander={true}
+                      showExpandableButton={true}
+                      titleColor="#00bcd4"/>
+
+          <CardText expandable={true}>
+            Profile settings here
+          </CardText>
+
+          <CardActions expandable={true}>
+            <div style={style.container2}>
+              <Card style={style.card2}>
+                <CardTitle title="Change Username"/>
+                <CardText>new card!</CardText>
+              </Card>
+              <Card style={style.card2}>
+                <CardTitle title="Change Email"/>
+                <CardText>new card!</CardText>
+              </Card>
+            </div><br />
+            <div style={style.container2}>
+              <Card style={style.card2}>
+                <CardTitle title="Change Password"/>
+                <CardText>new card!</CardText>
+              </Card>
+              <Card style={style.card2}>
+                <CardTitle title="Delete Account"/>
+                <CardText>new card!</CardText>
+              </Card>
+            </div>
           </CardActions>
         </Card>
       </div>
