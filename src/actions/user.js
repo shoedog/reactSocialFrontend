@@ -64,6 +64,27 @@ export const loginUser = (username, password) => {
   }
 };
 
+export const deleteAccount = (userId, userToken) => {
+  return dispatch => {
+    return dispatch({
+      type: 'DELETE',
+      payload: userApi.USER.delete(userId, userToken)
+    })
+    .then( ({value, action}) => {
+      console.log(value);
+      console.log(action);
+      if(action.type === 'DELETE_FULFILLED'){
+        browserHistory.push('/');
+        alert("Accounted Deleted!");
+      }
+    })
+    .catch( error => {
+      console.log(`Error: ${error}`);
+      alert(`Error: ${error}`);
+    })
+  }
+}
+
 export const authSuccess = (payload) => ({
   type: AUTH_SUCCESS,
   payload,

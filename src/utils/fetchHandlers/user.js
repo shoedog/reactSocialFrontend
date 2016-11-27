@@ -68,10 +68,15 @@ export default {
       );
     },
 
-    delete(userId) {
+    delete(userId, userToken) {
       return fetch(`http://localhost:5000/user/${userId}`,
         {
-          method: 'DELETE'
+          method: 'DELETE',
+          headers: {          
+            'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Authorization': 'Bearer' + userToken
+            }
         })
         .then(checkStatus)
         .then((res) => res.text());

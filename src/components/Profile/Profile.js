@@ -83,23 +83,8 @@ class Profile extends Component {
   onDelete(e){
     if( confirm("Are you sure you would like to Permanently DELETE your account?"))
     {
-      //this.props.deleteUser(this.props.user.userId);
-        fetch(`http://localhost:5000/user/${this.props.user.userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          'Authorization': 'Bearer' + this.props.user.token
-        },
-        body: '' }
-      )
-      .then((response) => {
-        return response.json();
-      })
-      .then(
-        (result) => { window.location.href = 'http://localhost:3000/', alert("Success!")},
-        (error) => { window.location.href = 'http://localhost:3000/', alert("Failure")}
-      );
+      this.props.deleteAccount(this.props.user.userId, this.props.user.token);
+      this.props.logout();
     }
    }
 
