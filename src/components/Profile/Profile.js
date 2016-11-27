@@ -81,7 +81,7 @@ class Profile extends Component {
   );
   }
 
-  onDelete(e){
+  onDelete(){
     if( confirm("Are you sure you would like to Permanently DELETE your account?"))
     {
       this.props.deleteAccount(this.props.user.userId, this.props.user.token);
@@ -92,7 +92,7 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props;
-    if(user.username != null)
+    if(user.userId != null)
       return(
 
         <Paper className={s.paperBlock}>
