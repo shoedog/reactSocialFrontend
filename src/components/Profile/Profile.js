@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/user';
 import s from './Profile.css';
@@ -7,7 +8,7 @@ import s from './Profile.css';
 import {Card, CardActions, CardHeader, 
         CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
+import {FlatButton} from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
@@ -91,128 +92,135 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props;
+    if(user.username != null)
+      return(
 
-    return(
-      <Paper className={s.paperBlock}>
-      <h1>User Profile: {user.displayName}</h1>
-      <div style={style.container}>
+        <Paper className={s.paperBlock}>
+        <h1>User Profile: {user.displayName}</h1>
+        <div style={style.container}>
 
 
-        <Card style={style.card}>
-          <CardHeader title="Link Social Media"
-                      actAsExpander={true}
-                      showExpandableButton={true}
-                      titleColor="#00bcd4" />
-          <CardText expandable={true}>
-            Select which Social Media platforms you'd like to link to your account:
-          </CardText>
-          <CardActions expandable={true}>
-            <Table selectable={false}>
-            <TableBody>
+          <Card style={style.card}>
+            <CardHeader title="Link Social Media"
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                        titleColor="#00bcd4" />
+            <CardText expandable={true}>
+              Select which Social Media platforms you'd like to link to your account:
+            </CardText>
+            <CardActions expandable={true}>
+              <Table selectable={false}>
+              <TableBody>
 
-              <TableRow selected={true} selectable={false} striped={true}>
-                <TableRowColumn>Twitter</TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton 
-                    label="Connect" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
-                    onClick={this.connectTwitter}
-                  />
-                </TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton 
-                    label="Remove" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
-                    onClick={this.removeTwitter}
-                  />
-                </TableRowColumn>
-              </TableRow>
+                <TableRow selected={true} selectable={false} striped={true}>
+                  <TableRowColumn>Twitter</TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton 
+                      label="Connect" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
+                      onClick={this.connectTwitter}
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton 
+                      label="Remove" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
+                      onClick={this.removeTwitter}
+                    />
+                  </TableRowColumn>
+                </TableRow>
 
-              <TableRow selectable={false}>
-                <TableRowColumn>Facebook</TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton 
-                    label="Connect" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton 
-                    label="Remove" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-              </TableRow>
+                <TableRow selectable={false}>
+                  <TableRowColumn>Facebook</TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton 
+                      label="Connect" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
+                      disabled={true}
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton 
+                      label="Remove" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
+                      disabled={true}
+                    />
+                  </TableRowColumn>
+                </TableRow>
 
-              <TableRow selectable={false}>
-                <TableRowColumn>Instagram</TableRowColumn>
-                <TableRowColumn>
+                <TableRow selectable={false}>
+                  <TableRowColumn>Instagram</TableRowColumn>
+                  <TableRowColumn>
 
-                  <RaisedButton 
-                    label="Connect" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton 
-                    label="Remove" 
-                    icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-              </TableRow> 
+                    <RaisedButton 
+                      label="Connect" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
+                      disabled={true}
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton 
+                      label="Remove" 
+                      icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
+                      disabled={true}
+                    />
+                  </TableRowColumn>
+                </TableRow> 
 
-            </TableBody>           
-            </Table>
-          </CardActions>
-        </Card>
+              </TableBody>           
+              </Table>
+            </CardActions>
+          </Card>
 
-        <Card>
-          <CardHeader title="Account Settings"
-                      actAsExpander={true}
-                      showExpandableButton={true}
-                      titleColor="#00bcd4"/>
+          <Card>
+            <CardHeader title="Account Settings"
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                        titleColor="#00bcd4"/>
 
-          <CardText expandable={true}>
-            Profile settings here
-          </CardText>
+            <CardText expandable={true}>
+              Profile settings here
+            </CardText>
 
-          <CardActions expandable={true}>
-            <div style={style.container2}>
-              <Card style={style.card2}>
-                <CardTitle title="Change Username"/>
-                <CardText>Coming Soon!</CardText>
-              </Card>
-              <Card style={style.card2}>
-                <CardTitle title="Change Email"/>
-                <CardText>Coming Soon!</CardText>
-              </Card>
-            </div><br />
-            <div style={style.container2}>
-              <Card style={style.card2}>
-                <CardTitle title="Change Password"/>
-                <CardText>Coming Soon!</CardText>
-              </Card>
-              <Card style={style.card2}>
-                <CardTitle title="Delete Account"/>
-                <CardText>Permanently Delete your Moonwalk Account</CardText>
-                <CardActions>
-                  <RaisedButton
-                    label="Delete Account"
-                    onClick={this.onDelete}
-                    primary={true}
-                  />
-                </CardActions>
-              </Card>
-            </div>
-          </CardActions>
-        </Card>
-      </div>
-      </Paper>
-    );
+            <CardActions expandable={true}>
+              <div style={style.container2}>
+                <Card style={style.card2}>
+                  <CardTitle title="Change Username"/>
+                  <CardText>Coming Soon!</CardText>
+                </Card>
+                <Card style={style.card2}>
+                  <CardTitle title="Change Email"/>
+                  <CardText>Coming Soon!</CardText>
+                </Card>
+              </div><br />
+              <div style={style.container2}>
+                <Card style={style.card2}>
+                  <CardTitle title="Change Password"/>
+                  <CardText>Coming Soon!</CardText>
+                </Card>
+                <Card style={style.card2}>
+                  <CardTitle title="Delete Account"/>
+                  <CardText>Permanently Delete your Moonwalk Account</CardText>
+                  <CardActions>
+                    <RaisedButton
+                      label="Delete Account"
+                      onClick={this.onDelete}
+                      primary={true}
+                    />
+                  </CardActions>
+                </Card>
+              </div>
+            </CardActions>
+          </Card>
+        </div>
+        </Paper>
+      );
+    else
+      return(
+        <Paper className={s.paperBlock}>
+          <h1>You Must Be Logged In to Access This Page!</h1>
+        </Paper>
+      );
   };
 };
 
