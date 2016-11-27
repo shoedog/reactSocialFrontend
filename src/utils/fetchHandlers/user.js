@@ -68,8 +68,8 @@ export default {
       );
     },
 
-    delete(username) {
-      return fetch(`http://localhost:5000/user/${username}`,
+    delete(userId) {
+      return fetch(`http://localhost:5000/user/${userId}`,
         {
           method: 'DELETE'
         })

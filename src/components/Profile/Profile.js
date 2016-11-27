@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import {Card, CardActions, CardHeader, 
-        CardMedia, CardTitle, CardText,
-        Tabs, Tab} from 'material-ui/Card';
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/user';
 import s from './Profile.css';
+/*  Material-ui Libs  */
+import {Card, CardActions, CardHeader, 
+        CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 const style = {
   card: {
@@ -43,10 +43,9 @@ function mapStateToProps(state) {
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'a'};
     this.connectTwitter = this.connectTwitter.bind(this);
     this.removeTwitter = this.removeTwitter.bind(this);
-    this.onToggle = this.onToggle.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
@@ -81,9 +80,29 @@ class Profile extends Component {
   );
   }
 
-  onToggle(e){
-    this.setState({value: this.state.value});
-  };
+  onDelete(e){
+    if( confirm("Are you sure you would like to Permanently DELETE your account?"))
+    {
+      //this.props.deleteUser(this.props.user.userId);
+        fetch(`http://localhost:5000/user/${this.props.user.userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Authorization': 'Bearer' + this.props.user.token
+        },
+        body: '' }
+      )
+      .then((response) => {
+        return response.json();
+      })
+      .then(
+        (result) => { window.location.href = 'http://localhost:3000/', alert("Success!")},
+        (error) => { window.location.href = 'http://localhost:3000/', alert("Failure")}
+      );
+    }
+   }
+
 
   render() {
     const { user } = this.props;
@@ -180,21 +199,28 @@ class Profile extends Component {
             <div style={style.container2}>
               <Card style={style.card2}>
                 <CardTitle title="Change Username"/>
-                <CardText>new card!</CardText>
+                <CardText>Coming Soon!</CardText>
               </Card>
               <Card style={style.card2}>
                 <CardTitle title="Change Email"/>
-                <CardText>new card!</CardText>
+                <CardText>Coming Soon!</CardText>
               </Card>
             </div><br />
             <div style={style.container2}>
               <Card style={style.card2}>
                 <CardTitle title="Change Password"/>
-                <CardText>new card!</CardText>
+                <CardText>Coming Soon!</CardText>
               </Card>
               <Card style={style.card2}>
                 <CardTitle title="Delete Account"/>
-                <CardText>new card!</CardText>
+                <CardText>Permanently Delete your Moonwalk Account</CardText>
+                <CardActions>
+                  <RaisedButton
+                    label="Delete Account"
+                    onClick={this.onDelete}
+                    primary={true}
+                  />
+                </CardActions>
               </Card>
             </div>
           </CardActions>

@@ -69,7 +69,7 @@ class RegisterForm extends React.Component {
     });
     //console.log(errors);
     if ( Object.keys(errors).length === 0 ) {
-      let res = confirm(`Username: ${this.state.username} \nEmail: ${this.state.email} \nPassword: ${this.state.password1}`);
+      //let res = confirm(`Username: ${this.state.username} \nEmail: ${this.state.email} \nPassword: ${this.state.password1}`);
       this.props.registerUser(form.username, form.email, form.password1);
       //if(res){window.location.href="/newusersetup"}
     }
