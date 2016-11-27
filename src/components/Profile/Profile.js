@@ -59,11 +59,11 @@ class Profile extends Component {
 
   connectTwitter() {
     //console.log(this.props.user.userId)
-    window.location = `http://0.0.0.0:5000/social/connect/twitter?id=${this.props.user.userId}`
+    window.location = `http://localhost:5000/social/connect/twitter?id=${this.props.user.userId}`
   }
 
   removeTwitter() {
-  fetch(`http://0.0.0.0:5000/social/remove/twitter?id=${this.props.user.userId}`, {
+  fetch(`http://localhost:5000/social/remove/twitter?id=${this.props.user.userId}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
@@ -76,8 +76,8 @@ class Profile extends Component {
     return response.json();
   })
   .then(
-    (result) => { window.location.href = 'http://0.0.0.0:3000/profile' },
-    (error) => { window.location.href = 'http://0.0.0.0:3000/profile' }
+    (result) => { window.location.href = 'http://localhost:3000/profile' },
+    (error) => { window.location.href = 'http://localhost:3000/profile' }
   );
   }
 
