@@ -31,7 +31,7 @@ const header = {
 };
 
 const StreamItem = (props) => {
-    const { friend, avatarImg, textContent, imgs, gifs } = props;
+    const { tweetId, friend, avatarImg, textContent, imgs, gifs } = props;
     console.log(friend);
 	return(
 			<Paper style={style} zDepth={1}>
@@ -62,7 +62,7 @@ const StreamItem = (props) => {
                         }
                     </ListItem>
                 </List>
-                <BottomBar/>
+                <BottomBar tweetId={tweetId}/>
             </Paper>
 
 	);

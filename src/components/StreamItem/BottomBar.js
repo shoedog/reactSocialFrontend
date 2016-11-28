@@ -18,39 +18,71 @@ const style = {
 };
 
 class BottomBar extends Component {
-    state = {
-        selectedIndex: 0,
+  constructor(props) {
+    super(props);
+
+    console.log(props)
+    this.state = {
+      selectedIndex: 0
     };
+  }
 
-    select = (index) => this.setState({selectedIndex: index});
+  select = (index) => this.setState({selectedIndex: index});
 
-    render() {
+  likeTweet = (id) => {
+    fetch(`http://0.0.0.0:5000/social/favorite/${id.tweetId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Authorization': 'Bearer' + sessionStorage.getItem('token')
+          }
+      })
+      .then((res) => console.log(res));
+  };
 
+  retweet = (id) => {
+    fetch(`http://0.0.0.0:5000/social/retweet/${id.tweetId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Authorization': 'Bearer' + sessionStorage.getItem('token')
+          }
+      })
+      .then((res) => console.log(res));
+  };
 
-        return (
-            <Paper zDepth={1}>
-                <BottomNavigation>
+  render() {
 
-                    <BottomNavigationItem label="Comments"
-                                          icon={<Forum/>}
-                                          onTouchTap={() => this.select(0)}
-                    ></BottomNavigationItem>
-                    <BottomNavigationItem label="Comment"
-                                          icon={<Comment/>}
-                                          onTouchTap={() => this.select(1)}
-                    />
-                    <BottomNavigationItem label="Favorite"
-                        icon={<FavoriteBorder/>}
-                        onTouchTap={() => this.select(2)}
-                    />
-                    <BottomNavigationItem label="Share"
-                                          icon={<Share/>}
-                                          onTouchTap={() => this.select(3)}
-                    />
-                </BottomNavigation>
-            </Paper>
-        )
-    }
+    const tweetId = this.props;
+
+    return (
+      <Paper zDepth={1}>
+          <BottomNavigation>
+
+              <BottomNavigationItem label="Comments"
+                                    icon={<Forum/>}
+                                    onTouchTap={() => this.select(0)}
+              ></BottomNavigationItem>
+              <BottomNavigationItem label="Comment"
+                                    icon={<Comment/>}
+                                    onTouchTap={() => this.select(1)}
+              />
+              <BottomNavigationItem label="Like"
+                  icon={<FavoriteBorder/>}
+                  onTouchTap={() => this.likeTweet(tweetId)}
+              />
+              <BottomNavigationItem label="Retweet"
+                                    icon={<Share/>}
+                                    onTouchTap={() => this.retweet(tweetId)}
+              />
+          </BottomNavigation>
+      </Paper>
+    )
+  }
 };
 
 

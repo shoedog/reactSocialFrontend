@@ -93,15 +93,16 @@ class StreamList extends Component {
 		return(
 				<Paper className={s.paperBlock} style={paper}>
 					<h1 className={s.title}>User Stream</h1>
-					<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>	
+					<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>
 					<br/>
 					{
-						( feedItems.length === 0) ? 
+						( feedItems.length === 0) ?
 								<div>No Content...</div>
 						:
 							<GridList cellHeight='auto' style={{"width":"100%", "height":"100%"}} padding={10} cols={2}>
 								{feedItems.map((tile) => (
-									<StreamItem key={tile.id_str}
+									<StreamItem key={tile.id}
+										tweetId={tile.id_str}
 										friend={tile.user.screen_name}
 										avatarImg={tile.user.profile_image_url}
 										textContent={this.getText(tile)}
