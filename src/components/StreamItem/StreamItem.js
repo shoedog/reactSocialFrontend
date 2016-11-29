@@ -5,6 +5,7 @@ import Divider from 'material-ui/Divider';
 import {List, ListItem} from 'material-ui/List';
 import BottomBar from './BottomBar';
 import s from './streamItem.css';
+import Link from 'react-router';
 
 const style = {
     minHeight: 200,
@@ -30,19 +31,42 @@ const header = {
     height: 50,
 };
 
+
+
 const StreamItem = (props) => {
-    const { tweetId, favorited, friend, avatarImg, textContent, imgs, gifs } = props;
+    const {
+      tweetId,
+      favorited,
+      retweeted,
+      retweetCount,
+      favoriteCount,
+      friend,
+      avatarImg,
+      textContent,
+      imgs,
+      gifs
+    } = props;
     console.log(friend);
+
+  const handleClickTop = () => {
+    window.open('http://twitter.com/intent/user?screen_name=' + friend, '_blank')
+  }
+
+  const handleClickMain = () => {
+    window.open('https://twitter.com/' + friend + '/status/' + tweetId, '_blank')
+  }
+
 	return(
 			<Paper style={style} zDepth={1}>
                 <List style={list}>
                     <ListItem
-                        primaryText={<a target="_blank" href={"http://twitter.com/intent/user?screen_name=" + friend}>{'@' + friend}</a>}
+                        primaryText={'@' + friend}
                         leftAvatar={<Avatar style={avatar} src={avatarImg}></Avatar>}
                         style={header}
+                        onTouchTap={handleClickTop}
                     />
                     <Divider />
-                    <ListItem style={{ flexGrow: 1}}>
+                    <ListItem style={{ flexGrow: 1}} onTouchTap={handleClickMain}>
                         {textContent} <br/>
                         { typeof imgs === 'undefined' ?
                             <span></span>
@@ -62,7 +86,14 @@ const StreamItem = (props) => {
                         }
                     </ListItem>
                 </List>
-                <BottomBar tweetId={tweetId} favorited={favorited}/>
+                <BottomBar
+                  tweetId={tweetId}
+                  favorited={favorited}
+                  retweeted={retweeted}
+                  retweetCount={retweetCount}
+                  favoriteCount={favoriteCount}
+                  friend={friend}
+                />
             </Paper>
 
 	);

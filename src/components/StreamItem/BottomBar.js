@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
+import Badge from 'material-ui/Badge';
 import Favorite from 'material-ui/svg-icons/action/favorite';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
-import Share from 'material-ui/svg-icons/social/share';
+import Share from 'material-ui/svg-icons/av/repeat';
 import Comment from 'material-ui/svg-icons/communication/comment';
 import Forum from 'material-ui/svg-icons/communication/forum';
-import { red400 } from 'material-ui/styles/colors';
+import { red400, grey500 } from 'material-ui/styles/colors';
 
 import s from './streamItem.css';
 
@@ -22,6 +23,7 @@ class BottomBar extends Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
     this.renderFav = this.renderFav.bind(this);
     this.state = {
       selectedIndex: 0,
@@ -69,7 +71,7 @@ class BottomBar extends Component {
 
   render() {
 
-    const { tweetId, favorited } = this.props;
+    const { tweetId, favorited, retweeted, retweetCount, favoriteCount } = this.props;
 
     return (
       <Paper zDepth={1}>
@@ -83,11 +85,11 @@ class BottomBar extends Component {
                 icon={<Comment/>}
                 onTouchTap={() => this.select(1)}
               />
-              <BottomNavigationItem label="Like"
+              <BottomNavigationItem label={favoriteCount}
                 icon={this.renderFav()}
                 onTouchTap={() => this.likeTweet(tweetId)}
               />
-              <BottomNavigationItem label="Retweet"
+              <BottomNavigationItem label={retweetCount}
                 icon={<Share/>}
                 onTouchTap={() => this.retweet(tweetId)}
               />
@@ -96,6 +98,19 @@ class BottomBar extends Component {
     )
   }
 };
+
+const styles = {
+  parent: {
+    display: 'table'
+  },
+  smallText: {
+    fontSize: 10,
+    margin: 0,
+    padding: 0,
+    display: 'table-cell',
+    verticalAlign: 'middle'
+  }
+}
 
 
 export default BottomBar;

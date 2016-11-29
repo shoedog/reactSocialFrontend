@@ -104,6 +104,9 @@ class StreamList extends Component {
 									<StreamItem key={tile.id}
 										tweetId={tile.id_str}
 										favorited={tile.favorited}
+										retweeted={tile.retweeted}
+										retweetCount={tile.retweet_count}
+										favoriteCount={tile.favorite_count}
 										friend={tile.user.screen_name}
 										avatarImg={tile.user.profile_image_url}
 										textContent={this.getText(tile)}
