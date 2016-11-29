@@ -6,6 +6,7 @@ import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Share from 'material-ui/svg-icons/social/share';
 import Comment from 'material-ui/svg-icons/communication/comment';
 import Forum from 'material-ui/svg-icons/communication/forum';
+import { red400 } from 'material-ui/styles/colors';
 
 import s from './streamItem.css';
 
@@ -21,16 +22,23 @@ class BottomBar extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props)
+    this.renderFav = this.renderFav.bind(this);
     this.state = {
-      selectedIndex: 0
+      selectedIndex: 0,
+      fav: this.props.favorited
     };
   }
 
   select = (index) => this.setState({selectedIndex: index});
 
+  renderFav = () => {
+    return this.state.fav ? <Favorite color={red400}/>
+      : <FavoriteBorder/>
+  }
+
   likeTweet = (id) => {
-    fetch(`http://0.0.0.0:5000/social/favorite/${id.tweetId}`,
+    const uriPath = this.state.fav ? 'unfavorite' : 'favorite';
+    fetch(`http://0.0.0.0:5000/social/${uriPath}/${id}`,
       {
         method: 'POST',
         headers: {
@@ -39,11 +47,15 @@ class BottomBar extends Component {
           'Authorization': 'Bearer' + sessionStorage.getItem('token')
           }
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+        const newState = ! this.state.fav;
+        this.setState({fav: newState});
+      });
   };
 
   retweet = (id) => {
-    fetch(`http://0.0.0.0:5000/social/retweet/${id.tweetId}`,
+    fetch(`http://0.0.0.0:5000/social/retweet/${id}`,
       {
         method: 'POST',
         headers: {
@@ -57,27 +69,27 @@ class BottomBar extends Component {
 
   render() {
 
-    const tweetId = this.props;
+    const { tweetId, favorited } = this.props;
 
     return (
       <Paper zDepth={1}>
           <BottomNavigation>
 
               <BottomNavigationItem label="Comments"
-                                    icon={<Forum/>}
-                                    onTouchTap={() => this.select(0)}
+                icon={<Forum/>}
+                onTouchTap={() => this.select(0)}
               ></BottomNavigationItem>
               <BottomNavigationItem label="Comment"
-                                    icon={<Comment/>}
-                                    onTouchTap={() => this.select(1)}
+                icon={<Comment/>}
+                onTouchTap={() => this.select(1)}
               />
               <BottomNavigationItem label="Like"
-                  icon={<FavoriteBorder/>}
-                  onTouchTap={() => this.likeTweet(tweetId)}
+                icon={this.renderFav()}
+                onTouchTap={() => this.likeTweet(tweetId)}
               />
               <BottomNavigationItem label="Retweet"
-                                    icon={<Share/>}
-                                    onTouchTap={() => this.retweet(tweetId)}
+                icon={<Share/>}
+                onTouchTap={() => this.retweet(tweetId)}
               />
           </BottomNavigation>
       </Paper>

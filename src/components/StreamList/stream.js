@@ -103,6 +103,7 @@ class StreamList extends Component {
 								{feedItems.map((tile) => (
 									<StreamItem key={tile.id}
 										tweetId={tile.id_str}
+										favorited={tile.favorited}
 										friend={tile.user.screen_name}
 										avatarImg={tile.user.profile_image_url}
 										textContent={this.getText(tile)}
