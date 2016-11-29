@@ -27,7 +27,8 @@ class BottomBar extends Component {
     this.renderFav = this.renderFav.bind(this);
     this.state = {
       selectedIndex: 0,
-      fav: this.props.favorited
+      fav: this.props.favorited,
+      rt: this.props.retweeted
     };
   }
 
@@ -57,7 +58,8 @@ class BottomBar extends Component {
   };
 
   retweet = (id) => {
-    fetch(`http://0.0.0.0:5000/social/retweet/${id}`,
+    const uriPath = this.state.rt ? 'unretweet' : 'retweet';
+    fetch(`http://0.0.0.0:5000/social/${uriPath}/${id}`,
       {
         method: 'POST',
         headers: {
@@ -66,7 +68,12 @@ class BottomBar extends Component {
           'Authorization': 'Bearer' + sessionStorage.getItem('token')
           }
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res)
+        const newState = ! this.state.rt;
+        this.setState({rt: newState});
+
+      });
   };
 
   render() {
