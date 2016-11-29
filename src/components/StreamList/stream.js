@@ -2,15 +2,11 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/stream';
 import * as selectors from '../../utils/lib/selectors';
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 
-import Avatar from 'material-ui/Avatar';
 import { GridList, GridTile } from 'material-ui';
-import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import RaisedButton from 'material-ui/RaisedButton';
+import { TwitterButton, TwitterCount } from 'react-social';
 
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
@@ -30,8 +26,6 @@ class StreamList extends Component {
 
 	componentDidMount() {
 		this.props.fetchFeedItems();
-		// For easy console fun
-		// console.log(this.props.fetchFeedItems());
 	}
 
 	getText(tweet) {
@@ -75,6 +69,9 @@ class StreamList extends Component {
 		}
 	}
 
+// Old Post Button
+// <button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>
+
 	render() {
 		const paper = {
 			marginTop: 15,
@@ -88,12 +85,53 @@ class StreamList extends Component {
 			margin: 10,
 		};
 
+		const twtBtn = {
+			backgroundColor: '#00aced',
+			color: 'white',
+			paddingTop: 8,
+			paddingBottom: 13,
+			paddingRight: 17,
+			paddingLeft: 17,
+
+		};
+
+		const icontwitter = {
+			color: '#00aced',
+
+		};
+		const fastack1x = {
+			color: 'white',
+		}
+	/*
+	 <RaisedButton  overlayStyle={{backgroundColor: '#00aced', width: 115, height: 41}}
+	 children={
+	 <TwitterButton message={message} url={link}  style={twtBtn} >
+	 <span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
+	 <i className="fa fa-square fa-stack-2x"></i>
+	 <i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
+	 </span>
+	 {" Tweet"}
+	 </TwitterButton>} />*/
+
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
+
+		let message = '';
+		let link = "";
 
 		return(
 				<Paper className={s.paperBlock} style={paper}>
 					<h1 className={s.title}>User Stream</h1>
-					<button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>
+					<br/>
+
+					<TwitterButton message={message} url={link}  style={twtBtn} >
+							<span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
+          						<i className="fa fa-square fa-stack-2x"></i>
+								<i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
+        					</span>
+						{" Tweet"}
+					</TwitterButton>
+
+
 					<br/>
 					{
 						( feedItems.length === 0) ?

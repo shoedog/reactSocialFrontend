@@ -82,6 +82,7 @@ function renderFullPage(html, preloadedState) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.2.65/css/materialdesignicons.min.css">
         <link rel="stylesheet" href="/styles.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     </head>
     <body style="margin:0">
     <div id="root">${html}</div>
@@ -89,6 +90,7 @@ function renderFullPage(html, preloadedState) {
         window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
       <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+      
       <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://localhost:8000/client.js" : "/client.js"} async></script>
     </body>
     </html>
