@@ -13,6 +13,7 @@ class NewUserSetup extends Component {
       stepIndex: 0
     };
     this.onFinish = this.onFinish.bind(this);
+    this.connectTwitter = this.connectTwitter.bind(this);
   }
 
   handleNext = () => {
@@ -35,6 +36,11 @@ class NewUserSetup extends Component {
     this.context.router.push("/profile");
   }
 
+  connectTwitter() {
+    //console.log(this.props.user.userId)
+    window.location = `http://localhost:5000/social/connect/twitter?id=${this.props.user.userId}`
+  }
+
   getStepContent(stepIndex) {
     switch(stepIndex){
       case 0:
@@ -42,21 +48,22 @@ class NewUserSetup extends Component {
       case 1:
         return(
           <div className={s.buttonContainer}>
-            <p>Moonwalk lets you interact with all your social media accounts in one place! 
+            <p>Moonwalk lets you interact with all your social media accounts in one place!
               Choose which Social Media platforms you'd like to link
             </p>
-            <RaisedButton 
-              label="Twitter" 
-              icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
+            <RaisedButton
+                label="Connect"
+                icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
+                onClick={this.connectTwitter}
             /><br /><br />
 
-            <RaisedButton 
-              label="Facebook" 
+            <RaisedButton
+              label="Facebook"
               icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
             /><br /><br />
 
-            <RaisedButton 
-              label="Instagram" 
+            <RaisedButton
+              label="Instagram"
               icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
             /><br />
 

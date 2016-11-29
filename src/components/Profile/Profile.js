@@ -10,6 +10,7 @@ import {Card, CardActions, CardHeader,
 import Paper from 'material-ui/Paper';
 import {FlatButton} from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 const style = {
@@ -218,10 +219,12 @@ class Profile extends Component {
     else
       return(
         <Paper className={s.paperBlock}>
-          <h1>You Must Be Logged In to Access This Page!</h1>
+
         </Paper>
       );
   };
 };
+
+//<h1>You Must Be Logged In to Access This Page!</h1>
 
 export default connect(mapStateToProps, actionCreators)(Profile);

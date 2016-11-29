@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/stream';
 import * as selectors from '../../utils/lib/selectors';
 
+import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -12,11 +13,47 @@ import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 
 class StreamList extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchTerm: ''
+		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	state = {
 		isToggleOn: false
 	};
 
-	//this.handleToggle = this.handleToggle.bind(this)
+	handleChange(e) {
+		this.setState({[e.target.id]: e.target.value});
+	}
+
+	searchTweets = (term) => {
+		fetch(`http://0.0.0.0:5000/social/twitter_search/${id}`,
+			{
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+					'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+					'Authorization': 'Bearer' + sessionStorage.getItem('token')
+				}
+			})
+		.then((res) => {
+			console.log(res);
+		});
+	};
+
+	handleSubmit(e) {
+		e.preventDefault();
+		let form = {
+			searchTerm: this.state.searchTerm,
+		};
+		this.searchTweets(searchTerm);
+	}
+
+
 
 	handleToggle(){
 		this.setState(prevState => ({
@@ -69,9 +106,6 @@ class StreamList extends Component {
 		}
 	}
 
-// Old Post Button
-// <button className={s.addFeedItemButton} onClick={() => addFeedItem()}>Create Post</button>
-
 	render() {
 		const paper = {
 			marginTop: 15,
@@ -102,16 +136,6 @@ class StreamList extends Component {
 		const fastack1x = {
 			color: 'white',
 		}
-	/*
-	 <RaisedButton  overlayStyle={{backgroundColor: '#00aced', width: 115, height: 41}}
-	 children={
-	 <TwitterButton message={message} url={link}  style={twtBtn} >
-	 <span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
-	 <i className="fa fa-square fa-stack-2x"></i>
-	 <i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
-	 </span>
-	 {" Tweet"}
-	 </TwitterButton>} />*/
 
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
@@ -133,11 +157,26 @@ class StreamList extends Component {
 
 
 					<br/>
+					<form onSubmit={this.handleSubmit}>
+						<div>
+					<TextField
+						id="searchTerm" type="text"
+						hintText="Search"
+						floatingLabelText="Search"
+						value={this.state.searchTerm}
+						onChange={this.handleChange}
+					/><br />
+					<div>
+						<RaisedButton label="Search" primary={true} type="submit" disabled={this.props.submitting}/>
+					</div>
+							</div>
+						</form>
+					<br/>
 					{
 						( feedItems.length === 0) ?
 								<div>No Content...</div>
 						:
-							<GridList cellHeight='auto' style={{"width":"100%", "height":"100%"}} padding={10} cols={2}>
+							<GridList cellHeight='auto' style={{"width":"100%", "height":"100%"}} padding={10} cols={1}>
 								{feedItems.map((tile) => (
 									<StreamItem key={tile.id}
 										tweetId={tile.id_str}
@@ -158,19 +197,6 @@ class StreamList extends Component {
 		);
 	}
 }
-
-/*
- <GridTile
- key={tile.id.toString()}
- className={s.gridTile}
- title={<span className={s.avatar}><Avatar src={tile.user.profile_image_url}/>{tile.user.screen_name}</span>}
- actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
- >
- {this.getText(tile)}
- <img src={this.getImgs(tile)}/>
- </GridTile>
- */
-
 
 StreamList.propTypes = {
 	feedItems: PropTypes.arrayOf(PropTypes.shape({
