@@ -2,15 +2,14 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/stream';
 import * as selectors from '../../utils/lib/selectors';
-
 import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { TwitterButton, TwitterCount } from 'react-social';
-
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
+import _ from 'lodash';
 
 class StreamList extends Component {
 	constructor(props) {
@@ -26,19 +25,14 @@ class StreamList extends Component {
 		isToggleOn: false
 	};
 
-	handleChange(e) {
-		this.setState({[e.target.id]: e.target.value});
-	}
+	handleChange(event) {
+    this.setState({searchTerm: event.target.value});
+		//const search = _.debounce((term) => { console.log("FUCK") }, 1000)(this.state.searchTerm);
+  }
 
 	searchTweets = (term) => {
-		fetch(`http://0.0.0.0:5000/social/twitter_search/${id}`,
+		fetch(`http://0.0.0.0:5000/social/stream/${term}`,
 			{
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-					'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-					'Authorization': 'Bearer' + sessionStorage.getItem('token')
-				}
 			})
 		.then((res) => {
 			console.log(res);
@@ -50,10 +44,8 @@ class StreamList extends Component {
 		let form = {
 			searchTerm: this.state.searchTerm,
 		};
-		this.searchTweets(searchTerm);
+		this.searchTweets(this.state.searchTerm);
 	}
-
-
 
 	handleToggle(){
 		this.setState(prevState => ({
