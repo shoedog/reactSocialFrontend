@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/user';
 import s from './Profile.css';
+import { browserHistory } from 'react-router';
 /*  Material-ui Libs  */
 import {Card, CardActions, CardHeader, 
         CardMedia, CardTitle, CardText } from 'material-ui/Card';
@@ -55,6 +56,13 @@ class Profile extends Component {
       console.log(this.props.location.query.twitter);
       // TODO: set up endpoint to check if twitter handle exists
       sessionStorage.setItem('twitter', this.props.location.query.twitter);
+    }
+
+    //If user is not signed in, redirect to Login page
+    if(this.props.user.userId == null)
+    {
+      alert("You must be logged in to access this page");
+      browserHistory.push( '/login');
     }
   }
 
