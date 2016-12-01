@@ -102,7 +102,7 @@ class StreamList extends Component {
 		const paper = {
 			marginTop: 15,
 			marginRight: 0,
-			minWidth: 643,
+			minWidth: 643
 		};
 
 		const streamItem = {
@@ -118,11 +118,10 @@ class StreamList extends Component {
 			paddingBottom: 13,
 			paddingRight: 17,
 			paddingLeft: 17,
-
 		};
 
 		const icontwitter = {
-			color: '#00aced',
+			color: '#00aced'
 
 		};
 		const fastack1x = {
@@ -135,40 +134,40 @@ class StreamList extends Component {
 		let link = "";
 
 		return(
-				<Paper className={s.paperBlock} style={paper}>
+				<Paper className={s.paperBlock} style={paper} zDepth={0}>
 					<h1 className={s.title}>User Stream</h1>
 					<br/>
 
-					<TwitterButton message={message} url={link}  style={twtBtn} >
-							<span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
-          						<i className="fa fa-square fa-stack-2x"></i>
-								<i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
-        					</span>
-						{" Tweet"}
-					</TwitterButton>
-
-
-					<br/>
-					<form onSubmit={this.handleSubmit}>
-						<div>
-					<TextField
-						id="searchTerm" type="text"
-						hintText="Search"
-						floatingLabelText="Search"
-						value={this.state.searchTerm}
-						onChange={this.handleChange}
-					/><br />
-					<div>
-						<RaisedButton label="Search" primary={true} type="submit" disabled={this.props.submitting}/>
-					</div>
+					<div style={{display: 'flex', justifyContent: 'space-around'}}>
+						<TwitterButton message={message} url={link}  style={twtBtn} >
+								<span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
+	          						<i className="fa fa-square fa-stack-2x"></i>
+									<i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
+	        					</span>
+							{" Tweet"}
+						</TwitterButton>
+						<form onSubmit={this.handleSubmit}>
+							<div>
+								<TextField
+									id="searchTerm" type="text"
+									hintText="Search"
+									floatingLabelText="Search"
+									value={this.state.searchTerm}
+									onChange={this.handleChange}
+								/><br />
+								<div>
+									<RaisedButton label="Search" primary={true} type="submit" disabled={this.props.submitting}/>
+								</div>
 							</div>
 						</form>
-					<br/>
+					</div>
+
 					{
 						( feedItems.length === 0) ?
 								<div>No Content...</div>
 						:
-							<GridList cellHeight='auto' style={{"width":"100%", "height":"100%"}} padding={10} cols={1}>
+						<div style={{display: 'flex', justifyContent: 'center'}}>
+							<GridList cellHeight='auto' style={{width: 400}} padding={10} cols={1}>
 								{feedItems.map((tile) => (
 									<StreamItem key={tile.id}
 										tweetId={tile.id_str}
@@ -184,6 +183,7 @@ class StreamList extends Component {
 									/>
 								))}
 							</GridList>
+						</div>
 						}
 				</Paper>
 		);

@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/user';
 import s from './Profile.css';
 import { browserHistory } from 'react-router';
 /*  Material-ui Libs  */
-import {Card, CardActions, CardHeader, 
+import {Card, CardActions, CardHeader,
         CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import {FlatButton} from 'material-ui/FlatButton';
@@ -103,8 +103,8 @@ class Profile extends Component {
     const { user } = this.props;
     if(user.userId != null)
       return(
-
-        <Paper className={s.paperBlock}>
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: '50'}}>
+        <Paper style={{width: 500}}>
         <h1>User Profile: {user.displayName}</h1>
         <div style={style.container}>
 
@@ -115,7 +115,7 @@ class Profile extends Component {
                         showExpandableButton={true}
                         titleColor="#00bcd4" />
             <CardText expandable={true}>
-              Select which Social Media platforms you'd like to link to your account:
+              Select which Social Media platforms you would like to link to your account:
             </CardText>
             <CardActions expandable={true}>
               <Table selectable={false}>
@@ -124,15 +124,15 @@ class Profile extends Component {
                 <TableRow selected={true} selectable={false} striped={true}>
                   <TableRowColumn>Twitter</TableRowColumn>
                   <TableRowColumn>
-                    <RaisedButton 
-                      label="Connect" 
+                    <RaisedButton
+                      label="Connect"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
                       onClick={this.connectTwitter}
                     />
                   </TableRowColumn>
                   <TableRowColumn>
-                    <RaisedButton 
-                      label="Remove" 
+                    <RaisedButton
+                      label="Remove"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg" />}
                       onClick={this.removeTwitter}
                     />
@@ -142,15 +142,15 @@ class Profile extends Component {
                 <TableRow selectable={false}>
                   <TableRowColumn>Facebook</TableRowColumn>
                   <TableRowColumn>
-                    <RaisedButton 
-                      label="Connect" 
+                    <RaisedButton
+                      label="Connect"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
                       disabled={true}
                     />
                   </TableRowColumn>
                   <TableRowColumn>
-                    <RaisedButton 
-                      label="Remove" 
+                    <RaisedButton
+                      label="Remove"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" />}
                       disabled={true}
                     />
@@ -161,22 +161,22 @@ class Profile extends Component {
                   <TableRowColumn>Instagram</TableRowColumn>
                   <TableRowColumn>
 
-                    <RaisedButton 
-                      label="Connect" 
+                    <RaisedButton
+                      label="Connect"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
                       disabled={true}
                     />
                   </TableRowColumn>
                   <TableRowColumn>
-                    <RaisedButton 
-                      label="Remove" 
+                    <RaisedButton
+                      label="Remove"
                       icon = {<img style={{"height":"16px", "width":"16px"}} src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" />}
                       disabled={true}
                     />
                   </TableRowColumn>
-                </TableRow> 
+                </TableRow>
 
-              </TableBody>           
+              </TableBody>
               </Table>
             </CardActions>
           </Card>
@@ -223,6 +223,7 @@ class Profile extends Component {
           </Card>
         </div>
         </Paper>
+        </div>
       );
     else
       return(
