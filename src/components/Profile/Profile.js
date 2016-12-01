@@ -16,6 +16,7 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import { Tabs, Tab } from 'material-ui';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
+import Dialog from 'material-ui/Dialog';
 
 const style = {
   card: {
@@ -55,11 +56,14 @@ class Profile extends Component {
     this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
     this.fetchHandler = this.fetchHandler.bind(this);
-    this.onDelete = this.onDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleConfirmDelete = this.handleConfirmDelete.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.state = {
       password: '',
       email: '',
-      open: false
+      open: false,
+      dialog: false
     }
   }
 
@@ -71,15 +75,46 @@ class Profile extends Component {
     }
 
     //If user is not signed in, redirect to Login page
-    if(this.props.user.userId == null)
+    if(!sessionStorage.getItem('token'))
     {
-      alert("You must be logged in to access this page");
       browserHistory.push( '/login');
     }
   }
 
+  handleClose() {
+    this.setState({dialog: false});
+  }
+
+  handleConfirmDelete() {
+    const userId = sessionStorage.getItem('userId');
+    const userToken = sessionStorage.getItem('token');
+    return fetch(`http://localhost:5000/user/${userId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Authorization': 'Bearer' + userToken
+        }
+      })
+      .then((res) => {
+        console.log(res)
+        if (res.ok) {
+          this.setState({
+            dialog: false
+          });
+          sessionStorage.clear();
+          browserHistory.push( '/login');
+        }
+      });
+  }
+
   handleChange(e) {
     this.setState({[e.target.id]: e.target.value});
+  }
+
+  handleDelete() {
+    this.setState({dialog: true});
   }
 
   handlePasswordSubmit() {
@@ -151,10 +186,35 @@ class Profile extends Component {
    }
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleConfirmDelete}
+      />,
+    ];
+
     const { user } = this.props;
     if(user.userId != null)
       return(
         <div>
+        {/* DIALOG START */}
+        <Dialog
+          title="Are you sure?"
+          actions={actions}
+          modal={false}
+          open={this.state.dialog}
+          onRequestClose={this.handleClose}
+        >
+          Please confirm you would like to delete your account.
+        </Dialog>
+        {/* DIALOG END */}
         {/* SNACKBAR START */}
         <Snackbar
           open={this.state.open}
@@ -164,6 +224,7 @@ class Profile extends Component {
         />
         {/* SNACKBAR END */}
         <Tabs>
+          {/* ACCOUNT SETTINGS START */}
           <Tab label='Account Settings'>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5%' }}>
               <TextField
@@ -184,8 +245,18 @@ class Profile extends Component {
               />
               <FlatButton id="emailBtn" label="Submit" onClick={this.handleEmailSubmit}/>
               <br />
+              <FlatButton
+                id="deleteAccount"
+                label="Delete Account"
+                secondary={true}
+                style={{marginTop: '5%'}}
+                onClick={this.handleDelete}
+              />
             </div>
+
           </Tab>
+          {/* ACCOUNT SETTINGS END */}
+
           <Tab label='Link Twitter Account'>
           <div style={{display: 'flex', justifyContent: 'center', marginTop: '50'}}>
           <Paper style={{width: 500}}>
@@ -261,47 +332,6 @@ class Profile extends Component {
 
                 </TableBody>
                 </Table>
-              </CardActions>
-            </Card>
-
-            <Card>
-              <CardHeader title="Account Settings"
-                          actAsExpander={true}
-                          showExpandableButton={true}
-                          titleColor="#00bcd4"/>
-
-              <CardText expandable={true}>
-                Profile settings here
-              </CardText>
-
-              <CardActions expandable={true}>
-                <div style={style.container2}>
-                  <Card style={style.card2}>
-                    <CardTitle title="Change Username"/>
-                    <CardText>Coming Soon!</CardText>
-                  </Card>
-                  <Card style={style.card2}>
-                    <CardTitle title="Change Email"/>
-                    <CardText>Coming Soon!</CardText>
-                  </Card>
-                </div><br />
-                <div style={style.container2}>
-                  <Card style={style.card2}>
-                    <CardTitle title="Change Password"/>
-                    <CardText>Coming Soon!</CardText>
-                  </Card>
-                  <Card style={style.card2}>
-                    <CardTitle title="Delete Account"/>
-                    <CardText>Permanently Delete your Moonwalk Account</CardText>
-                    <CardActions>
-                      <RaisedButton
-                        label="Delete Account"
-                        onClick={this.onDelete}
-                        primary={true}
-                      />
-                    </CardActions>
-                  </Card>
-                </div>
               </CardActions>
             </Card>
           </div>

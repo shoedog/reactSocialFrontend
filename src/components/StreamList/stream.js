@@ -207,7 +207,7 @@ class StreamList extends Component {
 							id="tweetBox"
 							value={this.state.tweetBox}
 							onChange={this.handleChange}
-							hintText="Tell the world what you're all about OSU FTW!"
+							hintText="Tell the world what you're all about #OSU FTW!"
 							multiLine={true}
 							rows={4}
 							rowsMax={4}
