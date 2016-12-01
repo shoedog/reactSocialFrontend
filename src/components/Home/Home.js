@@ -34,7 +34,7 @@ class Home extends Component {
     const { loginUser, registerUserServer } = this.props;
 
     return (
-      <Paper className={s.paperBlock}>
+      <Paper className={s.paperBlock} zDepth={0}>
         <Tabs >
 
           <Tab label="Sign In" value="a">

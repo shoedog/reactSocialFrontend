@@ -55,7 +55,7 @@ class App extends Component {
                 <NavBar username={user.displayName} windowWidth={this.state.windowWidth} onLogoutClick={this.handleLogoutClick}/>
                 {children}
                 <footer className={s.footer}>
-                    <p className={s.footerLink} target='_blank'>Copyright © 2016 Team Moonwalk</p>
+                    <p className={s.footerLink} target='_blank'></p>
                 </footer>
             </div>
         )

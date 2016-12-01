@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/stream';
 import * as selectors from '../../utils/lib/selectors';
 import TextField from 'material-ui/TextField';
-import { GridList, GridTile } from 'material-ui';
+import { Tabs, Tab, GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -101,11 +101,6 @@ class StreamList extends Component {
 	}
 
 	render() {
-		const paper = {
-			marginTop: 15,
-			marginRight: 0,
-			minWidth: 643
-		};
 
 		const streamItem = {
 			minHeight: 200,
@@ -119,7 +114,9 @@ class StreamList extends Component {
 		const gridList = {
 	    width: '450',
 			display: 'flex',
-			justifyContent: 'center'
+			justifyContent: 'center',
+			marginLeft: '30%',
+			marginTop: 40
 		};
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
@@ -127,8 +124,9 @@ class StreamList extends Component {
 		let link = "";
 
 		return(
-			<Paper className={s.paperBlock} style={paper} zDepth={0}>
-				<h1 className={s.title}>User Stream</h1>
+			<Paper className={s.paperBlock} zDepth={0}>
+				<Tabs>
+				<Tab label="User Stream">
 				<div style={{display: 'flex', justifyContent: 'space-around'}}>
 					{/* BEGIN FEED */}
 					{
@@ -186,6 +184,8 @@ class StreamList extends Component {
 					</div>
 					{/* END SIDEBAR */}
 				</div>
+				</Tab>
+				</Tabs>
 			</Paper>
 		);
 	}

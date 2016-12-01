@@ -32,7 +32,7 @@ export default function setMuiTheme(userAgent) {
       canvasColor: white,
       borderColor: '#e7e7e7',
       pickerHeaderColor: cyan500,
-      shadowColor: fullBlack
+      shadowColor: '#818181'
     },
     appBar: {
         color:  white,
