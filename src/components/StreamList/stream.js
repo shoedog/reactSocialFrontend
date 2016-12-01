@@ -158,15 +158,6 @@ class StreamList extends Component {
 
 					{/* BEGIN SIDEBAR */}
 					<div style={{flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: '50'}}>
-
-						<FlatButton href={link}
-							label='Tweet'
-							icon={<FaTwitter size={12}/>}
-							labelPosition="after"
-							primary={true}
-							viewBox='0 0 64 64'
-							style={{width: 100}}
-						/>
 						<form onSubmit={this.handleSubmit}>
 							<div>
 								<TextField
@@ -184,6 +175,16 @@ class StreamList extends Component {
 					</div>
 					{/* END SIDEBAR */}
 				</div>
+				</Tab>
+				<Tab label="Tweet">
+					<FlatButton href={link}
+						label='Tweet'
+						icon={<FaTwitter size={12}/>}
+						labelPosition="after"
+						primary={true}
+						viewBox='0 0 64 64'
+						style={{width: 100}}
+					/>
 				</Tab>
 				</Tabs>
 			</Paper>
