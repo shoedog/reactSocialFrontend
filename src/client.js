@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
+import setMuiTheme from '../server/setMuiTheme';
 import routes from './routes'
 import configureStore from './configureStore';
 
@@ -22,8 +22,9 @@ const store = configureStore(preloadedState);
  * @param {Object} store - this applies the store
  * @param {Object} history - this applies the history
  */
+const muiTheme = setMuiTheme(navigator.userAgent);
 render(
-  <MuiThemeProvider muiTheme={ getMuiTheme({lightBaseTheme, userAgent: navigator.userAgent}) }>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={browserHistory} routes={routes} />
     </Provider>

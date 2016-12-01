@@ -90,7 +90,7 @@ function renderFullPage(html, preloadedState) {
         window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
       <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-      
+
       <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://localhost:8000/client.js" : "/client.js"} async></script>
     </body>
     </html>
@@ -98,4 +98,3 @@ function renderFullPage(html, preloadedState) {
 }
 
 export default render;
-

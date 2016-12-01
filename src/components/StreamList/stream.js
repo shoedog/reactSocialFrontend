@@ -117,7 +117,7 @@ class StreamList extends Component {
 			color: 'white',
 		};
 		const gridList = {
-	    width: '400',
+	    width: '450',
 			display: 'flex',
 			justifyContent: 'center'
 		};
@@ -129,9 +129,37 @@ class StreamList extends Component {
 		return(
 			<Paper className={s.paperBlock} style={paper} zDepth={0}>
 				<h1 className={s.title}>User Stream</h1>
-				<div style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+				<div style={{display: 'flex', justifyContent: 'space-around'}}>
+					{/* BEGIN FEED */}
+					{
+						( feedItems.length === 0) ?
+								<div>No Content...</div>
+						:
+						<div style={{flex: '10 0 0', display: 'flex', justifyContent: 'center'}}>
+							<GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
+								{feedItems.map((tile) => (
+									<GridTile >
+									<StreamItem key={tile.id}
+										tweetId={tile.id_str}
+										favorited={tile.favorited}
+										retweeted={tile.retweeted}
+										retweetCount={tile.retweet_count}
+										favoriteCount={tile.favorite_count}
+										friend={tile.user.screen_name}
+										avatarImg={tile.user.profile_image_url}
+										textContent={this.getText(tile)}
+										imgs={this.getImgs(tile)}
+										gifs={this.getGif(tile)}
+									/>
+									</GridTile>
+								))}
+							</GridList>
+						</div>
+					}
+					{/* END FEED */}
+
 					{/* BEGIN SIDEBAR */}
-					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+					<div style={{flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: '50'}}>
 
 						<FlatButton href={link}
 							label='Tweet'
@@ -157,34 +185,6 @@ class StreamList extends Component {
 						</form>
 					</div>
 					{/* END SIDEBAR */}
-
-					{/* BEGIN FEED */}
-					{
-						( feedItems.length === 0) ?
-								<div>No Content...</div>
-						:
-						<div style={{display: 'flex', justifyContent: 'center'}}>
-							<GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
-								{feedItems.map((tile) => (
-									<GridTile >
-									<StreamItem key={tile.id}
-										tweetId={tile.id_str}
-										favorited={tile.favorited}
-										retweeted={tile.retweeted}
-										retweetCount={tile.retweet_count}
-										favoriteCount={tile.favorite_count}
-										friend={tile.user.screen_name}
-										avatarImg={tile.user.profile_image_url}
-										textContent={this.getText(tile)}
-										imgs={this.getImgs(tile)}
-										gifs={this.getGif(tile)}
-									/>
-									</GridTile>
-								))}
-							</GridList>
-						</div>
-					}
-					{/* END FEED */}
 				</div>
 			</Paper>
 		);
