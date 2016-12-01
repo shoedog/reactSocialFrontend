@@ -38,7 +38,7 @@ export const getFeed = (req, res) => {
 
 export const postFeedItem = (req, res) => {
   console.log(req.body);
-  fetch('http://54.212.196.159:5000/social/feed', {
+  fetch('http://localhost:5000/social/feed', {
     'method': 'POST',
     headers: {
       'Accept': 'application/json',
@@ -56,7 +56,7 @@ export const postFeedItem = (req, res) => {
 };
 
 export const updateFeedItem = (req, res) => {
-  fetch('http://54.212.196.159:5000/social/feed/:id', {
+  fetch('http://localhost:5000/social/feed/:id', {
     'method': 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -74,7 +74,7 @@ export const updateFeedItem = (req, res) => {
 };
 
 export const deleteFeedItem = (req, res) => {
-  fetch('http://54.212.196.159:5000/social/feed/:id', {
+  fetch('http://localhost:5000/social/feed/:id', {
     'method': 'DELETE',
     headers: {
       'Accept': 'application/json',

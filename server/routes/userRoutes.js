@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
 export const getUsers = (req, res) => {
-  fetch('http://0.0.0.0:5000/user', {
+  fetch('http://localhost:5000/user', {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   })
@@ -15,7 +15,7 @@ export const getUsers = (req, res) => {
 };
 
 export const getUser = (req, res, username) => {
-  fetch(`http://0.0.0.0:5000/user/${username}`, {
+  fetch(`http://localhost:5000/user/${username}`, {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   })
@@ -30,7 +30,7 @@ export const getUser = (req, res, username) => {
 
 export const registerUser = (req, res) => {
   console.log(req.body);
-  fetch('http://0.0.0.0:5000/user', {
+  fetch('http://localhost:5000/user', {
     'method': 'POST',
     headers: {
       'Accept': 'application/json',
@@ -48,7 +48,7 @@ export const registerUser = (req, res) => {
 };
 
 export const loginUser = (req, res) => {
-  fetch('http://0.0.0.0:5000/user/login', {
+  fetch('http://localhost:5000/user/login', {
     'method': 'POST',
     headers: {
       'Accept': 'application/json',
@@ -61,12 +61,13 @@ export const loginUser = (req, res) => {
     })
     .catch( (err) => {
       console.log(err);
+      alert(err);
       res.end(err);
     });
 };
 
 export const updateUser = (req, res, username) => {
-  fetch(`http://0.0.0.0:5000/user/${username}`, {
+  fetch(`http://localhost:5000/user/${username}`, {
     'method': 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -85,7 +86,7 @@ export const updateUser = (req, res, username) => {
 };
 
 export const deleteUser = (req, res, username) => {
-  fetch(`http://0.0.0.0:5000/user/${username}`, {
+  fetch(`http://localhost:5000/user/${username}`, {
     'method': 'DELETE',
     headers: {
       'Accept': 'application/json',

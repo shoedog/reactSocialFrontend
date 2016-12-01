@@ -31,7 +31,7 @@ class StreamList extends Component {
   }
 
 	searchTweets = (term) => {
-		fetch(`http://0.0.0.0:5000/social/stream/${term}`,
+		fetch(`http://localhost:5000/social/stream/${term}`,
 			{
 			})
 		.then((res) => {
@@ -126,8 +126,12 @@ class StreamList extends Component {
 		};
 		const fastack1x = {
 			color: 'white',
-		}
-
+		};
+		const gridList = {
+		    width: '80%',
+		    height: 'auto',
+		    overflowY: 'auto',	
+		};
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
 		let message = '';
@@ -167,8 +171,9 @@ class StreamList extends Component {
 								<div>No Content...</div>
 						:
 						<div style={{display: 'flex', justifyContent: 'center'}}>
-							<GridList cellHeight='auto' style={{width: 400}} padding={10} cols={1}>
+							<GridList cellHeight='auto' style={gridList} padding={10} cols={2}>
 								{feedItems.map((tile) => (
+									<GridTile >
 									<StreamItem key={tile.id}
 										tweetId={tile.id_str}
 										favorited={tile.favorited}
@@ -181,6 +186,7 @@ class StreamList extends Component {
 										imgs={this.getImgs(tile)}
 										gifs={this.getGif(tile)}
 									/>
+									</GridTile>
 								))}
 							</GridList>
 						</div>
