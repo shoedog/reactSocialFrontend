@@ -6,7 +6,9 @@ import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import { TwitterButton, TwitterCount } from 'react-social';
+import FlatButton from 'material-ui/FlatButton';
+import SvgIcon from 'material-ui/SvgIcon';
+import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 import _ from 'lodash';
@@ -111,26 +113,13 @@ class StreamList extends Component {
 			margin: 10,
 		};
 
-		const twtBtn = {
-			backgroundColor: '#00aced',
-			color: 'white',
-			paddingTop: 8,
-			paddingBottom: 13,
-			paddingRight: 17,
-			paddingLeft: 17,
-		};
-
-		const icontwitter = {
-			color: '#00aced'
-
-		};
 		const fastack1x = {
 			color: 'white',
 		};
 		const gridList = {
-		    width: '80%',
-		    height: 'auto',
-		    overflowY: 'auto',	
+	    width: '400',
+			display: 'flex',
+			justifyContent: 'center'
 		};
 		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
 
@@ -138,18 +127,20 @@ class StreamList extends Component {
 		let link = "";
 
 		return(
-				<Paper className={s.paperBlock} style={paper} zDepth={0}>
-					<h1 className={s.title}>User Stream</h1>
-					<br/>
+			<Paper className={s.paperBlock} style={paper} zDepth={0}>
+				<h1 className={s.title}>User Stream</h1>
+				<div style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+					{/* BEGIN SIDEBAR */}
+					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
 
-					<div style={{display: 'flex', justifyContent: 'space-around'}}>
-						<TwitterButton message={message} url={link}  style={twtBtn} >
-								<span className="fa-stack fa-1x icon-twitter" style={icontwitter}>
-	          						<i className="fa fa-square fa-stack-2x"></i>
-									<i className="fa fa-twitter fa-stack-2x" style={fastack1x}></i>
-	        					</span>
-							{" Tweet"}
-						</TwitterButton>
+						<FlatButton href={link}
+							label='Tweet'
+							icon={<FaTwitter size={12}/>}
+							labelPosition="after"
+							primary={true}
+							viewBox='0 0 64 64'
+							style={{width: 100}}
+						/>
 						<form onSubmit={this.handleSubmit}>
 							<div>
 								<TextField
@@ -158,20 +149,22 @@ class StreamList extends Component {
 									floatingLabelText="Search"
 									value={this.state.searchTerm}
 									onChange={this.handleChange}
-								/><br />
+								/>
 								<div>
 									<RaisedButton label="Search" primary={true} type="submit" disabled={this.props.submitting}/>
 								</div>
 							</div>
 						</form>
 					</div>
+					{/* END SIDEBAR */}
 
+					{/* BEGIN FEED */}
 					{
 						( feedItems.length === 0) ?
 								<div>No Content...</div>
 						:
 						<div style={{display: 'flex', justifyContent: 'center'}}>
-							<GridList cellHeight='auto' style={gridList} padding={10} cols={2}>
+							<GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
 								{feedItems.map((tile) => (
 									<GridTile >
 									<StreamItem key={tile.id}
@@ -190,8 +183,10 @@ class StreamList extends Component {
 								))}
 							</GridList>
 						</div>
-						}
-				</Paper>
+					}
+					{/* END FEED */}
+				</div>
+			</Paper>
 		);
 	}
 }
