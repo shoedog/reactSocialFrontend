@@ -137,12 +137,16 @@ class StreamList extends Component {
 
 		return(
 			<div>
+			{/* SNACKBAR START */}
 			<Snackbar
 				open={this.state.open}
 				message="Tweet sent!"
 				autoHideDuration={2000}
 				onRequestClose={this.handleRequestClose}
 			/>
+			{/* SNACKBAR END */}
+
+			{/* START MAIN BLOCK */}
 			<Paper className={s.paperBlock} zDepth={0}>
 				<Tabs>
 				<Tab label="User Stream">
@@ -195,6 +199,8 @@ class StreamList extends Component {
 					{/* END SIDEBAR */}
 				</div>
 				</Tab>
+
+				{/* START TWEET TAB */}
 				<Tab label="Tweet">
 					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10%'}}>
 						<TextField
@@ -218,8 +224,10 @@ class StreamList extends Component {
 						/>
 				</div>
 				</Tab>
+				{/* END TWEET TAB */}
 				</Tabs>
 			</Paper>
+			{/* END MAIN BLOCK */}
 			</div>
 		);
 	}
