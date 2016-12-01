@@ -85,8 +85,8 @@ class Profile extends Component {
     return response.json();
   })
   .then(
-    (result) => { window.location.href = 'http://localhost:3000/profile' },
-    (error) => { window.location.href = 'http://localhost:3000/profile' }
+    (result) => { browserHistory.push( '/profile'); },
+    (error) => { browserHistory.push( '/profile'); }
   );
   }
 
