@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 class SmallMenu extends Component {
   render() {
     const { user, onLogoutClick } = this.props;
-    console.log(user);
     if( user != null)
       return (
 
