@@ -12,25 +12,37 @@ import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 import _ from 'lodash';
+import Snackbar from 'material-ui/Snackbar';
 
 class StreamList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchTerm: ''
+			searchTerm: '',
+			tweetBox: '',
+			open: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.sendTweet = this.sendTweet.bind(this);
+		this.handleRequestClose = this.handleRequestClose.bind(this);
 	}
 
 	state = {
 		isToggleOn: false
 	};
 
-	handleChange(event) {
-    this.setState({searchTerm: event.target.value});
-		//const search = _.debounce((term) => { console.log("FUCK") }, 1000)(this.state.searchTerm);
+	handleChange(e) {
+    this.setState({[e.target.id]: e.target.value});
   }
+
+	handleRequestClose() {
+		this.setState({open: false, tweetBox: ''});
+	}
+
+	sendTweet() {
+		this.setState({open: true});
+	}
 
 	searchTweets = (term) => {
 		fetch(`http://localhost:5000/social/stream/${term}`,
@@ -112,7 +124,7 @@ class StreamList extends Component {
 			color: 'white',
 		};
 		const gridList = {
-	    width: '450',
+	    width: 450,
 			display: 'flex',
 			justifyContent: 'center',
 			marginLeft: '30%',
@@ -124,6 +136,13 @@ class StreamList extends Component {
 		let link = "";
 
 		return(
+			<div>
+			<Snackbar
+				open={this.state.open}
+				message="Tweet sent!"
+				autoHideDuration={2000}
+				onRequestClose={this.handleRequestClose}
+			/>
 			<Paper className={s.paperBlock} zDepth={0}>
 				<Tabs>
 				<Tab label="User Stream">
@@ -177,17 +196,31 @@ class StreamList extends Component {
 				</div>
 				</Tab>
 				<Tab label="Tweet">
-					<FlatButton href={link}
-						label='Tweet'
-						icon={<FaTwitter size={12}/>}
-						labelPosition="after"
-						primary={true}
-						viewBox='0 0 64 64'
-						style={{width: 100}}
-					/>
+					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10%'}}>
+						<TextField
+							id="tweetBox"
+							value={this.state.tweetBox}
+							onChange={this.handleChange}
+							hintText="Tell the world what you're all about OSU FTW!"
+							multiLine={true}
+							rows={4}
+							rowsMax={4}
+							maxLength={140}
+						/>
+						<FlatButton href={link}
+							label='Tweet'
+							icon={<FaTwitter size={12}/>}
+							labelPosition="after"
+							primary={true}
+							viewBox='0 0 64 64'
+							style={{width: 100}}
+							onClick={this.sendTweet}
+						/>
+				</div>
 				</Tab>
 				</Tabs>
 			</Paper>
+			</div>
 		);
 	}
 }
