@@ -6,6 +6,7 @@ import s from './App.css';
 import { logout, checkSession } from '../../actions/user';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { getSessionItem } from '../../utils/lib/sessionUtils';
+import Favicon from 'react-favicon';
 injectTapEventPlugin();
 
 /*
@@ -50,6 +51,7 @@ class App extends Component {
 
         return (
             <div>
+                <Favicon url={'./favicon.ico'} />
                 <NavBar username={user.displayName} windowWidth={this.state.windowWidth} onLogoutClick={this.handleLogoutClick}/>
                 {children}
                 <footer className={s.footer}>
