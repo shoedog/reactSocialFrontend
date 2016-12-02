@@ -2,7 +2,6 @@ import { browserHistory } from 'react-router';
 import userApi from '../utils/fetchHandlers/user';
 import { startAction, successAction,
   failureAction, asyncAction } from '../utils/lib/asyncActionUtils';
-//import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
 export const UPDATE_USER = 'UPDATE_PROFILE';
 export const REGISTER_USER = 'REGISTER_USER';
@@ -14,11 +13,60 @@ export const ROUTE_TO = 'ROUTE_TO';
 export const LOGIN = 'LOGIN';
 export const CHECK_SESSION = 'CHECK_SESSION';
 
+/**
+ * Check Session for User Details to validate Auth State
+ * @param token
+ * @param user
+ * @param userId
+ */
+export const checkSession = (token, user, userId) => ({
+  type: CHECK_SESSION,
+  payload: {
+    user: user,
+    token: token,
+    userId: userId
+  }
+});
+
+/**
+ *
+ */
 export const logout = () => ({
   type: LOGOUT
 });
 
-// Synchronous local action: updates an item locally
+/**
+ * Action on Auth Success
+ * @param payload: Auth result: added to Reducer
+ */
+export const authSuccess = (payload) => ({
+  type: AUTH_SUCCESS,
+  payload,
+  meta: {
+    done: true,
+  },
+});
+
+/**
+ * Action on Auth Failure
+ * @param payload: Auth failure result: Added to Reducer
+ */
+export const authFailure = (payload) => ({
+  type: AUTH_FAILURE,
+  error: true,
+  payload,
+  meta: {
+    done: true,
+  }
+});
+
+/**
+ * Async Action: Register user and call Fulfilled or Rejected
+ * @param username
+ * @param email
+ * @param password
+ * @returns {function(*)} : See Redux-Thunk Docs for Dispatch
+ */
 export const registerUserServer = (username, email, password) => {
   return dispatch => {
     return dispatch({
@@ -37,15 +85,12 @@ export const registerUserServer = (username, email, password) => {
   }
 };
 
-export const checkSession = (token, user, userId) => ({
-  type: CHECK_SESSION,
-  payload: {
-    user: user,
-    token: token,
-    userId: userId
-  }
-});
-
+/**
+ * Async Action: Login user and call Fulfilled or Rejected
+ * @param username
+ * @param password
+ * @returns {function(*)} : See Redux-Thunk Docs for Dispatch
+ */
 export const loginUser = (username, password) => {
   return dispatch => {
     return dispatch({
@@ -64,6 +109,12 @@ export const loginUser = (username, password) => {
   }
 };
 
+/**
+ * Async Action: Delete user account and call Fulfilled or Rejected
+ * @param userId
+ * @param userToken
+ * @returns {function(*)}  : See Redux-Thunk Docs for Dispatch
+ */
 export const deleteAccount = (userId, userToken) => {
   return dispatch => {
     return dispatch({
@@ -83,30 +134,11 @@ export const deleteAccount = (userId, userToken) => {
       alert(`Error: ${error}`);
     })
   }
-}
-
-export const authSuccess = (payload) => ({
-  type: AUTH_SUCCESS,
-  payload,
-  meta: {
-    done: true,
-  },
-});
-
-
-export const authFailure = (payload) => ({
-  type: AUTH_FAILURE,
-  error: true,
-  payload,
-  meta: {
-    done: true,
-  }
-
-});
+};
 
 
 /**
- * Fetch Feed Items from server: GET
+ * Fetch user Profile from server: GET
  * Action Type, start, success, failure, and async actions
  * using helpers from asyncActionUtils.js
  */
@@ -120,42 +152,6 @@ export const fetchUserProfile = asyncAction({
   success: fetchUserProfileSuccess,
   failure: fetchUserProfileFailure,
 });
-
-
-/**
- * Register User: POST
- * Action Type, start, success, failure, and async actions
- * using helpers from asyncActionUtils.js
- */
-/*
-const registerUserServerType = 'registerUserServer';
-export const registerUserServerStart = startAction(registerUserServerType);
-export const registerUserServerSuccess = successAction(registerUserServerType)
-export const registerUserServerFailure = failureAction(registerUserServerType);
-export const registerUserServer = asyncAction({
-  func: (username, email, password) => userApi.USER.register(username, email, password),
-  start: registerUserServerStart,
-  success: registerUserServerSuccess,
-  failure: registerUserServerFailure,
-});
- */
-
-/**
- * Login : POST
- * Action Type, start, success, failure, and async actions
- * using helpers from asyncActionUtils.js
- */
-/*
-const loginUserType = 'loginUser';
-export const loginUserStart = startAction(loginUserType);
-export const loginUserSuccess = successAction(loginUserType);
-export const loginUserFailure = failureAction(loginUserType);
-export const loginUser = asyncAction({
-  func: (username, password) => userApi.USER.login(username, password),
-  start: loginUserStart,
-  success: loginUserSuccess,
-  failure: loginUserFailure,
-});*/
 
 
 /**

@@ -23,7 +23,6 @@ class BottomBar extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
     this.renderFav = this.renderFav.bind(this);
     this.state = {
       selectedIndex: 0,

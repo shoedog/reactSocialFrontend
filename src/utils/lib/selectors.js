@@ -23,3 +23,24 @@ export const getOpenFeedItemId = (state) =>
  */
 export const getFeedItem = (state, id) =>
   state.byId[id] || null;
+
+/**
+ * This maps the sentimentItems to an array of ids
+ * Used for a list of items
+ */
+//export const getSentimentItems = (state) =>
+  //  state.sentimentTweets.map((id) => state.sentimentById.tweets[id]);
+
+/**
+ * Sets the open SentimentItem id in state
+ * used for an individual selected item in a list
+ */
+//export const getOpenSentimentItemId = (state) =>
+//    state.openSentimentItemId;
+
+/**
+ * Gets the id of an item to get the item
+ * Used for individual items
+ */
+//export const getSentimentItem = (state, id) =>
+//state.sentimentById.tweets[id] || null;

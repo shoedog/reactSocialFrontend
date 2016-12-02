@@ -11,7 +11,6 @@ import SvgIcon from 'material-ui/SvgIcon';
 import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
-import _ from 'lodash';
 import Snackbar from 'material-ui/Snackbar';
 
 class StreamList extends Component {

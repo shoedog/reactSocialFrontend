@@ -6,6 +6,10 @@ import {
 import { dissoc, without, merge, prepend } from 'ramda';
 import { eraseStorage, getSessionItem } from '../utils/lib/sessionUtils';
 
+/**
+ *
+ * @type {{error: null, token: null, userObj: null, displayName: null}}
+ */
 const initialState = {
   error: null, // last occurred error
   token: null,
@@ -13,6 +17,15 @@ const initialState = {
   displayName: null,
 };
 
+/**
+ *
+ * @param state
+ * @param type
+ * @param payload
+ * @param meta
+ * @param error
+ * @returns {*}
+ */
 export const user = (state = initialState, { type, payload, meta, error }) => {
   switch(type){
       // saves the token into the redux store && session storage
@@ -70,6 +83,14 @@ export const user = (state = initialState, { type, payload, meta, error }) => {
   }
 };
 
+/**
+ *
+ * @param state
+ * @param type
+ * @param payload
+ * @param route
+ * @returns {*}
+ */
 export const requests = ( state = {},  {type, payload, route }) => {
   switch (type) {
     case AUTH_PENDING:

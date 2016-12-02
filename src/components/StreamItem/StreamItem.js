@@ -46,7 +46,6 @@ const StreamItem = (props) => {
       imgs,
       gifs
     } = props;
-    console.log(friend);
 
   const handleClickTop = () => {
     window.open('http://twitter.com/intent/user?screen_name=' + friend, '_blank')

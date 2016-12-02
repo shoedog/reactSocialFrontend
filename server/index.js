@@ -2,24 +2,18 @@ import express from 'express';
 import http from 'http';
 import React from 'react';
 import passport from 'passport';
-import session from 'express-session';
 import render from './routes/handleRender';
 //import fetch from 'isomorphic-fetch';
 import { getFeed, postFeedItem,
   updateFeedItem, deleteFeedItem } from './routes/feedItemsApi';
 import { getUsers, getUser, registerUser,
   loginUser, updateUser, deleteUser } from './routes/userRoutes';
-import passportTwitter from './config/strategies/passportTwitter';
 
 const app = express();
 let router = express.Router();
 const server = new http.Server(app);
 app.use(express.static('public/static/dist'));
 app.use('/static', express.static('/public/static'));
-// required for passport
-//app.use(session({ secret: 'moonwalkissweet' })); // session secret
-app.use(passport.initialize());
-//app.use(passport.session()); // persistent login sessions
 
 // Mounting for SSR
 app.get(['/'], render);
