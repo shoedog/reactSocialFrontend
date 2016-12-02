@@ -38,7 +38,7 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center',
     width: "100%"
-  }
+  },
 }
 
 function mapStateToProps(state) {
@@ -223,6 +223,8 @@ class Profile extends Component {
           onRequestClose={this.handleRequestClose}
         />
         {/* SNACKBAR END */}
+        <Paper>
+        <h1 style={{'textAlign':'center'}}>User Profile: {user.displayName}</h1>
         <Tabs>
           {/* ACCOUNT SETTINGS START */}
           <Tab label='Account Settings'>
@@ -253,25 +255,20 @@ class Profile extends Component {
                 onClick={this.handleDelete}
               />
             </div>
-
           </Tab>
           {/* ACCOUNT SETTINGS END */}
 
-          <Tab label='Link Twitter Account'>
+          <Tab label='Link Social Media'>
           <div style={{display: 'flex', justifyContent: 'center', marginTop: '50'}}>
           <Paper style={{width: 500}}>
-          <h1>User Profile: {user.displayName}</h1>
+          
           <div style={style.container}>
 
             <Card style={style.card}>
-              <CardHeader title="Link Social Media"
-                          actAsExpander={true}
-                          showExpandableButton={true}
-                          titleColor="#00bcd4" />
-              <CardText expandable={true}>
+              <CardText>
                 Select which Social Media platforms you would like to link to your account:
               </CardText>
-              <CardActions expandable={true}>
+              <CardActions>
                 <Table selectable={false}>
                 <TableBody>
 
@@ -339,6 +336,7 @@ class Profile extends Component {
           </div>
           </Tab>
         </Tabs>
+        </Paper>
         </div>
       );
     else
