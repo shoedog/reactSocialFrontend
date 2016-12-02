@@ -9,7 +9,10 @@ const NavBar = (props) => {
 
     return (
         <AppBar
-            title = {<Link to="/login"> <FlatButton label="Moonwalk"/> </Link>}
+
+                title={ ( username == null ) ?
+                    <Link to="/login"><FlatButton label="Moonwalk"/></Link>
+                    : <Link to="/profile"><FlatButton label="Moonwalk"/> </Link>}
             showMenuIconButton={false}
             iconElementRight= {
                 ( windowWidth > 600 && username == null ) ?

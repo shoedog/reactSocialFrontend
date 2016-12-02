@@ -12,7 +12,6 @@ import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 import Snackbar from 'material-ui/Snackbar';
-import { getSessionItem } from '../../utils/lib/sessionUtils';
 import { fetchJson } from '../../utils/lib/fetchUtils';
 
 class StreamList extends Component {
@@ -43,8 +42,18 @@ class StreamList extends Component {
 		this.setState({open: false, tweetBox: ''});
 	}
 
+
 	sendTweet() {
-		this.setState({open: true});
+		let text = this.state.tweetBox;
+		return fetchJson(`http://localhost:5000/social/post`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: text,
+		})
+		.then((res) => {
+			console.log(res);
+			this.setState({open: true});
+		})
 	}
 
 	searchTweets = (term) => {

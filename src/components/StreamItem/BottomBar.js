@@ -50,7 +50,7 @@ class BottomBar extends Component {
           }
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         const newState = ! this.state.fav;
         this.setState({fav: newState});
       });
@@ -68,7 +68,7 @@ class BottomBar extends Component {
           }
       })
       .then((res) => {
-        console.log(res)
+        //console.log(res)
         const newState = ! this.state.rt;
         this.setState({rt: newState});
 
