@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import { Tabs, Tab, GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import FlatButton from 'material-ui/FlatButton';
 import SvgIcon from 'material-ui/SvgIcon';
 import FaTwitter from 'react-icons/lib/fa/twitter';
@@ -39,9 +40,6 @@ class Sentiment extends Component {
 	}
 
 	searchTweets = (term) => {
-        /*fetch(`http://localhost:5000/social/stream/${term}`,
-         {
-         })*/
         this.props.fetchSentimentServer(term)
 	};
 
@@ -135,35 +133,26 @@ class Sentiment extends Component {
 								<div>No Content...</div>
 						:
                             <div style={{flex: '10 0 0', display: 'flex', justifyContent: 'center'}}>
-                                <GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHeaderColumn>Sentiment Term</TableHeaderColumn>
+                                            <TableHeaderColumn>Total Value</TableHeaderColumn>
+                                            <TableHeaderColumn>Average Value</TableHeaderColumn>
+                                            <TableHeaderColumn>Polarity</TableHeaderColumn>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
                                     {sentimentGroup.map((tile) => (
-                                        <GridTile key={tile}>
-                                            <div>{tile.name}</div>
-                                            <div>Overall: {tile.value.overall}</div>
-                                            <div>Average: {tile.value.average}</div>
-                                            <div>Polarity: {tile.value.polar}</div>
-                                            {tile.value.tweets.map((tweet) => (
-                                                <span>
-                                                    <StreamItem key={tweet.id_str}
-                                                                tweetId={tweet.id_str}
-                                                                favorited={tweet.favorited}
-                                                                retweeted={tweet.retweeted}
-                                                                retweetCount={tweet.retweet_count}
-                                                                favoriteCount={tweet.favorite_count}
-                                                                friend={tweet.user.screen_name}
-                                                                avatarImg={tweet.user.profile_image_url}
-                                                                textContent={this.getText(tweet)}
-                                                    />
-                                                    <span>
-                                                        Comparative: {tweet.moonwalkScore.comparative}
-                                                        <br/>
-                                                        Score: {tweet.moonwalkScore.score}
-                                                    </span>
-                                                </span>
-                                            ))}
-                                        </GridTile>
+                                            <TableRow key={tile.name}>
+                                                <TableRowColumn>{tile.name}</TableRowColumn>
+                                                <TableRowColumn>{tile.value.overall}</TableRowColumn>
+                                                <TableRowColumn>{tile.value.average}</TableRowColumn>
+                                                <TableRowColumn>{tile.value.polar}</TableRowColumn>
+                                            </TableRow>
                                     ))}
-                                </GridList>
+                                    </TableBody>
+                                </Table>
                             </div>
 
 					}
@@ -196,8 +185,18 @@ class Sentiment extends Component {
 }
 
 /*
-{tile.tweets.map((tweet) => (
- <StreamItem key={tweet}
+ <GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
+ <span>
+ <GridTile key={tile.name}>
+ <div>{tile.name}</div>
+ <div>Overall: {tile.value.overall}</div>
+ <div>Average: {tile.value.average}</div>
+ <div>Polarity: {tile.value.polar}</div>
+
+ </GridTile>
+ {tile.value.tweets.map((tweet) => (
+ <span>
+ <StreamItem key={tweet.id_str}
  tweetId={tweet.id_str}
  favorited={tweet.favorited}
  retweeted={tweet.retweeted}
@@ -206,39 +205,18 @@ class Sentiment extends Component {
  friend={tweet.user.screen_name}
  avatarImg={tweet.user.profile_image_url}
  textContent={this.getText(tweet)}
- />))}
-
- <div style={{flex: '10 0 0', display: 'flex', justifyContent: 'center'}}>
- <GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
- {sentimentGroup.tweets.map((tile) => (
- <GridTile >
- <StreamItem key={tile.id}
- tweetId={tile.id_str}
- favorited={tile.favorited}
- retweeted={tile.retweeted}
- retweetCount={tile.retweet_count}
- favoriteCount={tile.favorite_count}
- friend={tile.user.screen_name}
- avatarImg={tile.user.profile_image_url}
- textContent={this.getText(tile)}
- imgs={this.getImgs(tile)}
- gifs={this.getGif(tile)}
  />
- </GridTile>
+ <span>
+ Comparative: {tweet.moonwalkScore.comparative}
+ <br/>
+ Score: {tweet.moonwalkScore.score}
+ </span>
+ </span>
  ))}
+ </span>
  </GridList>
- </div>
 
 
-Sentiment.propTypes = {
-	feedItems: PropTypes.arrayOf(PropTypes.shape({
-		content: PropTypes.string.isRequired,
-		id: PropTypes.string.isRequired,
-	}).isRequired).isRequired,
-	openFeedItem: PropTypes.func.isRequired,
-	addFeedItem: PropTypes.func.isRequired,
-	openFeedItemId: PropTypes.string,
-	fetchFeedItems: PropTypes.func.isRequired,
 };*/
 
 const selector = (state) => ({
