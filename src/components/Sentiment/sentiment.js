@@ -129,9 +129,6 @@ class Sentiment extends Component {
 				<div style={{display: 'flex', justifyContent: 'space-around'}}>
 					{/* BEGIN FEED */}
 					{
-						( sentimentGroup.length === 0) ?
-								<div>No Content...</div>
-						:
                             <div style={{flex: '10 0 0', display: 'flex', justifyContent: 'center'}}>
                                 <Table>
                                     <TableHeader>
@@ -144,7 +141,7 @@ class Sentiment extends Component {
                                     </TableHeader>
                                     <TableBody>
                                     {sentimentGroup.map((tile) => (
-                                            <TableRow key={tile.name}>
+                                            <TableRow key={tile.name} striped=true >
                                                 <TableRowColumn>{tile.name}</TableRowColumn>
                                                 <TableRowColumn>{tile.value.overall}</TableRowColumn>
                                                 <TableRowColumn>{tile.value.average}</TableRowColumn>
