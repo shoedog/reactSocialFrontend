@@ -4,8 +4,6 @@ import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import {List, ListItem} from 'material-ui/List';
 import BottomBar from './BottomBar';
-import s from './streamItem.css';
-import Link from 'react-router';
 
 const style = {
     minHeight: 200,
@@ -30,8 +28,6 @@ const avatar = {
 const header = {
     height: 50,
 };
-
-
 
 const StreamItem = (props) => {
     const {
@@ -71,7 +67,7 @@ const StreamItem = (props) => {
                             <span></span>
                             :
                             imgs.map((image) => (
-                                <img className={{objectFit: 'contain'}} src={image.media_url + ':thumb'}/>
+                                <img className={{objectFit: 'contain'}} src={image.media_url + ':thumb'} key={[image]}/>
 
                             ))
                         }
@@ -79,7 +75,7 @@ const StreamItem = (props) => {
                             <span></span>
                             :
                             gifs.map((gif) => (
-                                <video autoPlay className={{objectFit: 'contain'}}><source src={gif.video_info.variants[0].url} type="video/mp4"/> </video>
+                                <video autoPlay className={{objectFit: 'contain'}}><source src={gif.video_info.variants[0].url} type="video/mp4" key={[gif]}/> </video>
 
                             ))
                         }

@@ -5,13 +5,15 @@ import * as selectors from '../../utils/lib/selectors';
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab, GridList, GridTile } from 'material-ui';
 import Paper from 'material-ui/Paper';
+import Drawer from 'material-ui/Drawer';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import SvgIcon from 'material-ui/SvgIcon';
 import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 import Snackbar from 'material-ui/Snackbar';
+import { getSessionItem } from '../../utils/lib/sessionUtils';
+import { fetchJson } from '../../utils/lib/fetchUtils';
 
 class StreamList extends Component {
 	constructor(props) {
@@ -19,7 +21,9 @@ class StreamList extends Component {
 		this.state = {
 			searchTerm: '',
 			tweetBox: '',
-			open: false
+			open: false,
+			dopen: false,
+			searchData: null,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,12 +48,18 @@ class StreamList extends Component {
 	}
 
 	searchTweets = (term) => {
-		fetch(`http://localhost:5000/social/stream/${term}`,
-			{
-			})
+		let options = { method: 'GET'};
+		return fetchJson(`http://localhost:5000/social/stream/${term}`,
+			{options})
 		.then((res) => {
 			console.log(res);
-		});
+			this.handleDrawer(res.statuses);
+		})
+	};
+
+	handleDrawer = (data) => {
+		this.setState({searchData: data});
+		this.setState({dopen: !this.state.dopen});
 	};
 
 	handleSubmit(e) {
@@ -111,17 +121,49 @@ class StreamList extends Component {
 		}
 	}
 
+	getDrawer(searchGroup) {
+
+
+		if (searchGroup == null ) {
+			return (
+				<div>
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					{/* Begin Left Drawer */}
+					<Drawer open={this.state.dopen} width={400} docked={false} onRequestChange={(dopen) => this.setState({dopen})}>
+						<GridList cellHeight='auto' style={{
+							width: 350,
+							display: 'flex',
+							justifyContent: 'center',
+							marginLeft: '10%',
+							marginTop: 40
+						}} padding={10} cols={1}>
+							{searchGroup.map((tweet) => (
+								<GridTile key={tweet.id_str}>
+									<StreamItem
+										tweetId={tweet.id_str}
+										favorited={tweet.favorited}
+										retweeted={tweet.retweeted}
+										retweetCount={tweet.retweet_count}
+										favoriteCount={tweet.favorite_count}
+										friend={tweet.user.screen_name}
+										avatarImg={tweet.user.profile_image_url}
+										textContent={this.getText(tweet)} />
+								</GridTile>
+							))}
+						</GridList>
+					</Drawer>
+					{/* End Left Drawer */}
+				</div>
+			);
+		}
+	}
+
 	render() {
 
-		const streamItem = {
-			minHeight: 200,
-			minWidth: 300,
-			margin: 10,
-		};
-
-		const fastack1x = {
-			color: 'white',
-		};
 		const gridList = {
 	    width: 450,
 			display: 'flex',
@@ -129,9 +171,8 @@ class StreamList extends Component {
 			marginLeft: '30%',
 			marginTop: 40
 		};
-		const { feedItems, openFeedItemId, addFeedItem, openFeedItem } = this.props;
+		const { feedItems } = this.props;
 
-		let message = '';
 		let link = "";
 
 		return(
@@ -158,8 +199,8 @@ class StreamList extends Component {
 						<div style={{flex: '10 0 0', display: 'flex', justifyContent: 'center'}}>
 							<GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
 								{feedItems.map((tile) => (
-									<GridTile >
-									<StreamItem key={tile.id}
+									<GridTile key={tile.id_str}>
+									<StreamItem
 										tweetId={tile.id_str}
 										favorited={tile.favorited}
 										retweeted={tile.retweeted}
@@ -194,6 +235,8 @@ class StreamList extends Component {
 								</div>
 							</div>
 						</form>
+						<br/>
+						<RaisedButton label="Open Search Sidebar" primary={true} disabled={(this.state.searchData === null)}/>
 					</div>
 					{/* END SIDEBAR */}
 				</div>
@@ -227,6 +270,10 @@ class StreamList extends Component {
 				</Tabs>
 			</Paper>
 			{/* END MAIN BLOCK */}
+
+				{/* Begin Left Drawer */}
+				{this.getDrawer(this.state.searchData)}
+				{/* End Left Drawer */}
 			</div>
 		);
 	}
@@ -234,12 +281,9 @@ class StreamList extends Component {
 
 StreamList.propTypes = {
 	feedItems: PropTypes.arrayOf(PropTypes.shape({
-		content: PropTypes.string.isRequired,
-		id: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
 	}).isRequired).isRequired,
-	openFeedItem: PropTypes.func.isRequired,
 	addFeedItem: PropTypes.func.isRequired,
-	openFeedItemId: PropTypes.string,
 	fetchFeedItems: PropTypes.func.isRequired,
 };
 

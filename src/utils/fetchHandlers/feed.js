@@ -4,15 +4,6 @@ import { checkStatus, fetchJson } from '../lib/fetchUtils';
 // Create  schema for normalizr
 const feedItems = new Schema('feedItems');
 
-// Modify response for props
-// We can do it here or on server
-export const objConvert = (data) => {
-  return data.map((json) => {
-    let obj = JSON.parse(json);
-    return obj;
-  });
-};
-
 // Process data from fetch:
 export const normalizeFeedItems = (data) => normalize(data, arrayOf(feedItems));
 
@@ -25,7 +16,6 @@ export const returnFeedItemsAndIds = ({ entities: {feedItems}, result: feedItemI
 export default {
   feedItems: {
     fetchFeed() {
-
       let options = { method: 'GET'};
       const loggedIn = sessionStorage.getItem('token');
       const userId = sessionStorage.getItem('userId');
@@ -34,9 +24,6 @@ export default {
           Authorization: 'Bearer ' + loggedIn
         }
       }
-      console.log(userId);
-      // return loggedIn
-      // fetchJson('httplocalhost:5000/social/feed
       return fetchJson(`http://localhost:5000/social/feed/${userId}`, options)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);

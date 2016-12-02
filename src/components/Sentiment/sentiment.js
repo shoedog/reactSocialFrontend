@@ -59,7 +59,6 @@ class Sentiment extends Component {
 	}
 
     handleDrawer = (row) => {
-        console.log(row[0]);
         this.setState({row: row[0]});
         this.setState({dopen: !this.state.dopen});
     };
@@ -104,8 +103,6 @@ class Sentiment extends Component {
 			return gifs;
 		}
 	}
-
-
 
     getDrawer(sentimentGroup) {
         var myNamespace = {};
@@ -294,74 +291,6 @@ class Sentiment extends Component {
 		);
 	}
 }
-
-/*
- {
- ( sentimentGroup.length === 0) ?
- <div></div>
- :
- <div>
- <Drawer open={this.state.dopen}>
- <GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
- <GridTile>
- </GridTile>
- {sentimentGroup[this.state.row].value.tweets.map((tweet) => (
- <span>
- <StreamItem key={tweet.id_str}
- tweetId={tweet.id_str}
- favorited={tweet.favorited}
- retweeted={tweet.retweeted}
- retweetCount={tweet.retweet_count}
- favoriteCount={tweet.favorite_count}
- friend={tweet.user.screen_name}
- avatarImg={tweet.user.profile_image_url}
- textContent={this.getText(tweet)}
- />
- <span>
- Comparative: {tweet.moonwalkScore.comparative}
- <br/>
- Score: {tweet.moonwalkScore.score}
- </span>
- </span>
- ))}
-
- </GridList>
- </Drawer>
- </div>}
-
- <GridList cellHeight='auto' style={gridList} padding={10} cols={1}>
- <span>
- <GridTile key={tile.name}>
- <div>{tile.name}</div>
- <div>Overall: {tile.value.overall}</div>
- <div>Average: {tile.value.average}</div>
- <div>Polarity: {tile.value.polar}</div>
-
- </GridTile>
- {tile.value.tweets.map((tweet) => (
- <span>
- <StreamItem key={tweet.id_str}
- tweetId={tweet.id_str}
- favorited={tweet.favorited}
- retweeted={tweet.retweeted}
- retweetCount={tweet.retweet_count}
- favoriteCount={tweet.favorite_count}
- friend={tweet.user.screen_name}
- avatarImg={tweet.user.profile_image_url}
- textContent={this.getText(tweet)}
- />
- <span>
- Comparative: {tweet.moonwalkScore.comparative}
- <br/>
- Score: {tweet.moonwalkScore.score}
- </span>
- </span>
- ))}
- </span>
- </GridList>
-
-
-};*/
 
 const selector = (state) => ({
 	sentimentItems: selectors.getSentimentItems(state),

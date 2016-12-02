@@ -82,15 +82,6 @@ class BottomBar extends Component {
     return (
       <Paper zDepth={1}>
           <BottomNavigation>
-
-              <BottomNavigationItem label="Comments"
-                icon={<Forum/>}
-                onTouchTap={() => this.select(0)}
-              ></BottomNavigationItem>
-              <BottomNavigationItem label="Comment"
-                icon={<Comment/>}
-                onTouchTap={() => this.select(1)}
-              />
               <BottomNavigationItem label={favoriteCount}
                 icon={this.renderFav()}
                 onTouchTap={() => this.likeTweet(tweetId)}
@@ -104,6 +95,16 @@ class BottomBar extends Component {
     )
   }
 };
+
+/*
+<BottomNavigationItem label="Comments"
+                      icon={<Forum/>}
+                      onTouchTap={() => this.select(0)}
+></BottomNavigationItem>
+<BottomNavigationItem label="Comment"
+icon={<Comment/>}
+onTouchTap={() => this.select(1)}
+/>*/
 
 const styles = {
   parent: {
