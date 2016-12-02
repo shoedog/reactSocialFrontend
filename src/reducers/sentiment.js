@@ -20,8 +20,8 @@ export const sentimentGroup = (state = [], { type, payload, meta, error }) => {
     switch (type) {
         case SENTIMENT_SUCCESS:
             if (meta.done && !error) {
-                console.log(payload);
-                return prepend( {name: [payload.term], value: payload.result}, state)
+                console.log(state);
+                return prepend( {name: payload.term, value: payload.result}, state)
             }
             return state;
 
