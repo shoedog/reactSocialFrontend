@@ -13,6 +13,7 @@ import { fetchJson } from '../../utils/lib/fetchUtils';
 import cities from '../../utils/lib/cities';
 
 class AvailableTrends extends Component {
+  mixins: [React.addons.LinkedStateMixin]
     constructor(props) {
         super(props);
         this.state = {
@@ -25,12 +26,16 @@ class AvailableTrends extends Component {
     }
 
     handleClick(e) {
-        console.log(e);
+      this.getTrending(e);
     }
 
     getId = (e) => {
       console.log(e)  ;
     };
+
+    comoponentWillUpdate() {
+      console.log(this.state)
+    }
 
 
     /**
@@ -38,8 +43,7 @@ class AvailableTrends extends Component {
      *
      *
      * **/
-    getTrending = (e) => {
-        console.log(e);
+    getTrending = (id) => {
         let options = { method: 'GET'};
         return fetchJson(`http://localhost:5000/social/trends/place/${id}`,
             {options})
@@ -141,6 +145,7 @@ class AvailableTrends extends Component {
 
     render() {
         let link = "";
+
         return(
             <div>
 
@@ -149,9 +154,9 @@ class AvailableTrends extends Component {
                     <div style={{display: 'flex', }}>
                         <div>
                             {/* Begin Place List */}
-                            {cities.map((city) => (
+                            {cities.map((city, handle=fn) => (
                                 <ul key={city.woied}>
-                                    <li> <FlatButton label={city.city} onClick={(e) => this.handleClick(e)} /></li>
+                                    <li> <FlatButton label={city.city} onClick={this.handleClick.bind(this, city['woeid'])} /></li>
                                 </ul>
                             ))}
 
