@@ -31,7 +31,7 @@ export default {
     register(username, email, password) {
       //console.log("req sent");
       return fetchJson(
-        'http://0.0.0.0:5000/user',
+        'http://54.212.196.159:5000/user',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -42,7 +42,7 @@ export default {
 
     login(username, password) {
       return fetchJson(
-        `http://0.0.0.0:5000/user/login`,
+        `http://54.212.196.159:5000/user/login`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
