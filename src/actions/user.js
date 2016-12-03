@@ -77,7 +77,7 @@ export const registerUserServer = (username, email, password) => {
       console.log(action.type);
       if( action.type === 'REGISTER_USER_FULFILLED'){
         dispatch(authSuccess(value));
-        browserHistory.push( '/newUserSetup');
+        browserHistory.push( '/profile');
       } else if ( action.type === 'LOGIN_REJECTED'){
         dispatch(authFailure(value));
       }

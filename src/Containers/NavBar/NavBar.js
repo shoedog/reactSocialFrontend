@@ -9,7 +9,6 @@ const NavBar = (props) => {
 
     return (
         <AppBar
-
                 title={ ( username == null ) ?
                     <Link to="/login"><FlatButton label="Moonwalk"/></Link>
                     : <Link to="/profile"><FlatButton label="Moonwalk"/> </Link>}

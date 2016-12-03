@@ -42,12 +42,19 @@ class StreamList extends Component {
 		this.setState({open: false, tweetBox: ''});
 	}
 
-
+/**
+ *		TWEET FUNCTION
+ *
+ *
+ */
 	sendTweet() {
+		const userId = sessionStorage.getItem('userId');
+		const userToken = sessionStorage.getItem('token');
 		let text = this.state.tweetBox;
 		return fetchJson(`http://localhost:5000/social/post`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Bearer' + userToken },
 			body: text,
 		})
 		.then((res) => {

@@ -1,0 +1,111 @@
+div.Stream {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.paperBlock {
+    align-self: center;
+    /*text-align: center;*/
+    padding: 20px;
+    background-color: #eee;
+}
+
+.paperBlock .title {
+    background-color: #00bcd4;
+    margin: 0px;
+    padding: 10px;
+}
+
+.gridList {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.gridTile{
+    background-color: lightblue;
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+}
+
+
+.avatar {
+    text-align: left;
+    margin-left: -7px;
+
+}
+
+#tweetButton {
+   margin-top: 10px;
+    margin-bottom: 10px;
+}
+/*div.Stream > h1 {
+    text-align: center;
+}
+
+.SideBarToggle {
+    position: absolute;
+    z-index: 1;
+    top: 92px;
+    max-width: 25%;
+    padding: 20px;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    height: 18px;
+    background-color: #FFFFFF;
+    color: #585555;   
+}
+
+.SideBarToggle:hover {
+	background-color: #9b9797;
+	color: white;
+}
+
+div.StreamContent {
+    background-color: #d8d8d8;
+    border: solid black;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.empty {
+    text-align: center;
+}
+
+.addFeedItemButton {
+    width: 75%;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid white;
+    border-radius: 3px;
+    color: #f1f1f1;
+}
+
+.selected {
+    border-right: 0.8rem solid #f3805b,
+}
+
+.feedItem {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 0.25rem;
+    padding: 0.25rem 1rem;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-radius: 3px;
+    color: darkblue;
+    background-color: silver;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
+    transition: border-right 0.1s linear;
+}
+
+.newFeedItem {
+    color: #c3c3c3;
+}*/

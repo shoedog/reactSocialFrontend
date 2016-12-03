@@ -26,6 +26,8 @@ class SmallMenu extends Component {
             <Divider />
             <MenuItem primaryText="Profile" containerElement={<Link to="/profile"/>}/>
             <MenuItem primaryText="Stream" containerElement={<Link to="/stream"/>}/>
+            <MenuItem primaryText="Trending"
+                      containerElement={<Link to="/trends"/>}/>
             <MenuItem primaryText="Sentiment Analysis" containerElement={<Link to="/sentiment"/>}/>
             <MenuItem primaryText="Sign out" onClick={onLogoutClick}
                       containerElement={<Link to="/login"/>}/>
@@ -40,10 +42,12 @@ class SmallMenu extends Component {
           >
             <MenuItem primaryText="Sign In or Sign Up"
                       containerElement={<Link to="/login"/>}/>
-            <MenuItem primaryText="About"
-                      containerElement={<Link to="/about"/>}/>
+            <MenuItem primaryText="Trending"
+                      containerElement={<Link to="/trends"/>}/>
             <MenuItem primaryText="Sentiment Analysis"
                       containerElement={<Link to="/sentiment"/>}/>
+            <MenuItem primaryText="About"
+                      containerElement={<Link to="/about"/>}/>
             <MenuItem primaryText="Contact"
                       containerElement={<Link to="/contact"/>}/>
 
