@@ -71,30 +71,43 @@ function handleRender(req, res, renderProps) {
  * @returns {string}
  */
 function renderFullPage(html, preloadedState) {
-  return `
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Moonwalk</title>
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.2.65/css/materialdesignicons.min.css">
-        <link rel="stylesheet" href="/styles.css">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    </head>
-    <body style="margin:0">
-    <div id="root">${html}</div>
-      <script>
-        window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
-      </script>
-      <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-
-      <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://localhost:8000/client.js" : "/client.js"} async></script>
-    </body>
-    </html>
-`
+  fs.readFile('./public/static/index.html', 'utf8', function (err, file) {
+       if (err) {
+          return console.log(err);
+        }
+       let document = file.replace(/<div id="root"><\/div>/, `<div id="root">${html}</div>`);
+      document = document.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${strState}</script>`);
+       if(process.env.NODE_ENV === 'development') {
+          document = document.replace(
+              /<script type="application\/javascript" src="\/client.js" async><\/script>/,
+                  `<script type="application/javascript" src="http://localhost:8000/client.js" async></script>`);
+         }
+        res.send(document);
+      });
+// return `
+//   <!doctype html>
+//   <html lang="en">
+//   <head>
+//       <meta charset="utf-8">
+//       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//       <title>Moonwalk</title>
+//       <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+//       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+//       <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.2.65/css/materialdesignicons.min.css">
+//       <link rel="stylesheet" href="/styles.css">
+//       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+//   </head>
+//   <body style="margin:0">
+//   <div id="root">${html}</div>
+//     <script>
+//       window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+//     </script>
+//     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+//
+//     <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://localhost:8000/client.js" : "/client.js"} async></script>
+//   </body>
+//   </html>
+//
 }
 
 export default render;
