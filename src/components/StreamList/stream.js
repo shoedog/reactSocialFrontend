@@ -12,6 +12,7 @@ import FaTwitter from 'react-icons/lib/fa/twitter';
 import StreamItem from '../StreamItem/StreamItem';
 import s from './stream.css';
 import Snackbar from 'material-ui/Snackbar';
+import { getSessionItem } from '../../utils/lib/sessionUtils';
 import { fetchJson } from '../../utils/lib/fetchUtils';
 
 class StreamList extends Component {
@@ -42,25 +43,22 @@ class StreamList extends Component {
 		this.setState({open: false, tweetBox: ''});
 	}
 
-/**
- *		TWEET FUNCTION
- *
- *
- */
 	sendTweet() {
-		const userId = sessionStorage.getItem('userId');
 		const userToken = sessionStorage.getItem('token');
-		let text = this.state.tweetBox;
-		return fetchJson(`http://localhost:5000/social/post`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': 'Bearer' + userToken },
-			body: text,
-		})
-		.then((res) => {
-			console.log(res);
-			this.setState({open: true});
-		})
+		console.log(userToken)
+		fetch(`http://localhost:5000/social/post`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'Authorization': 'Bearer' + userToken
+        },
+          body: 'text=' + this.state.tweetBox
+      })
+			.then((res) => {
+				console.log(res);
+				this.setState({open: true, tweetBox: ''});
+			})
 	}
 
 	searchTweets = (term) => {

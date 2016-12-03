@@ -17,6 +17,7 @@ import { Tabs, Tab } from 'material-ui';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Dialog from 'material-ui/Dialog';
+import formUrlencoded from 'form-urlencoded';
 
 const style = {
   card: {
@@ -138,7 +139,7 @@ class Profile extends Component {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
           'Authorization': 'Bearer' + userToken
         },
-          body: args
+          body: formUrlencoded(args)
       })
       .then((res) => {
         if (res.ok) {
@@ -261,7 +262,7 @@ class Profile extends Component {
           <Tab label='Link Social Media'>
           <div style={{display: 'flex', justifyContent: 'center', marginTop: '50'}}>
           <Paper style={{width: 500}}>
-          
+
           <div style={style.container}>
 
             <Card style={style.card}>
