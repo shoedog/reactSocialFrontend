@@ -1,4 +1,5 @@
 import React from 'react';
+import fs from 'fs';
 import { Provider } from 'react-redux';
 import { match, RouterContext } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -56,7 +57,7 @@ function handleRender(req, res, renderProps) {
     </MuiThemeProvider>
   );
   const preloadedState = store.getState();
-  res.send(renderFullPage(html, preloadedState));
+  renderFullPage(res, html, preloadedState);
 }
 
 /**
@@ -70,13 +71,13 @@ function handleRender(req, res, renderProps) {
  * @param preloadedState
  * @returns {string}
  */
-function renderFullPage(html, preloadedState) {
+function renderFullPage(res, html, preloadedState) {
   fs.readFile('./public/static/index.html', 'utf8', function (err, file) {
        if (err) {
           return console.log(err);
         }
        let document = file.replace(/<div id="root"><\/div>/, `<div id="root">${html}</div>`);
-      document = document.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${strState}</script>`);
+      document = document.replace(/<script text="initialState"><\/script>/, `<script>window.__INITIAL_STATE__ = ${preloadedState}</script>`);
        if(process.env.NODE_ENV === 'development') {
           document = document.replace(
               /<script type="application\/javascript" src="\/client.js" async><\/script>/,

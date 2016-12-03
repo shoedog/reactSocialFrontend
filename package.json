@@ -131,7 +131,7 @@
   },
   "scripts": {
     "build:prod": "cross-env NODE_ENV='production' npm run build:client && npm run build:server",
-    "start": "cross-env NODE_ENV='production' forever start ./public/static/dist/server.js --name moonwalk",
+    "start": "cross-env NODE_ENV='production' node ./public/static/dist/server.js --name moonwalk",
     "dev:serve": "cross-env NODE_ENV=development & concurrently \"npm run build:devServer\" \"npm run watch:dev\" \"npm run start:dev\" \"npm run dev:api\"",
     "watch:dev": "cross-env NODE_ENV=development webpack-dev-server -d --devtool eval --config webpack.config.js --content-base public/static/dist/ --inline --hot --port 8000",
     "build:devServer": "cross-env NODE_ENV=development webpack -d --config webpack.serverConfig.js",
