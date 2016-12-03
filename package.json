@@ -36,6 +36,7 @@
     "react-icons": "^2.2.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
+    "react-scrollable-list": "^1.1.2",
     "react-social": "^1.6.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",

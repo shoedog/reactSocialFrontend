@@ -10,6 +10,7 @@ import StreamItem from '../StreamItem/StreamItem';
 import s from './trends.css';
 import Snackbar from 'material-ui/Snackbar';
 import { fetchJson } from '../../utils/lib/fetchUtils';
+import cities from '../../utils/lib/cities';
 
 class AvailableTrends extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class AvailableTrends extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getAvailableTrends = this.getAvailableTrends.bind(this);
         this.handleRequestClose = this.handleRequestClose.bind(this);
-        this.getTrending = this.getTrending.bind(this);
+        //this.getTrending = this.getTrending.bind(this);
         this.viewTweets = this.viewTweets.bind(this);
     }
 
@@ -58,34 +59,24 @@ class AvailableTrends extends Component {
             this.setState({availablePlaces: res});
         })
     };
+/*
+<div>
+{/* Begin Place List }
+{places.map((place) => (
+    <ul key={place.name}>
+        <li>Name: {place.name}</li>
+        <li>PlaceType: {place.placeType.name}</li>
+        <li>parentid ( Country ?): {place.parentid}
+            <FlatButton label="Trending Country" onClick={this.getTrending(place.parentid)} /></li>
+        <li>country: {place.country} </li>
+        <li> woeid (local? ): {place.woeid} <FlatButton label="Trending Here" onClick={this.getTrending(place.woeid)} /></li>
+        <li>countryCode: {place.countryCode} </li>
+    </ul>
+))}
 
-    getPlaces(places) {
-        if (places == null ) {
-            return (
-                <div>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    {/* Begin Place List */}
-                    {places.map((place) => (
-                        <ul key={place.name}>
-                            <li>Name: {place.name}</li>
-                            <li>PlaceType: {place.placeType.name}</li>
-                            <li>parentid ( Country ?): {place.parentid}
-                                <FlatButton label="Trending Country" onClick={this.getTrending(place.parentid)} /></li>
-                            <li>country: {place.country} </li>
-                            <li> woeid (local? ): {place.woeid} <FlatButton label="Trending Here" onClick={this.getTrending(place.woeid)} /></li>
-                            <li>countryCode: {place.countryCode} </li>
-                        </ul>
-                    ))}
-
-                    {/* End Place List */}
-                </div>
-            );
-        }
-    }
+{/* End Place List }
+</div>
+ */
 
 
     /**
@@ -93,7 +84,7 @@ class AvailableTrends extends Component {
      *
      *
      * **/
-    getTrending = (id) => {
+    getTrending(id) {
         let options = { method: 'GET'};
         return fetchJson(`http://localhost:5000/social/trends/place/${id}`,
             {options})
@@ -104,7 +95,7 @@ class AvailableTrends extends Component {
         })
     };
 
-    getTrends(trends) {
+  /*  getTrends(trends) {
         if (trends == null ) {
             return (
                 <div>
@@ -113,7 +104,7 @@ class AvailableTrends extends Component {
         } else {
             return (
                 <div>
-                    {/* Begin Place List */}
+                    {/* Begin Place List }
                     {trends.map((trend) => (
                         <ul key={trend.url}>
                             <li>Name: {trend.name}</li>
@@ -124,13 +115,13 @@ class AvailableTrends extends Component {
                         </ul>
                     ))}
 
-                    {/* End Place List */}
+                    {/* End Place List }
                 </div>
             );
         }
     }
 
-
+*/
     /**
      *  TWEETS!
      *
@@ -235,7 +226,11 @@ class AvailableTrends extends Component {
 
    /**
     *   RENDER!!
-    *
+    *<li>Name: {place.name}</li>
+    <li>PlaceType: {place.placeType.name}</li>
+    <li>parentid ( Country ?): {place.parentid}
+    <FlatButton label="Trending Country" onClick={this.getTrending(place.parentid)} /></li>
+    <li>country: {place.country} </li>
     *
     *
     * **/
@@ -255,31 +250,26 @@ class AvailableTrends extends Component {
 
                 {/* START MAIN BLOCK */}
                 <Paper className={s.paperBlock} zDepth={0}>
-                    <RaisedButton href={link}
-                                label='Trending'
-                                icon={<FaTwitter size={12}/>}
-                                labelPosition="after"
-                                primary={true}
-                                viewBox='0 0 64 64'
-                                style={{width: 100}}
-                                onClick={this.getAvailableTrends}
-                    />
                     <div style={{display: 'flex', }}>
                         <div>
-                            <p>PLACES</p>
                             {/* Begin Place List */}
-                            {this.getPlaces(this.state.availablePlaces)}
+                            {cities.map((city) => (
+                                <ul key={city}>
+                                    <li> <FlatButton label="Trending Here" onClick={this.getTrending(city)} /></li>
+                                </ul>
+                            ))}
+
                             {/* End Place List */}
                         </div>
                         <div>
                             <p>TRENDS</p>
-                            {/* Begin Trend List */}
-                            {this.getTrends(this.state.availableTrends)}
+                            {/* Begin Trend List  {this.getTrends(this.state.availableTrends)}*/}
+
                             {/* End Trend List */}
                         </div>
                     </div>
-                    {/* Begin Left Drawer */}
-                    {this.getDrawer(this.state.searchData)}
+                    {/* Begin Left Drawer {this.getDrawer(this.state.searchData)}*/}
+
                     {/* End Left Drawer */}
                 </Paper>
                 {/* END MAIN BLOCK */}
