@@ -1,9 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
-const IP = process.env.NODE_ENV === 'production' ? 'http://54.212.196.159:5000' : 'http://0.0.0.0:5000';
+const IP = process.env.NODE_ENV === 'production' ? 'http://54.212.196.159:5000' : 'http://54.212.196.159:5000';
 
 export const getFeed = (req, res) => {
-  fetch('http://localhost:5000/social/feed', {
+  fetch('http://54.212.196.159:5000/social/feed', {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   })
@@ -21,7 +21,7 @@ export const getFeed = (req, res) => {
 
 export const postFeedItem = (req, res) => {
   console.log(req.body);
-  fetch('http://localhost:5000/social/feed', {
+  fetch('http://54.212.196.159:5000/social/feed', {
     'method': 'POST',
     headers: {
       'Accept': 'application/json',
@@ -39,7 +39,7 @@ export const postFeedItem = (req, res) => {
 };
 
 export const updateFeedItem = (req, res) => {
-  fetch('http://localhost:5000/social/feed/:id', {
+  fetch('http://54.212.196.159:5000/social/feed/:id', {
     'method': 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -57,7 +57,7 @@ export const updateFeedItem = (req, res) => {
 };
 
 export const deleteFeedItem = (req, res) => {
-  fetch('http://localhost:5000/social/feed/:id', {
+  fetch('http://54.212.196.159:5000/social/feed/:id', {
     'method': 'DELETE',
     headers: {
       'Accept': 'application/json',

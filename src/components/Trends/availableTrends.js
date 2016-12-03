@@ -53,7 +53,7 @@ class AvailableTrends extends Component {
      * **/
     getTrending = (id) => {
         let options = { method: 'GET'};
-        return fetchJson(`http://localhost:5000/social/trends/place/${id}`,
+        return fetchJson(`http://54.212.196.159:5000/social/trends/place/${id}`,
             {options})
         .then((res) => {
             console.log('TRENDS');
@@ -64,7 +64,7 @@ class AvailableTrends extends Component {
 
   viewTweets = (term) => {
       let options = { method: 'GET'};
-      return fetchJson(`http://localhost:5000/social/stream/${term}`,
+      return fetchJson(`http://54.212.196.159:5000/social/stream/${term}`,
           {options})
       .then((res) => {
           console.log(res);

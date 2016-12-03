@@ -38,7 +38,7 @@ class NewUserSetup extends Component {
 
   connectTwitter() {
     //console.log(this.props.user.userId)
-    window.location = `http://localhost:5000/social/connect/twitter?id=${this.props.user.userId}`
+    window.location = `http://54.212.196.159:5000/social/connect/twitter?id=${this.props.user.userId}`
   }
 
   getStepContent(stepIndex) {

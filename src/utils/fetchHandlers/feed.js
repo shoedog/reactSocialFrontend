@@ -24,7 +24,7 @@ export default {
           Authorization: 'Bearer ' + loggedIn
         }
       }
-      return fetchJson(`http://localhost:5000/social/feed/${userId}`, options)
+      return fetchJson(`http://54.212.196.159:5000/social/feed/${userId}`, options)
         .then(normalizeFeedItems)
         .then(returnFeedItemsAndIds);
     },

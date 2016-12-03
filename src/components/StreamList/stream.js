@@ -46,7 +46,7 @@ class StreamList extends Component {
 	sendTweet() {
 		const userToken = sessionStorage.getItem('token');
 		console.log(userToken)
-		fetch(`http://localhost:5000/social/post`, {
+		fetch(`http://54.212.196.159:5000/social/post`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
@@ -63,7 +63,7 @@ class StreamList extends Component {
 
 	searchTweets = (term) => {
 		let options = { method: 'GET'};
-		return fetchJson(`http://localhost:5000/social/stream/${term}`,
+		return fetchJson(`http://54.212.196.159:5000/social/stream/${term}`,
 			{options})
 		.then((res) => {
 			console.log(res);

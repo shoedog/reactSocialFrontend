@@ -2,7 +2,7 @@
 export const twitter = {
     moonwalkId: "HBTuDkqYixOZeZIP3Uupj6gMB",
     moonwalkSecret: "V11loaak55rQAtzPsyHq4HULEfbGwEzR1ZBQidvJAS5A9xqZn5",
-    callbackURL: `http://0.0.0.0:3000/auth/twitter/callback`
+    callbackURL: `http://54.212.196.159:3000/auth/twitter/callback`
 /* Sample Twitter Profile Object
  {
  id: '130668248',

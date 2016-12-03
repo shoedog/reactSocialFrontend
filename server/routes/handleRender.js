@@ -81,7 +81,7 @@ function renderFullPage(res, html, preloadedState) {
        if(process.env.NODE_ENV === 'development') {
           document = document.replace(
               /<script type="application\/javascript" src="\/client.js" async><\/script>/,
-                  `<script type="application/javascript" src="http://localhost:8000/client.js" async></script>`);
+                  `<script type="application/javascript" src="http://54.212.196.159:8000/client.js" async></script>`);
          }
         res.send(document);
       });
@@ -105,7 +105,7 @@ function renderFullPage(res, html, preloadedState) {
 //     </script>
 //     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 //
-//     <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://localhost:8000/client.js" : "/client.js"} async></script>
+//     <script type="application/javascript" src=${ process.env.NODE_ENV == 'development' ? "http://54.212.196.159:8000/client.js" : "/client.js"} async></script>
 //   </body>
 //   </html>
 //

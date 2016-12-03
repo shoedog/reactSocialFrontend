@@ -40,7 +40,7 @@ class BottomBar extends Component {
 
   likeTweet = (id) => {
     const uriPath = this.state.fav ? 'unfavorite' : 'favorite';
-    fetch(`http://0.0.0.0:5000/social/${uriPath}/${id}`,
+    fetch(`http://54.212.196.159:5000/social/${uriPath}/${id}`,
       {
         method: 'POST',
         headers: {
@@ -58,7 +58,7 @@ class BottomBar extends Component {
 
   retweet = (id) => {
     const uriPath = this.state.rt ? 'unretweet' : 'retweet';
-    fetch(`http://0.0.0.0:5000/social/${uriPath}/${id}`,
+    fetch(`http://54.212.196.159:5000/social/${uriPath}/${id}`,
       {
         method: 'POST',
         headers: {

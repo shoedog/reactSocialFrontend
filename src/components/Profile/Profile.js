@@ -89,7 +89,7 @@ class Profile extends Component {
   handleConfirmDelete() {
     const userId = sessionStorage.getItem('userId');
     const userToken = sessionStorage.getItem('token');
-    return fetch(`http://localhost:5000/user/${userId}`,
+    return fetch(`http://54.212.196.159:5000/user/${userId}`,
       {
         method: 'DELETE',
         headers: {
@@ -131,7 +131,7 @@ class Profile extends Component {
     const userToken = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
     console.log(userId, userToken)
-    return fetch(`http://localhost:5000/user/${userId}`,
+    return fetch(`http://54.212.196.159:5000/user/${userId}`,
       {
         method: 'PUT',
         headers: {
@@ -153,11 +153,11 @@ class Profile extends Component {
 
   connectTwitter() {
     //console.log(this.props.user.userId)
-    window.location = `http://localhost:5000/social/connect/twitter?id=${this.props.user.userId}`
+    window.location = `http://54.212.196.159:5000/social/connect/twitter?id=${this.props.user.userId}`
   }
 
   removeTwitter() {
-  fetch(`http://localhost:5000/social/remove/twitter?id=${this.props.user.userId}`, {
+  fetch(`http://54.212.196.159:5000/social/remove/twitter?id=${this.props.user.userId}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json, application/xml, text/plain, text/html, *.*',

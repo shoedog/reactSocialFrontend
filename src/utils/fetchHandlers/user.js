@@ -52,7 +52,7 @@ export default {
     },
 
     fetch(username) {
-      return fetchJson(`http://localhost:5000/user/${username}`)
+      return fetchJson(`http://54.212.196.159:5000/user/${username}`)
       //.then(objConvert)
         .then(normalizeUserData)
         .then(returnUserData);
@@ -60,7 +60,7 @@ export default {
 
     updateUser(username, userData) {
       return fetchJson(
-        `http://localhost:5000/user/${username}`,
+        `http://54.212.196.159:5000/user/${username}`,
         {
           method: 'PUT',
           body: JSON.stringify({ userData }),
@@ -69,7 +69,7 @@ export default {
     },
 
     delete(userId, userToken) {
-      return fetch(`http://localhost:5000/user/${userId}`,
+      return fetch(`http://54.212.196.159:5000/user/${userId}`,
         {
           method: 'DELETE',
           headers: {          

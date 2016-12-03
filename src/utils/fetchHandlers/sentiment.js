@@ -5,6 +5,6 @@ export default {
     SENTIMENT: {
         fetchSentiment(term) {
             let options = { method: 'GET'};
-            return fetchJson(`http://localhost:5000/social/sentiment/${term}`, options)
+            return fetchJson(`http://54.212.196.159:5000/social/sentiment/${term}`, options)
     },
 }}
